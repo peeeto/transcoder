@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="997ca218-5ff3-48b4-9473-f69c3feafb11" name="Default" comment="" />
+    <list default="true" id="997ca218-5ff3-48b4-9473-f69c3feafb11" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java" afterPath="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/transcoder.ipr" afterPath="$PROJECT_DIR$/transcoder.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/transcoder.iws" afterPath="$PROJECT_DIR$/transcoder.iws" />
+      <change type="MOVED" beforePath="J:\devel\transcoder\src\main\resources\images\bulb.gif" afterPath="$PROJECT_DIR$/src/main/resources/bulb.gif" />
+    </list>
     <ignored path="transcoder.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/pom.xml" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384176943475" ignored="false" />
-    <file path="/TranscoderFrame.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384179991445" ignored="false" />
+    <file path="/pom.xml" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384182416588" ignored="false" />
+    <file path="/TranscoderFrame.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384182946005" ignored="false" />
     <file path="/Transcoder.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384178266053" ignored="false" />
-    <file path="/fragment.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384179777902" ignored="false" />
+    <file path="/fragment.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384182905070" ignored="false" />
+    <file path="/Dummy.txt" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384183074833" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,55 +73,20 @@
     <favorites_list name="transcoder" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Transcoder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="15" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#143#468#0" expanded="true" />
-                <element signature="e#461#462#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="39" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TranscoderFrame.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="23" selection-start="639" selection-end="639" vertical-scroll-proportion="0.52577317">
-              <folding>
-                <element signature="docComment;field#serialVersionUID#0;class#TranscoderFrame#0" expanded="true" />
-                <element signature="docComment;method#TranscoderFrame#0;class#TranscoderFrame#0" expanded="true" />
-                <element signature="e#3381#3535#0" expanded="true" />
-                <element signature="e#3528#3529#0" expanded="true" />
-                <element signature="docComment;method#initComponents#0;class#TranscoderFrame#0" expanded="true" />
-                <element signature="docComment;method#lostOwnership#0;class#TranscoderFrame#0" expanded="true" />
-                <element signature="docComment;method#urlDecode#0;class#TranscoderFrame#0" expanded="true" />
-                <element signature="docComment;method#urlEncode#0;class#TranscoderFrame#0" expanded="true" />
-                <element signature="docComment;method#main#0;class#TranscoderFrame#0" expanded="true" />
-                <element signature="docComment;field#serialVersionUID#0;class#UndoAction#0;class#TranscoderFrame#0" expanded="true" />
-                <element signature="docComment;field#serialVersionUID#0;class#RedoAction#0;class#TranscoderFrame#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
@@ -133,7 +104,7 @@
     <option name="width" value="1688" />
     <option name="height" value="1030" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -209,13 +180,14 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="preferences.sourceCode" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../_daotec/daopaycore-trunk/dist/daopaycore-SNAPSHOT-war.war" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -238,8 +210,10 @@
       <recent name="J:\devel\transcoder\src\main\java\org\pch" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="J:\devel\transcoder\src\main\resources\images" />
+      <recent name="J:\devel\transcoder\src\main\resources" />
+      <recent name="J:\devel\transcoder\src\main\java" />
       <recent name="J:\devel\transcoder\src\main\java\org\pch" />
+      <recent name="J:\devel\transcoder\src\main\resources\images" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Transcoder">
@@ -379,8 +353,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="24" width="1688" height="1030" extended-state="0" />
-    <editor active="true" />
+    <frame x="-4" y="24" width="1688" height="1030" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -395,7 +369,7 @@
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24541004" sideWeight="0.6703418" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24541004" sideWeight="0.6703418" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296582" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -482,31 +456,12 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#143#468#0" expanded="true" />
-            <element signature="e#461#462#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="115" column="133" selection-start="3431" selection-end="3431" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="docComment;field#serialVersionUID#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;method#TranscoderFrame#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="e#3381#3535#0" expanded="true" />
-            <element signature="e#3528#3529#0" expanded="true" />
-            <element signature="docComment;method#initComponents#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;method#lostOwnership#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;method#urlDecode#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;method#urlEncode#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;method#main#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;field#serialVersionUID#0;class#UndoAction#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;field#serialVersionUID#0;class#RedoAction#0;class#TranscoderFrame#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="115" column="133" selection-start="3431" selection-end="3431" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.8/commons-codec-1.8.jar!/org/apache/commons/codec/binary/Base64.class">
@@ -516,64 +471,47 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.8/commons-codec-1.8-sources.jar!/org/apache/commons/codec/binary/Base64.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="590" column="40" selection-start="26157" selection-end="26158" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/images/bulb.gif">
-      <provider selected="true" editor-type-id="images">
-        <state />
+        <state line="590" column="40" selection-start="26157" selection-end="26158" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/java/awt/Toolkit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1392" column="29" selection-start="61512" selection-end="61512" vertical-scroll-proportion="0.46435452">
-          <folding />
-        </state>
+        <state line="1392" column="29" selection-start="61512" selection-end="61512" vertical-scroll-proportion="0.46435452" />
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/java/awt/event/ActionListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="16" selection-start="944" selection-end="944" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="32" column="16" selection-start="944" selection-end="944" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="15" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#143#468#0" expanded="true" />
-            <element signature="e#461#462#0" expanded="true" />
-          </folding>
+        <state line="10" column="43" selection-start="229" selection-end="229" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="39" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0">
+        <state line="35" column="70" selection-start="1515" selection-end="1515" vertical-scroll-proportion="0.58419245">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="23" selection-start="639" selection-end="639" vertical-scroll-proportion="0.52577317">
+        <state line="94" column="21" selection-start="2774" selection-end="2774" vertical-scroll-proportion="0.23883161">
           <folding>
-            <element signature="docComment;field#serialVersionUID#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;method#TranscoderFrame#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="e#3381#3535#0" expanded="true" />
-            <element signature="e#3528#3529#0" expanded="true" />
-            <element signature="docComment;method#initComponents#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;method#lostOwnership#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;method#urlDecode#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;method#urlEncode#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;method#main#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;field#serialVersionUID#0;class#UndoAction#0;class#TranscoderFrame#0" expanded="true" />
-            <element signature="docComment;field#serialVersionUID#0;class#RedoAction#0;class#TranscoderFrame#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#4295#5313#0" expanded="true" />
+            <element signature="e#5306#5307#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/bulb.gif">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
   </component>

@@ -19,6 +19,8 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.*;
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -85,19 +87,26 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
 
   //Obtain the image URL
   protected static Image createImage(String path, String description) {
-    URL imageURL = TranscoderFrame.class.getResource(path);
-
-    if (imageURL == null) {
-      System.err.println("Resource not found: " + path);
-      return null;
-    } else {
-      return (new ImageIcon(imageURL, description)).getImage();
-    }
+//    URL imageURL = TranscoderFrame.class.getResource(path);
+//
+//    if (imageURL == null) {
+//      System.err.println("Resource not found: " + path);
+//      try {
+//        imageURL = new File(path).toURI().toURL();
+//      } catch (MalformedURLException e) {
+//        throw new IllegalStateException("Unknown file path: " + path);
+//      }
+//      if (imageURL == null) {
+//        System.err.println("Resource not found #2: " + path);
+//        return null;
+//      }
+//    }
+    return (new ImageIcon(path, description)).getImage();
   }
 
   private void initTrayComponents() {
     final SystemTray tray = SystemTray.getSystemTray();
-    final Image image = createImage("../../images/bulb.gif", "transcoder");
+    final Image image = createImage("bulb.gif", "transcoder");
     ActionListener exitListener = new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         System.out.println("Exiting....");
@@ -122,10 +131,8 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
     trayIcon.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        if (e.getClickCount() == 2) {
-          setVisible(!isVisible());
-          setExtendedState(JFrame.NORMAL);
-        }
+        setVisible(!isVisible());
+        setExtendedState(JFrame.NORMAL);
       }
     });
     addWindowStateListener(new WindowStateListener() {
