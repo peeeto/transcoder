@@ -6,7 +6,7 @@
     </list>
     <ignored path="transcoder.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/pom.xml" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384781394199" ignored="false" />
+    <file path="/pom.xml" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384782214012" ignored="false" />
     <file path="/TranscoderFrame.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384781419934" ignored="false" />
     <file path="/Transcoder.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384772676441" ignored="false" />
     <file path="/fragment.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384264890601" ignored="false" />
@@ -83,7 +83,7 @@
       <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="16" selection-start="413" selection-end="413" vertical-scroll-proportion="0.22149837">
+            <state line="8" column="25" selection-start="422" selection-end="422" vertical-scroll-proportion="0.22149837">
               <folding />
             </state>
           </provider>
@@ -693,7 +693,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="16" selection-start="413" selection-end="413" vertical-scroll-proportion="0.22149837">
+        <state line="8" column="25" selection-start="422" selection-end="422" vertical-scroll-proportion="0.22149837">
           <folding />
         </state>
       </provider>
