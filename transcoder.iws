@@ -2,18 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="997ca218-5ff3-48b4-9473-f69c3feafb11" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java" afterPath="$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.form" afterPath="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.form" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java" afterPath="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/transcoder.iml" afterPath="$PROJECT_DIR$/transcoder.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/transcoder.ipr" afterPath="$PROJECT_DIR$/transcoder.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/transcoder.iws" afterPath="$PROJECT_DIR$/transcoder.iws" />
-      <change type="MOVED" beforePath="J:\devel\transcoder\src\main\resources\bulb.gif" afterPath="$PROJECT_DIR$/src/main/resources/images/bulb.gif" />
     </list>
     <ignored path="transcoder.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/pom.xml" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384182416588" ignored="false" />
-    <file path="/TranscoderFrame.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384264898577" ignored="false" />
-    <file path="/Transcoder.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384265081715" ignored="false" />
+    <file path="/pom.xml" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384781394199" ignored="false" />
+    <file path="/TranscoderFrame.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384781419934" ignored="false" />
+    <file path="/Transcoder.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384772676441" ignored="false" />
     <file path="/fragment.java" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384264890601" ignored="false" />
-    <file path="/Dummy.txt" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384263990246" ignored="false" />
+    <file path="/Dummy.txt" changelist="997ca218-5ff3-48b4-9473-f69c3feafb11" time="1384779760167" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,16 +80,79 @@
       <file leaf-file-name="Transcoder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="125" selection-start="477" selection-end="477" vertical-scroll-proportion="0.0">
+            <state line="13" column="15" selection-start="204" selection-end="204" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="28" selection-start="104" selection-end="104" vertical-scroll-proportion="0.35051546">
+            <state line="158" column="24" selection-start="6131" selection-end="6131" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TranscoderFrame.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="210" column="77" selection-start="7057" selection-end="7057" vertical-scroll-proportion="0.2599681">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="docComment;field#serialVersionUID#0;class#TranscoderFrame#0" expanded="true" />
+                <element signature="docComment;method#TranscoderFrame#0;class#TranscoderFrame#0" expanded="true" />
+                <element signature="e#3266#3420#0" expanded="true" />
+                <element signature="e#3413#3414#0" expanded="true" />
+                <element signature="e#3665#3827#0" expanded="true" />
+                <element signature="e#3820#3821#0" expanded="true" />
+                <element signature="e#4555#4719#0" expanded="true" />
+                <element signature="e#4712#4713#0" expanded="true" />
+                <element signature="docComment;method#initComponents#0;class#TranscoderFrame#0" expanded="true" />
+                <element signature="e#7109#7110#0" expanded="true" />
+                <element signature="e#7235#7399#0" expanded="true" />
+                <element signature="e#7392#7393#0" expanded="true" />
+                <element signature="e#7527#7694#0" expanded="true" />
+                <element signature="e#7687#7688#0" expanded="true" />
+                <element signature="e#7825#7992#0" expanded="true" />
+                <element signature="e#7985#7986#0" expanded="true" />
+                <element signature="e#8103#8265#0" expanded="true" />
+                <element signature="e#8258#8259#0" expanded="true" />
+                <element signature="e#8417#8580#0" expanded="true" />
+                <element signature="e#8573#8574#0" expanded="true" />
+                <element signature="e#8689#8850#0" expanded="true" />
+                <element signature="e#8843#8844#0" expanded="true" />
+                <element signature="e#8957#9118#0" expanded="true" />
+                <element signature="e#9111#9112#0" expanded="true" />
+                <element signature="e#9225#9386#0" expanded="true" />
+                <element signature="e#9379#9380#0" expanded="true" />
+                <element signature="e#9489#9649#0" expanded="true" />
+                <element signature="e#9642#9643#0" expanded="true" />
+                <element signature="e#9757#9919#0" expanded="true" />
+                <element signature="e#9912#9913#0" expanded="true" />
+                <element signature="docComment;method#urlDecode#0;class#TranscoderFrame#0" expanded="true" />
+                <element signature="docComment;method#urlEncode#0;class#TranscoderFrame#0" expanded="true" />
+                <element signature="docComment;field#serialVersionUID#0;class#UndoAction#0;class#TranscoderFrame#0" expanded="true" />
+                <element signature="docComment;field#serialVersionUID#0;class#RedoAction#0;class#TranscoderFrame#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JComponent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/javax/swing/JComponent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1457" column="16" selection-start="54906" selection-end="54906" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CheckedInputStream.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/java/util/zip/CheckedInputStream.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="30" column="11" selection-start="752" selection-end="752" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -110,9 +176,9 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java" />
       </list>
     </option>
   </component>
@@ -219,12 +285,12 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="PublishConfig">
     <servers>
@@ -403,7 +469,6 @@
     <frame x="-4" y="24" width="1688" height="1030" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.6703418" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -417,11 +482,11 @@
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24541004" sideWeight="0.6703418" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24541004" sideWeight="0.7199559" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2800441" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.6703418" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296582" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="JRebel Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39911798" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -431,9 +496,11 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.6703418" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="IntelliJad Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -503,26 +570,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="115" column="133" selection-start="3431" selection-end="3431" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.8/commons-codec-1.8.jar!/org/apache/commons/codec/binary/Base64.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="33" selection-start="2130" selection-end="2130" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.8/commons-codec-1.8-sources.jar!/org/apache/commons/codec/binary/Base64.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="590" column="40" selection-start="26157" selection-end="26158" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/java/awt/Toolkit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1392" column="29" selection-start="61512" selection-end="61512" vertical-scroll-proportion="0.46435452" />
@@ -538,38 +585,120 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="28" selection-start="1079" selection-end="1079" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.form">
       <provider selected="true" editor-type-id="ui-designer">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="75" selection-start="2707" selection-end="2707" vertical-scroll-proportion="0.32646048">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="6" column="7" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/java/awt/Frame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="231" column="38" selection-start="8134" selection-end="8134" vertical-scroll-proportion="0.50859106">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/java/awt/Window.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1609" column="37" selection-start="57823" selection-end="57823" vertical-scroll-proportion="0.36662883">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/commons-io/commons-io/2.4/commons-io-2.4.jar!/org/apache/commons/io/FileUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="13" selection-start="164" selection-end="164" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/intellijad/org/apache/commons/io/FileUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1270" column="53" selection-start="41350" selection-end="41350" vertical-scroll-proportion="1.8524404">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/java/util/zip/Adler32.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="13" selection-start="453" selection-end="460" vertical-scroll-proportion="0.11577752" />
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/java/util/zip/CRC32.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="22" selection-start="475" selection-end="475" vertical-scroll-proportion="0.2122588" />
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/java/util/zip/CheckedInputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="11" selection-start="752" selection-end="752" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_43/src.zip!/javax/swing/JComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1457" column="16" selection-start="54906" selection-end="54906" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="125" selection-start="477" selection-end="477" vertical-scroll-proportion="0.0">
+        <state line="13" column="15" selection-start="204" selection-end="204" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="28" selection-start="104" selection-end="104" vertical-scroll-proportion="0.35051546">
+        <state line="158" column="24" selection-start="6131" selection-end="6131" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="210" column="77" selection-start="7057" selection-end="7057" vertical-scroll-proportion="0.2599681">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;field#serialVersionUID#0;class#TranscoderFrame#0" expanded="true" />
+            <element signature="docComment;method#TranscoderFrame#0;class#TranscoderFrame#0" expanded="true" />
+            <element signature="e#3266#3420#0" expanded="true" />
+            <element signature="e#3413#3414#0" expanded="true" />
+            <element signature="e#3665#3827#0" expanded="true" />
+            <element signature="e#3820#3821#0" expanded="true" />
+            <element signature="e#4555#4719#0" expanded="true" />
+            <element signature="e#4712#4713#0" expanded="true" />
+            <element signature="docComment;method#initComponents#0;class#TranscoderFrame#0" expanded="true" />
+            <element signature="e#7109#7110#0" expanded="true" />
+            <element signature="e#7235#7399#0" expanded="true" />
+            <element signature="e#7392#7393#0" expanded="true" />
+            <element signature="e#7527#7694#0" expanded="true" />
+            <element signature="e#7687#7688#0" expanded="true" />
+            <element signature="e#7825#7992#0" expanded="true" />
+            <element signature="e#7985#7986#0" expanded="true" />
+            <element signature="e#8103#8265#0" expanded="true" />
+            <element signature="e#8258#8259#0" expanded="true" />
+            <element signature="e#8417#8580#0" expanded="true" />
+            <element signature="e#8573#8574#0" expanded="true" />
+            <element signature="e#8689#8850#0" expanded="true" />
+            <element signature="e#8843#8844#0" expanded="true" />
+            <element signature="e#8957#9118#0" expanded="true" />
+            <element signature="e#9111#9112#0" expanded="true" />
+            <element signature="e#9225#9386#0" expanded="true" />
+            <element signature="e#9379#9380#0" expanded="true" />
+            <element signature="e#9489#9649#0" expanded="true" />
+            <element signature="e#9642#9643#0" expanded="true" />
+            <element signature="e#9757#9919#0" expanded="true" />
+            <element signature="e#9912#9913#0" expanded="true" />
+            <element signature="docComment;method#urlDecode#0;class#TranscoderFrame#0" expanded="true" />
+            <element signature="docComment;method#urlEncode#0;class#TranscoderFrame#0" expanded="true" />
+            <element signature="docComment;field#serialVersionUID#0;class#UndoAction#0;class#TranscoderFrame#0" expanded="true" />
+            <element signature="docComment;field#serialVersionUID#0;class#RedoAction#0;class#TranscoderFrame#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
