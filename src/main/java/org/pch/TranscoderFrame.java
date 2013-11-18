@@ -202,7 +202,8 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
     jScrollPane1.setViewportView(textPane);
 
     getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
+    jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     jPanel1.setLayout(new java.awt.GridLayout(2, 0));
 
     urlEncodeButton.setText("URL encode");
