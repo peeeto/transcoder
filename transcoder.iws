@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="997ca218-5ff3-48b4-9473-f69c3feafb11" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java" afterPath="$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.form" afterPath="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.form" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java" afterPath="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/transcoder.iml" afterPath="$PROJECT_DIR$/transcoder.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/transcoder.ipr" afterPath="$PROJECT_DIR$/transcoder.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/transcoder.iws" afterPath="$PROJECT_DIR$/transcoder.iws" />
     </list>
     <ignored path="transcoder.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,19 +80,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="158" column="24" selection-start="6131" selection-end="6131" vertical-scroll-proportion="0.0">
+            <state line="8" column="16" selection-start="413" selection-end="413" vertical-scroll-proportion="0.22149837">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TranscoderFrame.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="TranscoderFrame.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="210" column="77" selection-start="7057" selection-end="7057" vertical-scroll-proportion="0.2599681">
+            <state line="214" column="90" selection-start="7152" selection-end="7152" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;field#serialVersionUID#0;class#TranscoderFrame#0" expanded="true" />
@@ -110,6 +104,7 @@
                 <element signature="e#4555#4719#0" expanded="true" />
                 <element signature="e#4712#4713#0" expanded="true" />
                 <element signature="docComment;method#initComponents#0;class#TranscoderFrame#0" expanded="true" />
+                <element signature="e#6952#7116#0" expanded="true" />
                 <element signature="e#7109#7110#0" expanded="true" />
                 <element signature="e#7235#7399#0" expanded="true" />
                 <element signature="e#7392#7393#0" expanded="true" />
@@ -177,8 +172,8 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/org/pch/Transcoder.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -652,16 +647,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="158" column="24" selection-start="6131" selection-end="6131" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/pch/TranscoderFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="210" column="77" selection-start="7057" selection-end="7057" vertical-scroll-proportion="0.2599681">
+        <state line="214" column="90" selection-start="7152" selection-end="7152" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;field#serialVersionUID#0;class#TranscoderFrame#0" expanded="true" />
@@ -673,6 +661,7 @@
             <element signature="e#4555#4719#0" expanded="true" />
             <element signature="e#4712#4713#0" expanded="true" />
             <element signature="docComment;method#initComponents#0;class#TranscoderFrame#0" expanded="true" />
+            <element signature="e#6952#7116#0" expanded="true" />
             <element signature="e#7109#7110#0" expanded="true" />
             <element signature="e#7235#7399#0" expanded="true" />
             <element signature="e#7392#7393#0" expanded="true" />
@@ -699,6 +688,13 @@
             <element signature="docComment;field#serialVersionUID#0;class#UndoAction#0;class#TranscoderFrame#0" expanded="true" />
             <element signature="docComment;field#serialVersionUID#0;class#RedoAction#0;class#TranscoderFrame#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="16" selection-start="413" selection-end="413" vertical-scroll-proportion="0.22149837">
+          <folding />
         </state>
       </provider>
     </entry>
