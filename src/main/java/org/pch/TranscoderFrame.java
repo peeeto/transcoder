@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.util.Hashtable;
 import java.util.zip.Adler32;
 import java.util.zip.CRC32;
@@ -193,11 +194,14 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         cdc32Button = new javax.swing.JButton();
         Adrel32Button = new javax.swing.JButton();
         uuidButton = new javax.swing.JButton();
+        timestampEncode = new javax.swing.JButton();
+        timestampDecode = new javax.swing.JButton();
         countLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         editMenu = new javax.swing.JMenu();
 
         setTitle("Transcoder");
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         textPane.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         jScrollPane1.setViewportView(textPane);
@@ -206,6 +210,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
 
         jPanel1.setLayout(new java.awt.GridLayout(2, 0));
 
+        urlEncodeButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         urlEncodeButton.setText("URL encode");
         urlEncodeButton.setName(""); // NOI18N
         urlEncodeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -215,6 +220,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(urlEncodeButton);
 
+        urlDecodeButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         urlDecodeButton.setText("URL decode");
         urlDecodeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -223,6 +229,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(urlDecodeButton);
 
+        base64EncodeButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         base64EncodeButton.setText("Base64 encode");
         base64EncodeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,6 +238,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(base64EncodeButton);
 
+        base64DecodeButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         base64DecodeButton.setText("Base64 decode");
         base64DecodeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,6 +247,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(base64DecodeButton);
 
+        md5hashButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         md5hashButton.setText("MD5");
         md5hashButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,6 +256,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(md5hashButton);
 
+        sha1hashButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha1hashButton.setText("SHA-1");
         sha1hashButton.setName(""); // NOI18N
         sha1hashButton.addActionListener(new java.awt.event.ActionListener() {
@@ -256,6 +266,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(sha1hashButton);
 
+        sha256Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha256Button.setText("SHA-256");
         sha256Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -264,6 +275,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(sha256Button);
 
+        sha384Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha384Button.setText("SHA-384");
         sha384Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -272,6 +284,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(sha384Button);
 
+        sha512Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha512Button.setText("SHA-512");
         sha512Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,6 +293,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(sha512Button);
 
+        cdc32Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         cdc32Button.setText("CRC32");
         cdc32Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,6 +302,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(cdc32Button);
 
+        Adrel32Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         Adrel32Button.setText("Adler32");
         Adrel32Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,6 +311,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(Adrel32Button);
 
+        uuidButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         uuidButton.setText("UUID");
         uuidButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,6 +319,26 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
             }
         });
         jPanel1.add(uuidButton);
+
+        timestampEncode.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        timestampEncode.setText("ENCODE yyyy-MM-dd HH:mm:ss.SSS Z");
+        timestampEncode.setToolTipText("ENCODE yyyy-MM-dd HH:mm:ss.SSS Z");
+        timestampEncode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                encodeTimestampHandler(evt);
+            }
+        });
+        jPanel1.add(timestampEncode);
+
+        timestampDecode.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        timestampDecode.setText("DECODE yyyy-MM-dd HH:mm:ss.SSS Z");
+        timestampDecode.setToolTipText("DECODE yyyy-MM-dd HH:mm:ss.SSS Z");
+        timestampDecode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decodeTimestampHandler(evt);
+            }
+        });
+        jPanel1.add(timestampDecode);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.SOUTH);
 
@@ -469,14 +505,36 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
     }
   }//GEN-LAST:event_cdc32ButtonActionPerformed
 
-    private void uuidButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuidButtonActionPerformed
-        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-            textPane.select(0, textPane.getText().length());
-        }
-        textPane.replaceSelection(java.util.UUID.randomUUID().toString());
-        textPane.selectAll();
-        textPane.requestFocusInWindow();
-    }//GEN-LAST:event_uuidButtonActionPerformed
+  private void uuidButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuidButtonActionPerformed
+    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+      textPane.select(0, textPane.getText().length());
+    }
+    textPane.replaceSelection(java.util.UUID.randomUUID().toString());
+    textPane.selectAll();
+    textPane.requestFocusInWindow();
+  }//GEN-LAST:event_uuidButtonActionPerformed
+
+  private void encodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encodeTimestampHandler
+    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+      textPane.select(0, textPane.getText().length());
+    }
+    try {
+      textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(textPane.getText()).getTime() + "");
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    textPane.selectAll();
+    textPane.requestFocusInWindow();
+  }//GEN-LAST:event_encodeTimestampHandler
+
+  private void decodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodeTimestampHandler
+    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+      textPane.select(0, textPane.getText().length());
+    }
+    textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").format(Long.valueOf(textPane.getText())));
+    textPane.selectAll();
+    textPane.requestFocusInWindow();
+  }//GEN-LAST:event_decodeTimestampHandler
 
   /**
    * Notifies this object that it is no longer the owner of the contents of the clipboard.
@@ -582,6 +640,8 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
     private javax.swing.JButton sha384Button;
     private javax.swing.JButton sha512Button;
     private javax.swing.JTextPane textPane;
+    private javax.swing.JButton timestampDecode;
+    private javax.swing.JButton timestampEncode;
     private javax.swing.JButton urlDecodeButton;
     private javax.swing.JButton urlEncodeButton;
     private javax.swing.JButton uuidButton;

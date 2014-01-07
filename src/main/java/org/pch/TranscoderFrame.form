@@ -68,6 +68,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="urlEncodeButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="URL encode"/>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
           </Properties>
@@ -77,6 +80,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="urlDecodeButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="URL decode"/>
           </Properties>
           <Events>
@@ -85,6 +91,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="base64EncodeButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Base64 encode"/>
           </Properties>
           <Events>
@@ -93,6 +102,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="base64DecodeButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Base64 decode"/>
           </Properties>
           <Events>
@@ -101,6 +113,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="md5hashButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="MD5"/>
           </Properties>
           <Events>
@@ -109,6 +124,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="sha1hashButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="SHA-1"/>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
           </Properties>
@@ -118,6 +136,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="sha256Button">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="SHA-256"/>
           </Properties>
           <Events>
@@ -126,6 +147,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="sha384Button">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="SHA-384"/>
           </Properties>
           <Events>
@@ -134,6 +158,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="sha512Button">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="SHA-512"/>
           </Properties>
           <Events>
@@ -142,6 +169,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="cdc32Button">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="CRC32"/>
           </Properties>
           <Events>
@@ -150,6 +180,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="Adrel32Button">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Adler32"/>
           </Properties>
           <Events>
@@ -158,10 +191,37 @@
         </Component>
         <Component class="javax.swing.JButton" name="uuidButton">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="UUID"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="uuidButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="timestampEncode">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="ENCODE yyyy-MM-dd HH:mm:ss.SSS Z"/>
+            <Property name="toolTipText" type="java.lang.String" value="ENCODE yyyy-MM-dd HH:mm:ss.SSS Z"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="encodeTimestampHandler"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="timestampDecode">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="10" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="DECODE yyyy-MM-dd HH:mm:ss.SSS Z"/>
+            <Property name="toolTipText" type="java.lang.String" value="DECODE yyyy-MM-dd HH:mm:ss.SSS Z"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="decodeTimestampHandler"/>
           </Events>
         </Component>
       </SubComponents>
