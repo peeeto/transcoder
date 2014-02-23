@@ -7,7 +7,7 @@
     <groupId>org.pch</groupId>
     <artifactId>transcoder</artifactId>
     <version>1.1-SNAPSHOT</version>
-    <description>transcoder</description>
+    <description>transcoder of text</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
