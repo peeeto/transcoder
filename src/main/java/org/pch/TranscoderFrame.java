@@ -22,16 +22,18 @@ import javax.swing.text.JTextComponent;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.*;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -41,12 +43,6 @@ import java.util.zip.Adler32;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
 import java.util.zip.Checksum;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwner {
 
@@ -114,56 +110,60 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
   }
 
   private void initTrayComponents() {
-    final SystemTray tray = SystemTray.getSystemTray();
-    final Image image = createImage("images/bulb.gif", "transcoder");
-    ActionListener exitListener = new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        System.out.println("Exiting....");
-        System.exit(0);
-      }
-    };
-    PopupMenu popup = new PopupMenu();
-    MenuItem defaultItem = new MenuItem("Exit");
-    defaultItem.addActionListener(exitListener);
-    popup.add(defaultItem);
-    defaultItem = new MenuItem("Open");
-    final ActionListener setVisible = new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        setVisible(!isVisible());
-        setExtendedState(JFrame.NORMAL);
-      }
-    };
-    defaultItem.addActionListener(setVisible);
-    popup.add(defaultItem);
-    final TrayIcon trayIcon = new TrayIcon(image, "transcoder", popup);
-    trayIcon.setImageAutoSize(true);
     try {
-      tray.add(trayIcon);
-    } catch (AWTException e) {
+      final SystemTray tray = SystemTray.getSystemTray();
+      final Image image = createImage("images/bulb.gif", "transcoder");
+      ActionListener exitListener = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          System.out.println("Exiting....");
+          System.exit(0);
+        }
+      };
+      PopupMenu popup = new PopupMenu();
+      MenuItem defaultItem = new MenuItem("Exit");
+      defaultItem.addActionListener(exitListener);
+      popup.add(defaultItem);
+      defaultItem = new MenuItem("Open");
+      final ActionListener setVisible = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          setVisible(!isVisible());
+//          setExtendedState(JFrame.NORMAL);
+        }
+      };
+      defaultItem.addActionListener(setVisible);
+      popup.add(defaultItem);
+      final TrayIcon trayIcon = new TrayIcon(image, "transcoder", popup);
+      trayIcon.setImageAutoSize(true);
+      try {
+        tray.add(trayIcon);
+      } catch (AWTException e) {
+        e.printStackTrace();
+      }
+      trayIcon.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+          setVisible(!isVisible());
+//          setExtendedState(JFrame.NORMAL);
+        }
+      });
+      setIconImage(Toolkit.getDefaultToolkit().getImage("Duke256.png"));
+    } catch (java.lang.UnsupportedOperationException e) {
       e.printStackTrace();
     }
-    trayIcon.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        setVisible(!isVisible());
-        setExtendedState(JFrame.NORMAL);
-      }
-    });
 
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
         setVisible(!isVisible());
-        setExtendedState(NORMAL);
+//        setExtendedState(NORMAL);
       }
     });
     addWindowStateListener(new WindowStateListener() {
 
       public void windowStateChanged(WindowEvent e) {
-        setVisible(!isVisible());
-        setExtendedState(NORMAL);
+//        setVisible(!isVisible());
+//        setExtendedState(NORMAL);
       }
     });
-    setIconImage(Toolkit.getDefaultToolkit().getImage("Duke256.png"));
     setVisible(true);
     setSize(new java.awt.Dimension(740, 256));
     setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -592,7 +592,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
       textPane.select(0, textPane.getText().length());
     }
     JsonParser parser = new JsonParser();
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().enableComplexMapKeySerialization().setExclusionStrategies().create();
 
     JsonElement el = parser.parse(textPane.getText());
     String jsonString = gson.toJson(el); // done
