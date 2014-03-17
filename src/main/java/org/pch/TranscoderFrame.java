@@ -46,148 +46,149 @@ import java.util.zip.Checksum;
 
 public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwner {
 
-  /**
-   *
-   */
-  private static final long serialVersionUID = 5712516501903313109L;
-  protected UndoManager undo = new UndoManager();
-  protected UndoAction undoAction;
-  protected RedoAction redoAction;
-  private Hashtable<Object, Action> actions;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5712516501903313109L;
+    protected UndoManager undo = new UndoManager();
+    protected UndoAction undoAction;
+    protected RedoAction redoAction;
+    private Hashtable<Object, Action> actions;
 
-  /**
-   * Creates new form TranscoderFrame
-   */
-  public TranscoderFrame() {
-    initComponents();
-    createActionTable(textPane);
+    /**
+     * Creates new form TranscoderFrame
+     */
+    public TranscoderFrame() {
+        initComponents();
+        createActionTable(textPane);
 
-    undo.setLimit(50);
-    undoAction = new UndoAction();
-    editMenu.add(undoAction);
-    redoAction = new RedoAction();
-    editMenu.add(redoAction);
+        undo.setLimit(50);
+        undoAction = new UndoAction();
+        editMenu.add(undoAction);
+        redoAction = new RedoAction();
+        editMenu.add(redoAction);
 
-    editMenu.addSeparator();
+        editMenu.addSeparator();
 
-    //These actions come from the default editor kit.
-    //Get the ones we want and stick them in the menu.
-    editMenu.add(getActionByName(DefaultEditorKit.cutAction));
-    editMenu.add(getActionByName(DefaultEditorKit.copyAction));
-    editMenu.add(getActionByName(DefaultEditorKit.pasteAction));
+        //These actions come from the default editor kit.
+        //Get the ones we want and stick them in the menu.
+        editMenu.add(getActionByName(DefaultEditorKit.cutAction));
+        editMenu.add(getActionByName(DefaultEditorKit.copyAction));
+        editMenu.add(getActionByName(DefaultEditorKit.pasteAction));
 
-    editMenu.addSeparator();
+        editMenu.addSeparator();
 
-    editMenu.add(getActionByName(DefaultEditorKit.selectAllAction));
+        editMenu.add(getActionByName(DefaultEditorKit.selectAllAction));
 
-    final Document d = textPane.getDocument();
-    d.addUndoableEditListener(new MyUndoableEditListener());
-    d.addDocumentListener(new DocumentListener() {
-      public void changedUpdate(DocumentEvent evt) {
-        update();
-      }
+        final Document d = textPane.getDocument();
+        d.addUndoableEditListener(new MyUndoableEditListener());
+        d.addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent evt) {
+                update();
+            }
 
-      public void insertUpdate(DocumentEvent evt) {
-        update();
-      }
+            public void insertUpdate(DocumentEvent evt) {
+                update();
+            }
 
-      public void removeUpdate(DocumentEvent evt) {
-        update();
-      }
+            public void removeUpdate(DocumentEvent evt) {
+                update();
+            }
 
-      private void update() {
-        countLabel.setText("Characters: " + d.getLength());
-      }
-    });
+            private void update() {
+                countLabel.setText("Characters: " + d.getLength());
+            }
+        });
 
-    initTrayComponents();
-  }
-
-  //Obtain the images URL
-  protected static Image createImage(String path, String description) {
-    URL imageURL = TranscoderFrame.class.getClassLoader().getResource(path);
-    return (new ImageIcon(imageURL, description)).getImage();
-  }
-
-  private void initTrayComponents() {
-    try {
-      final SystemTray tray = SystemTray.getSystemTray();
-      final Image image = createImage("images/bulb.gif", "transcoder");
-      ActionListener exitListener = new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          System.out.println("Exiting....");
-          System.exit(0);
-        }
-      };
-      PopupMenu popup = new PopupMenu();
-      MenuItem defaultItem = new MenuItem("Exit");
-      defaultItem.addActionListener(exitListener);
-      popup.add(defaultItem);
-      defaultItem = new MenuItem("Open");
-      final ActionListener setVisible = new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          setVisible(!isVisible());
-//          setExtendedState(JFrame.NORMAL);
-        }
-      };
-      defaultItem.addActionListener(setVisible);
-      popup.add(defaultItem);
-      final TrayIcon trayIcon = new TrayIcon(image, "transcoder", popup);
-      trayIcon.setImageAutoSize(true);
-      try {
-        tray.add(trayIcon);
-      } catch (AWTException e) {
-        e.printStackTrace();
-      }
-      trayIcon.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-          setVisible(!isVisible());
-//          setExtendedState(JFrame.NORMAL);
-        }
-      });
-      setIconImage(Toolkit.getDefaultToolkit().getImage("Duke256.png"));
-    } catch (java.lang.UnsupportedOperationException e) {
-      e.printStackTrace();
+        initTrayComponents();
     }
 
-    addWindowListener(new java.awt.event.WindowAdapter() {
-      public void windowClosing(java.awt.event.WindowEvent evt) {
-        setVisible(!isVisible());
-//        setExtendedState(NORMAL);
-      }
-    });
-    addWindowStateListener(new WindowStateListener() {
+    //Obtain the images URL
+    protected static Image createImage(String path, String description) {
+        URL imageURL = TranscoderFrame.class.getClassLoader().getResource(path);
+        return (new ImageIcon(imageURL, description)).getImage();
+    }
 
-      public void windowStateChanged(WindowEvent e) {
+    private void initTrayComponents() {
+        try {
+            final SystemTray tray = SystemTray.getSystemTray();
+            final Image image = createImage("images/bulb.gif", "transcoder");
+            ActionListener exitListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Exiting....");
+                    System.exit(0);
+                }
+            };
+            PopupMenu popup = new PopupMenu();
+            MenuItem defaultItem = new MenuItem("Exit");
+            defaultItem.addActionListener(exitListener);
+            popup.add(defaultItem);
+            defaultItem = new MenuItem("Open");
+            final ActionListener setVisible = new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setVisible(!isVisible());
+//          setExtendedState(JFrame.NORMAL);
+                }
+            };
+            defaultItem.addActionListener(setVisible);
+            popup.add(defaultItem);
+            final TrayIcon trayIcon = new TrayIcon(image, "transcoder", popup);
+            trayIcon.setImageAutoSize(true);
+            try {
+                tray.add(trayIcon);
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+            trayIcon.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    setVisible(!isVisible());
+//          setExtendedState(JFrame.NORMAL);
+                }
+            });
+            setIconImage(Toolkit.getDefaultToolkit().getImage("Duke256.png"));
+        } catch (java.lang.UnsupportedOperationException e) {
+            e.printStackTrace();
+        }
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                setVisible(!isVisible());
+//        setExtendedState(NORMAL);
+            }
+        });
+        addWindowStateListener(new WindowStateListener() {
+
+            public void windowStateChanged(WindowEvent e) {
 //        setVisible(!isVisible());
 //        setExtendedState(NORMAL);
-      }
-    });
-    setVisible(true);
-    setSize(new java.awt.Dimension(740, 256));
-    setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-  }
-
-  //The following two methods allow us to find an
-  //action provided by the editor kit by its name.
-  private void createActionTable(JTextComponent textComponent) {
-    actions = new Hashtable<Object, Action>();
-    Action[] actionsArray = textComponent.getActions();
-    for (int i = 0; i < actionsArray.length; i++) {
-      Action a = actionsArray[i];
-      actions.put(a.getValue(Action.NAME), a);
+            }
+        });
+        setVisible(true);
+        setSize(new java.awt.Dimension(740, 256));
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
-  }
 
-  private Action getActionByName(String name) {
-    return (Action) (actions.get(name));
-  }
+    //The following two methods allow us to find an
+    //action provided by the editor kit by its name.
+    private void createActionTable(JTextComponent textComponent) {
+        actions = new Hashtable<Object, Action>();
+        Action[] actionsArray = textComponent.getActions();
+        for (int i = 0; i < actionsArray.length; i++) {
+            Action a = actionsArray[i];
+            actions.put(a.getValue(Action.NAME), a);
+        }
+    }
 
-  /**
-   * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always
-   * regenerated by the Form Editor.
-   */
+    private Action getActionByName(String name) {
+        return (Action) (actions.get(name));
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -377,7 +378,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         getContentPane().add(countLabel, java.awt.BorderLayout.NORTH);
 
         jPanel2.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         textPane.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         jScrollPane1.setViewportView(textPane);
@@ -391,242 +392,245 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(657, 401));
+        setSize(new java.awt.Dimension(740, 506));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
   private void sha1hashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha1hashButtonActionPerformed
-    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-      textPane.select(0, textPane.getText().length());
-    }
-    textPane.replaceSelection(prepareText(DigestUtils.sha1Hex(getSelectedText())));
-    textPane.selectAll();
-    textPane.requestFocusInWindow();
+      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+          textPane.select(0, textPane.getText().length());
+      }
+      textPane.replaceSelection(prepareText(DigestUtils.sha1Hex(getSelectedText())));
+      textPane.selectAll();
+      textPane.requestFocusInWindow();
   }//GEN-LAST:event_sha1hashButtonActionPerformed
 
-  private String getSelectedText() {
-    return Objects.firstNonNull(textPane.getSelectedText(), "");
-  }
+    private String getSelectedText() {
+        return Objects.firstNonNull(textPane.getSelectedText(), "");
+    }
 
   private void md5hashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_md5hashButtonActionPerformed
-    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-      textPane.select(0, textPane.getText().length());
-    }
-    textPane.replaceSelection(prepareText(DigestUtils.md5Hex(getSelectedText())));
-    textPane.selectAll();
-    textPane.requestFocusInWindow();
+      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+          textPane.select(0, textPane.getText().length());
+      }
+      textPane.replaceSelection(prepareText(DigestUtils.md5Hex(getSelectedText())));
+      textPane.selectAll();
+      textPane.requestFocusInWindow();
   }//GEN-LAST:event_md5hashButtonActionPerformed
 
   private void base64DecodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base64DecodeButtonActionPerformed
-    try {
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-        textPane.select(0, textPane.getText().length());
+      try {
+          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+              textPane.select(0, textPane.getText().length());
+          }
+          textPane.replaceSelection(new String(Base64.decodeBase64(getSelectedText())));
+          textPane.selectAll();
+          textPane.requestFocusInWindow();
+      } catch (Throwable t) {
+          Runtime.getRuntime().gc();
+          t.printStackTrace();
+          textPane.setText("Exception! " + t.toString());
       }
-      textPane.replaceSelection(new String(Base64.decodeBase64(getSelectedText())));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
-    } catch (Throwable t) {
-      Runtime.getRuntime().gc();
-      t.printStackTrace();
-      textPane.setText("Exception! " + t.toString());
-    }
   }//GEN-LAST:event_base64DecodeButtonActionPerformed
 
   private void base64EncodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base64EncodeButtonActionPerformed
-    try {
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-        textPane.select(0, textPane.getText().length());
+      try {
+          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+              textPane.select(0, textPane.getText().length());
+          }
+          textPane.replaceSelection(Base64.encodeBase64String(getSelectedText().getBytes()));
+          textPane.selectAll();
+          textPane.requestFocusInWindow();
+      } catch (Throwable t) {
+          Runtime.getRuntime().gc();
+          t.printStackTrace();
+          textPane.setText("Exception! " + t.toString());
       }
-      textPane.replaceSelection(Base64.encodeBase64String(getSelectedText().getBytes()));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
-    } catch (Throwable t) {
-      Runtime.getRuntime().gc();
-      t.printStackTrace();
-      textPane.setText("Exception! " + t.toString());
-    }
   }//GEN-LAST:event_base64EncodeButtonActionPerformed
 
   private void urlDecodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlDecodeButtonActionPerformed
-    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-      textPane.select(0, textPane.getText().length());
-    }
-    textPane.replaceSelection(urlDecode(getSelectedText()));
-    textPane.selectAll();
-    textPane.requestFocusInWindow();
+      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+          textPane.select(0, textPane.getText().length());
+      }
+      textPane.replaceSelection(urlDecode(getSelectedText()));
+      textPane.selectAll();
+      textPane.requestFocusInWindow();
   }//GEN-LAST:event_urlDecodeButtonActionPerformed
 
-  private String prepareText(String text) {
-    return StringUtils.upperCase(text);
-  }
+    private String prepareText(String text) {
+        return StringUtils.upperCase(text);
+    }
 
   private void urlEncodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlEncodeButtonActionPerformed
-    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-      textPane.select(0, textPane.getText().length());
-    }
-    textPane.replaceSelection(urlEncode(getSelectedText()));
-    textPane.selectAll();
-    textPane.requestFocusInWindow();
+      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+          textPane.select(0, textPane.getText().length());
+      }
+      textPane.replaceSelection(urlEncode(getSelectedText()));
+      textPane.selectAll();
+      textPane.requestFocusInWindow();
   }//GEN-LAST:event_urlEncodeButtonActionPerformed
 
 
   private void Adrel32ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Adrel32ButtonActionPerformed
-    try {
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-        textPane.select(0, textPane.getText().length());
-      }
-      textPane.replaceSelection(prepareText(checksumAdler32Hex(new ByteArrayInputStream(getSelectedText().getBytes("UTF-8")))));
+      try {
+          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+              textPane.select(0, textPane.getText().length());
+          }
+          textPane.replaceSelection(prepareText(checksumAdler32Hex(new ByteArrayInputStream(getSelectedText().getBytes("UTF-8")))));
 
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
-    } catch (Throwable t) {
-      Runtime.getRuntime().gc();
-      t.printStackTrace();
-      textPane.setText("Exception! " + t.toString());
-    }
+          textPane.selectAll();
+          textPane.requestFocusInWindow();
+      } catch (Throwable t) {
+          Runtime.getRuntime().gc();
+          t.printStackTrace();
+          textPane.setText("Exception! " + t.toString());
+      }
   }//GEN-LAST:event_Adrel32ButtonActionPerformed
 
   private void sha256ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha256ButtonActionPerformed
-    try {
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-        textPane.select(0, textPane.getText().length());
+      try {
+          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+              textPane.select(0, textPane.getText().length());
+          }
+          textPane.replaceSelection(prepareText(DigestUtils.sha256Hex(getSelectedText().getBytes())));
+          textPane.selectAll();
+          textPane.requestFocusInWindow();
+      } catch (Throwable t) {
+          Runtime.getRuntime().gc();
+          t.printStackTrace();
+          textPane.setText("Exception! " + t.toString());
       }
-      textPane.replaceSelection(prepareText(DigestUtils.sha256Hex(getSelectedText().getBytes())));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
-    } catch (Throwable t) {
-      Runtime.getRuntime().gc();
-      t.printStackTrace();
-      textPane.setText("Exception! " + t.toString());
-    }
   }//GEN-LAST:event_sha256ButtonActionPerformed
 
   private void sha384ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha384ButtonActionPerformed
-    try {
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-        textPane.select(0, textPane.getText().length());
+      try {
+          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+              textPane.select(0, textPane.getText().length());
+          }
+          textPane.replaceSelection(prepareText(DigestUtils.sha384Hex(getSelectedText().getBytes())));
+          textPane.selectAll();
+          textPane.requestFocusInWindow();
+      } catch (Throwable t) {
+          Runtime.getRuntime().gc();
+          t.printStackTrace();
+          textPane.setText("Exception! " + t.toString());
       }
-      textPane.replaceSelection(prepareText(DigestUtils.sha384Hex(getSelectedText().getBytes())));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
-    } catch (Throwable t) {
-      Runtime.getRuntime().gc();
-      t.printStackTrace();
-      textPane.setText("Exception! " + t.toString());
-    }
   }//GEN-LAST:event_sha384ButtonActionPerformed
 
   private void sha512ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha512ButtonActionPerformed
-    try {
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-        textPane.select(0, textPane.getText().length());
+      try {
+          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+              textPane.select(0, textPane.getText().length());
+          }
+          textPane.replaceSelection(prepareText(DigestUtils.sha512Hex(getSelectedText().getBytes())));
+          textPane.selectAll();
+          textPane.requestFocusInWindow();
+      } catch (Throwable t) {
+          Runtime.getRuntime().gc();
+          t.printStackTrace();
+          textPane.setText("Exception! " + t.toString());
       }
-      textPane.replaceSelection(prepareText(DigestUtils.sha512Hex(getSelectedText().getBytes())));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
-    } catch (Throwable t) {
-      Runtime.getRuntime().gc();
-      t.printStackTrace();
-      textPane.setText("Exception! " + t.toString());
-    }
   }//GEN-LAST:event_sha512ButtonActionPerformed
 
   private void cdc32ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cdc32ButtonActionPerformed
-    try {
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-        textPane.select(0, textPane.getText().length());
+      try {
+          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+              textPane.select(0, textPane.getText().length());
+          }
+          textPane.replaceSelection(prepareText(checksumCRC32Hex(new ByteArrayInputStream(getSelectedText().getBytes("UTF-8")))));
+          textPane.selectAll();
+          textPane.requestFocusInWindow();
+      } catch (Throwable t) {
+          Runtime.getRuntime().gc();
+          t.printStackTrace();
+          textPane.setText("Exception! " + t.toString());
       }
-      textPane.replaceSelection(prepareText(checksumCRC32Hex(new ByteArrayInputStream(getSelectedText().getBytes("UTF-8")))));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
-    } catch (Throwable t) {
-      Runtime.getRuntime().gc();
-      t.printStackTrace();
-      textPane.setText("Exception! " + t.toString());
-    }
   }//GEN-LAST:event_cdc32ButtonActionPerformed
 
   private void uuidButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuidButtonActionPerformed
-    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-      textPane.select(0, textPane.getText().length());
-    }
-    textPane.replaceSelection(java.util.UUID.randomUUID().toString());
-    textPane.selectAll();
-    textPane.requestFocusInWindow();
+      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+          textPane.select(0, textPane.getText().length());
+      }
+      textPane.replaceSelection(java.util.UUID.randomUUID().toString());
+      textPane.selectAll();
+      textPane.requestFocusInWindow();
   }//GEN-LAST:event_uuidButtonActionPerformed
 
   private void encodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encodeTimestampHandler
-    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-      textPane.select(0, textPane.getText().length());
-    }
-    try {
-      textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(textPane.getText()).getTime() + "");
-    } catch (ParseException e) {
-      e.printStackTrace();
-    }
-    textPane.selectAll();
-    textPane.requestFocusInWindow();
+      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+          textPane.select(0, textPane.getText().length());
+      }
+      try {
+          textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(textPane.getText()).getTime() + "");
+      } catch (ParseException e) {
+          e.printStackTrace();
+      }
+      textPane.selectAll();
+      textPane.requestFocusInWindow();
   }//GEN-LAST:event_encodeTimestampHandler
 
   private void decodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodeTimestampHandler
-    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-      textPane.select(0, textPane.getText().length());
-    }
-    textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").format(Long.valueOf(textPane.getText())));
-    textPane.selectAll();
-    textPane.requestFocusInWindow();
+      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+          textPane.select(0, textPane.getText().length());
+      }
+      textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").format(Long.valueOf(textPane.getText())));
+      textPane.selectAll();
+      textPane.requestFocusInWindow();
   }//GEN-LAST:event_decodeTimestampHandler
 
   private void xmlFormatAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlFormatAction
-    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-      textPane.select(0, textPane.getText().length());
-    }
-    try {
-      Transformer transformer = TransformerFactory.newInstance().newTransformer();
-      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-//initialize StreamResult with File object to save to file
-      StreamResult result = new StreamResult(new StringWriter());
-      Source source = new StreamSource(new StringReader(textPane.getText()));
-      transformer.transform(source, result);
-      String xmlString = result.getWriter().toString();
-      textPane.replaceSelection(xmlString);
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
-    } catch (Exception e) {
-      throw new IllegalStateException("error reading xml");
-    }
+      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+          textPane.select(0, textPane.getText().length());
+      }
+      try {
+          Source xmlInput = new StreamSource(new StringReader(textPane.getText()));
+          StringWriter stringWriter = new StringWriter();
+          StreamResult xmlOutput = new StreamResult(stringWriter);
+          TransformerFactory transformerFactory = TransformerFactory.newInstance();
+          transformerFactory.setAttribute("indent-number", 4);
+          Transformer transformer = transformerFactory.newTransformer();
+          transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+          transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+          transformer.transform(xmlInput, xmlOutput);
+          textPane.replaceSelection(xmlOutput.getWriter().toString());
+          textPane.selectAll();
+          textPane.requestFocusInWindow();
+      } catch (Exception e) {
+          throw new IllegalStateException("error reading xml");
+      }
   }//GEN-LAST:event_xmlFormatAction
 
   private void jsonFormatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsonFormatActionPerformed
-    if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-      textPane.select(0, textPane.getText().length());
-    }
-    JsonParser parser = new JsonParser();
-    Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().enableComplexMapKeySerialization().setExclusionStrategies().create();
+      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+          textPane.select(0, textPane.getText().length());
+      }
+      JsonParser parser = new JsonParser();
+      Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().enableComplexMapKeySerialization().setExclusionStrategies().create();
 
-    JsonElement el = parser.parse(textPane.getText());
-    String jsonString = gson.toJson(el); // done
+      JsonElement el = parser.parse(textPane.getText());
+      String jsonString = gson.toJson(el); // done
 
-    textPane.replaceSelection(jsonString);
-    textPane.selectAll();
-    textPane.requestFocusInWindow();
+      textPane.replaceSelection(jsonString);
+      textPane.selectAll();
+      textPane.requestFocusInWindow();
   }//GEN-LAST:event_jsonFormatActionPerformed
 
-  /**
-   * Notifies this object that it is no longer the owner of the contents of the clipboard.
-   *
-   * @param clipboard the clipboard that is no longer owned
-   * @param contents  the contents which this owner had placed on the clipboard
-   */
-  public void lostOwnership(Clipboard clipboard, Transferable contents) {
-  }
+    /**
+     * Notifies this object that it is no longer the owner of the contents of
+     * the clipboard.
+     *
+     * @param clipboard the clipboard that is no longer owned
+     * @param contents the contents which this owner had placed on the clipboard
+     */
+    public void lostOwnership(Clipboard clipboard, Transferable contents) {
+    }
 
-  /**
-   * Description of the Method
-   *
-   * @param str Description of the Parameter
-   * @return Description of the Return Value
-   */
+    /**
+     * Description of the Method
+     *
+     * @param str Description of the Parameter
+     * @return Description of the Return Value
+     */
     /* 
      public static String unicodeDecode( String str ) {
      // FIXME: TOTALLY EXPERIMENTAL
@@ -643,12 +647,12 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
      }
      }
      */
-  /**
-   * Description of the Method
-   *
-   * @param str Description of the Parameter
-   * @return Description of the Return Value
-   */
+    /**
+     * Description of the Method
+     *
+     * @param str Description of the Parameter
+     * @return Description of the Return Value
+     */
     /*
      public static String unicodeEncode( String str ) {
      // FIXME: TOTALLY EXPERIMENTAL
@@ -663,36 +667,35 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
      }
      }
      */
-
-  /**
-   * Description of the Method
-   *
-   * @param str Description of the Parameter
-   *
-   * @return Description of the Return Value
-   */
-  public static String urlDecode(String str) {
-    try {
-      return (URLDecoder.decode(str, "UTF-8"));
-    } catch (Exception e) {
-      return ("Decoding error");
+    /**
+     * Description of the Method
+     *
+     * @param str Description of the Parameter
+     *
+     * @return Description of the Return Value
+     */
+    public static String urlDecode(String str) {
+        try {
+            return (URLDecoder.decode(str, "UTF-8"));
+        } catch (Exception e) {
+            return ("Decoding error");
+        }
     }
-  }
 
-  /**
-   * Description of the Method
-   *
-   * @param str Description of the Parameter
-   *
-   * @return Description of the Return Value
-   */
-  public static String urlEncode(String str) {
-    try {
-      return (URLEncoder.encode(str, "UTF-8"));
-    } catch (Exception e) {
-      return ("Encoding error");
+    /**
+     * Description of the Method
+     *
+     * @param str Description of the Parameter
+     *
+     * @return Description of the Return Value
+     */
+    public static String urlEncode(String str) {
+        try {
+            return (URLEncoder.encode(str, "UTF-8"));
+        } catch (Exception e) {
+            return ("Encoding error");
+        }
     }
-  }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -721,109 +724,109 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
     private javax.swing.JButton xmlFormat;
     // End of variables declaration//GEN-END:variables
 
-  class UndoAction extends AbstractAction {
+    class UndoAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -137321944593284589L;
+        /**
+         *
+         */
+        private static final long serialVersionUID = -137321944593284589L;
 
-    public UndoAction() {
-      super("Undo");
-      setEnabled(false);
+        public UndoAction() {
+            super("Undo");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            try {
+                undo.undo();
+            } catch (CannotUndoException ex) {
+                System.out.println("Unable to undo: " + ex);
+                ex.printStackTrace();
+            }
+            updateUndoState();
+            redoAction.updateRedoState();
+        }
+
+        protected void updateUndoState() {
+            if (undo.canUndo()) {
+                setEnabled(true);
+                putValue(Action.NAME, undo.getUndoPresentationName());
+            } else {
+                setEnabled(false);
+                putValue(Action.NAME, "Undo");
+            }
+        }
     }
 
-    public void actionPerformed(ActionEvent e) {
-      try {
-        undo.undo();
-      } catch (CannotUndoException ex) {
-        System.out.println("Unable to undo: " + ex);
-        ex.printStackTrace();
-      }
-      updateUndoState();
-      redoAction.updateRedoState();
+    class RedoAction extends AbstractAction {
+
+        /**
+         *
+         */
+        private static final long serialVersionUID = -2044519935735823050L;
+
+        public RedoAction() {
+            super("Redo");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            try {
+                undo.redo();
+            } catch (CannotRedoException ex) {
+                System.out.println("Unable to redo: " + ex);
+                ex.printStackTrace();
+            }
+            updateRedoState();
+            undoAction.updateUndoState();
+        }
+
+        protected void updateRedoState() {
+            if (undo.canRedo()) {
+                setEnabled(true);
+                putValue(Action.NAME, undo.getRedoPresentationName());
+            } else {
+                setEnabled(false);
+                putValue(Action.NAME, "Redo");
+            }
+        }
     }
 
-    protected void updateUndoState() {
-      if (undo.canUndo()) {
-        setEnabled(true);
-        putValue(Action.NAME, undo.getUndoPresentationName());
-      } else {
-        setEnabled(false);
-        putValue(Action.NAME, "Undo");
-      }
-    }
-  }
+    //This one listens for edits that can be undone.
+    protected class MyUndoableEditListener
+            implements UndoableEditListener {
 
-  class RedoAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2044519935735823050L;
-
-    public RedoAction() {
-      super("Redo");
-      setEnabled(false);
+        public void undoableEditHappened(UndoableEditEvent e) {
+            //Remember the edit and update the menus.
+            undo.addEdit(e.getEdit());
+            undoAction.updateUndoState();
+            redoAction.updateRedoState();
+        }
     }
 
-    public void actionPerformed(ActionEvent e) {
-      try {
-        undo.redo();
-      } catch (CannotRedoException ex) {
-        System.out.println("Unable to redo: " + ex);
-        ex.printStackTrace();
-      }
-      updateRedoState();
-      undoAction.updateUndoState();
+    public static long checksumCRC32(InputStream is) throws IOException {
+        CRC32 crc = new CRC32();
+        checksum(is, crc);
+        return crc.getValue();
     }
 
-    protected void updateRedoState() {
-      if (undo.canRedo()) {
-        setEnabled(true);
-        putValue(Action.NAME, undo.getRedoPresentationName());
-      } else {
-        setEnabled(false);
-        putValue(Action.NAME, "Redo");
-      }
+    public static String checksumCRC32Hex(InputStream is) throws IOException {
+        CRC32 crc = new CRC32();
+        checksum(is, crc);
+        return Long.toHexString(crc.getValue()).toUpperCase();
     }
-  }
 
-  //This one listens for edits that can be undone.
-  protected class MyUndoableEditListener
-      implements UndoableEditListener {
-
-    public void undoableEditHappened(UndoableEditEvent e) {
-      //Remember the edit and update the menus.
-      undo.addEdit(e.getEdit());
-      undoAction.updateUndoState();
-      redoAction.updateRedoState();
+    public static String checksumAdler32Hex(InputStream is) throws IOException {
+        Adler32 crc = new Adler32();
+        checksum(is, crc);
+        return Long.toHexString(crc.getValue()).toUpperCase();
     }
-  }
 
-  public static long checksumCRC32(InputStream is) throws IOException {
-    CRC32 crc = new CRC32();
-    checksum(is, crc);
-    return crc.getValue();
-  }
-
-  public static String checksumCRC32Hex(InputStream is) throws IOException {
-    CRC32 crc = new CRC32();
-    checksum(is, crc);
-    return Long.toHexString(crc.getValue()).toUpperCase();
-  }
-
-  public static String checksumAdler32Hex(InputStream is) throws IOException {
-    Adler32 crc = new Adler32();
-    checksum(is, crc);
-    return Long.toHexString(crc.getValue()).toUpperCase();
-  }
-
-  private static Checksum checksum(InputStream is, Checksum checksum) throws IOException {
-    InputStream in;
-    in = new CheckedInputStream(is, checksum);
-    IOUtils.copy(in, new NullOutputStream());
-    return checksum;
-  }
+    private static Checksum checksum(InputStream is, Checksum checksum) throws IOException {
+        InputStream in;
+        in = new CheckedInputStream(is, checksum);
+        IOUtils.copy(in, new NullOutputStream());
+        return checksum;
+    }
 
 }
