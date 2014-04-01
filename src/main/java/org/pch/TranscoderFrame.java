@@ -43,6 +43,8 @@ import java.util.zip.Adler32;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
 import java.util.zip.Checksum;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwner {
 
@@ -192,6 +194,12 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        countLabel = new javax.swing.JLabel();
+        jTabbedPane = new javax.swing.JTabbedPane();
+        transcoderPanel = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textPane = new javax.swing.JTextPane();
         jPanel1 = new javax.swing.JPanel();
         urlEncodeButton = new javax.swing.JButton();
         urlDecodeButton = new javax.swing.JButton();
@@ -209,14 +217,27 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         timestampDecode = new javax.swing.JButton();
         jsonFormat = new javax.swing.JButton();
         xmlFormat = new javax.swing.JButton();
-        countLabel = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        textPane = new javax.swing.JTextPane();
+        groovyPanel = new javax.swing.JPanel();
+        beanshellPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         editMenu = new javax.swing.JMenu();
 
         setTitle("Transcoder");
+
+        countLabel.setText("Characters: 0");
+        getContentPane().add(countLabel, java.awt.BorderLayout.NORTH);
+
+        transcoderPanel.setLayout(new java.awt.BorderLayout());
+
+        jPanel2.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
+
+        textPane.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        jScrollPane1.setViewportView(textPane);
+
+        jPanel2.add(jScrollPane1);
+
+        transcoderPanel.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanel1.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(230, 368));
@@ -372,20 +393,13 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         });
         jPanel1.add(xmlFormat);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.WEST);
+        transcoderPanel.add(jPanel1, java.awt.BorderLayout.WEST);
 
-        countLabel.setText("Characters: 0");
-        getContentPane().add(countLabel, java.awt.BorderLayout.NORTH);
+        jTabbedPane.addTab("transcoder", transcoderPanel);
+        jTabbedPane.addTab("groovy", groovyPanel);
+        jTabbedPane.addTab("beanshell", beanshellPanel);
 
-        jPanel2.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
-        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
-
-        textPane.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        jScrollPane1.setViewportView(textPane);
-
-        jPanel2.add(jScrollPane1);
-
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jTabbedPane, java.awt.BorderLayout.CENTER);
 
         editMenu.setText("Edit");
         jMenuBar1.add(editMenu);
@@ -557,11 +571,15 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
   }//GEN-LAST:event_uuidButtonActionPerformed
 
   private void encodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encodeTimestampHandler
+      String text = textPane.getText();
       if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, textPane.getText().length());
+          textPane.select(0, text.length());
       }
       try {
-          textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(textPane.getText()).getTime() + "");
+          if (text == null || text.trim().isEmpty()) {
+              text = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS Z").print(DateTime.now().toDate().getTime());
+          }
+          textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(text).getTime() + "");
       } catch (ParseException e) {
           e.printStackTrace();
       }
@@ -570,10 +588,14 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
   }//GEN-LAST:event_encodeTimestampHandler
 
   private void decodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodeTimestampHandler
+      String text = textPane.getText();
       if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, textPane.getText().length());
+          textPane.select(0, text.length());
       }
-      textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").format(Long.valueOf(textPane.getText())));
+      if (text == null || text.trim().isEmpty()) {
+          text = String.valueOf(DateTime.now().toDate().getTime());
+      }
+      textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").format(Long.valueOf(text)));
       textPane.selectAll();
       textPane.requestFocusInWindow();
   }//GEN-LAST:event_decodeTimestampHandler
@@ -702,13 +724,16 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
     private javax.swing.JButton Adrel32Button;
     private javax.swing.JButton base64DecodeButton;
     private javax.swing.JButton base64EncodeButton;
+    private javax.swing.JPanel beanshellPanel;
     private javax.swing.JButton cdc32Button;
     private javax.swing.JLabel countLabel;
     private javax.swing.JMenu editMenu;
+    private javax.swing.JPanel groovyPanel;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JButton jsonFormat;
     private javax.swing.JButton md5hashButton;
     private javax.swing.JButton sha1hashButton;
@@ -718,6 +743,7 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
     private javax.swing.JTextPane textPane;
     private javax.swing.JButton timestampDecode;
     private javax.swing.JButton timestampEncode;
+    private javax.swing.JPanel transcoderPanel;
     private javax.swing.JButton urlDecodeButton;
     private javax.swing.JButton urlEncodeButton;
     private javax.swing.JButton uuidButton;
