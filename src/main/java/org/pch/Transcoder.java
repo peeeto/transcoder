@@ -1,5 +1,6 @@
 package org.pch;
 
+import java.awt.Component;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.*;
@@ -7,12 +8,12 @@ import javax.swing.*;
 public class Transcoder {
 
     public static void main(String args[]) {
-        final AtomicReference<JFrame> frameRef = new AtomicReference<JFrame>();
+        final AtomicReference<Component> componentRef = new AtomicReference<Component>();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                JFrame tf = new TranscoderFrame();
-                frameRef.set(tf);
-                tf.setExtendedState(JFrame.NORMAL);
+                JDialog tf = new TranscoderFrame();
+                componentRef.set(tf);
+//                tf.setExtendedState(JFrame.NORMAL);
                 tf.setVisible(true);
             }
         });
@@ -20,7 +21,7 @@ public class Transcoder {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(frameRef.get(),
+                JOptionPane.showMessageDialog(componentRef.get(),
                         e + "",
                         "Unexpected Error",
                         JOptionPane.ERROR_MESSAGE

@@ -46,7 +46,7 @@ import java.util.zip.Checksum;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwner {
+public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwner {
 
     /**
      *
@@ -233,6 +233,11 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         textPane.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        textPane.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textPaneKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(textPane);
 
         jPanel2.add(jScrollPane1);
@@ -636,6 +641,16 @@ public class TranscoderFrame extends javax.swing.JFrame implements ClipboardOwne
       textPane.selectAll();
       textPane.requestFocusInWindow();
   }//GEN-LAST:event_jsonFormatActionPerformed
+
+    private void textPaneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textPaneKeyPressed
+        if (evt.isControlDown()) {
+            if ((Character.toLowerCase(evt.getKeyCode()) == 'z'|| Character.toLowerCase(evt.getKeyCode()) == 'y')) {
+                undoAction.actionPerformed(null);
+            } else if (Character.toLowerCase(evt.getKeyChar()) == 'r') {
+                redoAction.actionPerformed(null);
+            }
+        }
+    }//GEN-LAST:event_textPaneKeyPressed
 
     /**
      * Notifies this object that it is no longer the owner of the contents of
