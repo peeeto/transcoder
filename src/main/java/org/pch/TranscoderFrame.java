@@ -37,12 +37,17 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.Hashtable;
 import java.util.zip.Adler32;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
 import java.util.zip.Checksum;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import org.apache.commons.codec.binary.Hex;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
@@ -217,6 +222,20 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         timestampDecode = new javax.swing.JButton();
         jsonFormat = new javax.swing.JButton();
         xmlFormat = new javax.swing.JButton();
+        jPanelHmacMd5Hex = new javax.swing.JPanel();
+        jButtonHmacMd5Hex = new javax.swing.JButton();
+        jTextFieldHmacMd5Hex = new javax.swing.JTextField();
+        jPanelHmacSha1Hex = new javax.swing.JPanel();
+        jButtonHmacSha1Hex = new javax.swing.JButton();
+        jTextFieldHmacSha1Hex = new javax.swing.JTextField();
+        jPanelHmacSha256Hex = new javax.swing.JPanel();
+        jButtonHmacSha256Hex = new javax.swing.JButton();
+        jTextFieldHmacSha256Hex = new javax.swing.JTextField();
+        jPanelHmacSha512Hex = new javax.swing.JPanel();
+        jButtonHmacSha512Hex = new javax.swing.JButton();
+        jTextFieldHmacSha512Hex = new javax.swing.JTextField();
+        jButtonToUpper = new javax.swing.JButton();
+        jButtonToLower = new javax.swing.JButton();
         groovyPanel = new javax.swing.JPanel();
         beanshellPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -246,7 +265,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanel1.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(230, 368));
-        jPanel1.setLayout(new java.awt.GridLayout(16, 1));
+        jPanel1.setLayout(new java.awt.GridLayout(22, 1));
 
         urlEncodeButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         urlEncodeButton.setText("URL encode");
@@ -398,6 +417,93 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         });
         jPanel1.add(xmlFormat);
 
+        jPanelHmacMd5Hex.setLayout(new java.awt.GridLayout(1, 2));
+
+        jButtonHmacMd5Hex.setFont(jButtonHmacMd5Hex.getFont().deriveFont(jButtonHmacMd5Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacMd5Hex.getFont().getSize()-2));
+        jButtonHmacMd5Hex.setText("HmacMd5Hex");
+        jButtonHmacMd5Hex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHmacMd5HexActionPerformed(evt);
+            }
+        });
+        jPanelHmacMd5Hex.add(jButtonHmacMd5Hex);
+
+        jTextFieldHmacMd5Hex.setFont(new java.awt.Font("Andale Mono", 0, 10)); // NOI18N
+        jPanelHmacMd5Hex.add(jTextFieldHmacMd5Hex);
+
+        jPanel1.add(jPanelHmacMd5Hex);
+
+        jPanelHmacSha1Hex.setLayout(new java.awt.GridLayout());
+
+        jButtonHmacSha1Hex.setFont(jButtonHmacSha1Hex.getFont().deriveFont(jButtonHmacSha1Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha1Hex.getFont().getSize()-2));
+        jButtonHmacSha1Hex.setText("HmacSha1Hex");
+        jButtonHmacSha1Hex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHmacSha1HexActionPerformed(evt);
+            }
+        });
+        jPanelHmacSha1Hex.add(jButtonHmacSha1Hex);
+
+        jTextFieldHmacSha1Hex.setFont(new java.awt.Font("Andale Mono", 0, 10)); // NOI18N
+        jTextFieldHmacSha1Hex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldHmacSha1HexActionPerformed(evt);
+            }
+        });
+        jPanelHmacSha1Hex.add(jTextFieldHmacSha1Hex);
+
+        jPanel1.add(jPanelHmacSha1Hex);
+
+        jPanelHmacSha256Hex.setLayout(new java.awt.GridLayout());
+
+        jButtonHmacSha256Hex.setFont(jButtonHmacSha256Hex.getFont().deriveFont(jButtonHmacSha256Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha256Hex.getFont().getSize()-2));
+        jButtonHmacSha256Hex.setText("HmacSha256Hex");
+        jButtonHmacSha256Hex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHmacSha256HexActionPerformed(evt);
+            }
+        });
+        jPanelHmacSha256Hex.add(jButtonHmacSha256Hex);
+
+        jTextFieldHmacSha256Hex.setFont(new java.awt.Font("Andale Mono", 0, 10)); // NOI18N
+        jPanelHmacSha256Hex.add(jTextFieldHmacSha256Hex);
+
+        jPanel1.add(jPanelHmacSha256Hex);
+
+        jPanelHmacSha512Hex.setLayout(new java.awt.GridLayout());
+
+        jButtonHmacSha512Hex.setFont(jButtonHmacSha512Hex.getFont().deriveFont(jButtonHmacSha512Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha512Hex.getFont().getSize()-2));
+        jButtonHmacSha512Hex.setText("HmacSha512Hex");
+        jButtonHmacSha512Hex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHmacSha512HexActionPerformed(evt);
+            }
+        });
+        jPanelHmacSha512Hex.add(jButtonHmacSha512Hex);
+
+        jTextFieldHmacSha512Hex.setFont(new java.awt.Font("Andale Mono", 0, 10)); // NOI18N
+        jPanelHmacSha512Hex.add(jTextFieldHmacSha512Hex);
+
+        jPanel1.add(jPanelHmacSha512Hex);
+
+        jButtonToUpper.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jButtonToUpper.setText("To Upper");
+        jButtonToUpper.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonToUpperActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonToUpper);
+
+        jButtonToLower.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jButtonToLower.setText("To Lower");
+        jButtonToLower.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonToLowerActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonToLower);
+
         transcoderPanel.add(jPanel1, java.awt.BorderLayout.WEST);
 
         jTabbedPane.addTab("transcoder", transcoderPanel);
@@ -411,7 +517,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(740, 506));
+        setSize(new java.awt.Dimension(740, 585));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -644,13 +750,132 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
     private void textPaneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textPaneKeyPressed
         if (evt.isControlDown()) {
-            if ((Character.toLowerCase(evt.getKeyCode()) == 'z'|| Character.toLowerCase(evt.getKeyCode()) == 'y')) {
-                undoAction.actionPerformed(null);
-            } else if (Character.toLowerCase(evt.getKeyChar()) == 'r') {
+            if (Character.toLowerCase(evt.getKeyChar()) == 'r' || evt.isShiftDown()) {
                 redoAction.actionPerformed(null);
+            } else if ((Character.toLowerCase(evt.getKeyCode()) == 'z' || Character.toLowerCase(evt.getKeyCode()) == 'y')) {
+                undoAction.actionPerformed(null);
             }
         }
     }//GEN-LAST:event_textPaneKeyPressed
+
+    private void jButtonHmacMd5HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacMd5HexActionPerformed
+        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+            textPane.select(0, textPane.getText().length());
+        }
+        try {
+            String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacMd5Hex.getText(), textPane.getSelectedText(), "HmacMD5"));
+            textPane.replaceSelection(hmac);
+            textPane.selectAll();
+            textPane.requestFocusInWindow();
+        } catch (Exception e) {
+            throw new IllegalStateException("error calculating hmac", e);
+        }    }//GEN-LAST:event_jButtonHmacMd5HexActionPerformed
+
+    private void jButtonHmacSha512HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha512HexActionPerformed
+        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+            textPane.select(0, textPane.getText().length());
+        }
+        try {
+            String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha512Hex.getText(), textPane.getSelectedText(), "HmacSHA512"));
+            textPane.replaceSelection(hmac);
+            textPane.selectAll();
+            textPane.requestFocusInWindow();
+        } catch (Exception e) {
+            throw new IllegalStateException("error calculating hmac", e);
+        }    }//GEN-LAST:event_jButtonHmacSha512HexActionPerformed
+
+    private void jTextFieldHmacSha1HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHmacSha1HexActionPerformed
+        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+            textPane.select(0, textPane.getText().length());
+        }
+        try {
+            String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha1Hex.getText(), textPane.getSelectedText(), "HmacSHA1"));
+            textPane.replaceSelection(hmac);
+            textPane.selectAll();
+            textPane.requestFocusInWindow();
+        } catch (Exception e) {
+            throw new IllegalStateException("error calculating hmac", e);
+        }    }//GEN-LAST:event_jTextFieldHmacSha1HexActionPerformed
+
+    private void jButtonHmacSha256HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha256HexActionPerformed
+        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+            textPane.select(0, textPane.getText().length());
+        }
+        try {
+            String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha256Hex.getText(), textPane.getSelectedText(), "HmacSha256"));
+            textPane.replaceSelection(hmac);
+            textPane.selectAll();
+            textPane.requestFocusInWindow();
+        } catch (Exception e) {
+            throw new IllegalStateException("error calculating hmac", e);
+        }    }//GEN-LAST:event_jButtonHmacSha256HexActionPerformed
+
+    private void jButtonHmacSha1HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha1HexActionPerformed
+        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+            textPane.select(0, textPane.getText().length());
+        }
+        try {
+            String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha1Hex.getText(), textPane.getText(), "HmacSha1"));
+            textPane.replaceSelection(hmac);
+            textPane.selectAll();
+            textPane.requestFocusInWindow();
+        } catch (Exception e) {
+            throw new IllegalStateException("error calculating hmac", e);
+        }    }//GEN-LAST:event_jButtonHmacSha1HexActionPerformed
+
+    private void jButtonToUpperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToUpperActionPerformed
+        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+            textPane.select(0, textPane.getText().length());
+        }
+        try {
+            textPane.replaceSelection(StringUtils.upperCase(textPane.getSelectedText()));
+            textPane.selectAll();
+            textPane.requestFocusInWindow();
+        } catch (Exception e) {
+            throw new IllegalStateException("error upperCase", e);
+        }    }//GEN-LAST:event_jButtonToUpperActionPerformed
+
+    private void jButtonToLowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToLowerActionPerformed
+        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+            textPane.select(0, textPane.getText().length());
+        }
+        try {
+            textPane.replaceSelection(StringUtils.lowerCase(textPane.getSelectedText()));
+            textPane.selectAll();
+            textPane.requestFocusInWindow();
+        } catch (Exception e) {
+            throw new IllegalStateException("error lowerCase", e);
+        }    }//GEN-LAST:event_jButtonToLowerActionPerformed
+
+    private static byte[] getHmac(String secretKey, String payload, String hmacType) {
+        final Mac mac;
+        byte[] hmac;
+        try {
+            final byte[] secretKeyBytes;
+            if (secretKey == null || secretKey.trim().isEmpty()) {
+                secretKeyBytes = new byte[0];
+            } else {
+                secretKeyBytes = secretKey.getBytes("UTF-8");
+            }
+
+            SecretKeySpec keySpec = new SecretKeySpec(secretKeyBytes, hmacType.toString());
+            mac = Mac.getInstance(hmacType.toString());
+            mac.init(keySpec);
+
+            hmac = mac.doFinal(payload.getBytes("UTF-8"));
+
+        } catch (NoSuchAlgorithmException e) {
+            String msg = "An error occurred initializing algorithm '" + hmacType + "', e: " + e;
+            throw new IllegalStateException(msg, e);
+        } catch (InvalidKeyException e) {
+            String msg = "An error occurred initializing key, e: " + e;
+            throw new IllegalStateException(msg, e);
+        } catch (UnsupportedEncodingException e) {
+            String msg = "Invalid encoding, e: " + e;
+            throw new IllegalStateException(msg, e);
+        }
+        return hmac;
+    }
 
     /**
      * Notifies this object that it is no longer the owner of the contents of
@@ -744,11 +969,25 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
     private javax.swing.JLabel countLabel;
     private javax.swing.JMenu editMenu;
     private javax.swing.JPanel groovyPanel;
+    private javax.swing.JButton jButtonHmacMd5Hex;
+    private javax.swing.JButton jButtonHmacSha1Hex;
+    private javax.swing.JButton jButtonHmacSha256Hex;
+    private javax.swing.JButton jButtonHmacSha512Hex;
+    private javax.swing.JButton jButtonToLower;
+    private javax.swing.JButton jButtonToUpper;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelHmacMd5Hex;
+    private javax.swing.JPanel jPanelHmacSha1Hex;
+    private javax.swing.JPanel jPanelHmacSha256Hex;
+    private javax.swing.JPanel jPanelHmacSha512Hex;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane;
+    private javax.swing.JTextField jTextFieldHmacMd5Hex;
+    private javax.swing.JTextField jTextFieldHmacSha1Hex;
+    private javax.swing.JTextField jTextFieldHmacSha256Hex;
+    private javax.swing.JTextField jTextFieldHmacSha512Hex;
     private javax.swing.JButton jsonFormat;
     private javax.swing.JButton md5hashButton;
     private javax.swing.JButton sha1hashButton;
