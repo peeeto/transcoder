@@ -14,6 +14,7 @@ public class Transcoder {
                 JDialog tf = new TranscoderFrame();
                 componentRef.set(tf);
 //                tf.setExtendedState(JFrame.NORMAL);
+                tf.pack();
                 tf.setVisible(true);
             }
         });

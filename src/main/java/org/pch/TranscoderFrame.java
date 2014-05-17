@@ -246,6 +246,8 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         countLabel.setText("Characters: 0");
         getContentPane().add(countLabel, java.awt.BorderLayout.NORTH);
 
+        jTabbedPane.setPreferredSize(new java.awt.Dimension(800, 500));
+
         transcoderPanel.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
@@ -433,7 +435,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanel1.add(jPanelHmacMd5Hex);
 
-        jPanelHmacSha1Hex.setLayout(new java.awt.GridLayout());
+        jPanelHmacSha1Hex.setLayout(new java.awt.GridLayout(1, 0));
 
         jButtonHmacSha1Hex.setFont(jButtonHmacSha1Hex.getFont().deriveFont(jButtonHmacSha1Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha1Hex.getFont().getSize()-2));
         jButtonHmacSha1Hex.setText("HmacSha1Hex");
@@ -454,7 +456,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanel1.add(jPanelHmacSha1Hex);
 
-        jPanelHmacSha256Hex.setLayout(new java.awt.GridLayout());
+        jPanelHmacSha256Hex.setLayout(new java.awt.GridLayout(1, 0));
 
         jButtonHmacSha256Hex.setFont(jButtonHmacSha256Hex.getFont().deriveFont(jButtonHmacSha256Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha256Hex.getFont().getSize()-2));
         jButtonHmacSha256Hex.setText("HmacSha256Hex");
@@ -470,7 +472,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanel1.add(jPanelHmacSha256Hex);
 
-        jPanelHmacSha512Hex.setLayout(new java.awt.GridLayout());
+        jPanelHmacSha512Hex.setLayout(new java.awt.GridLayout(1, 0));
 
         jButtonHmacSha512Hex.setFont(jButtonHmacSha512Hex.getFont().deriveFont(jButtonHmacSha512Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha512Hex.getFont().getSize()-2));
         jButtonHmacSha512Hex.setText("HmacSha512Hex");
@@ -517,17 +519,14 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(740, 585));
+        setSize(new java.awt.Dimension(836, 543));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
   private void sha1hashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha1hashButtonActionPerformed
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, textPane.getText().length());
-      }
+      selectAllIfNotSelectedYet(textPane);
       textPane.replaceSelection(prepareText(DigestUtils.sha1Hex(getSelectedText())));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
+      selectAllAndFocus();
   }//GEN-LAST:event_sha1hashButtonActionPerformed
 
     private String getSelectedText() {
@@ -535,23 +534,28 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
     }
 
   private void md5hashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_md5hashButtonActionPerformed
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, textPane.getText().length());
-      }
+      selectAllIfNotSelectedYet(this.textPane);
       textPane.replaceSelection(prepareText(DigestUtils.md5Hex(getSelectedText())));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
+      selectAllAndFocus();
   }//GEN-LAST:event_md5hashButtonActionPerformed
+
+    private void selectAllAndFocus() {
+        textPane.selectAll();
+        textPane.requestFocusInWindow();
+    }
+
+    private void selectAllIfNotSelectedYet(JTextPane textPane) {
+        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
+            textPane.select(0, textPane.getText().length());
+        }
+    }
 
   private void base64DecodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base64DecodeButtonActionPerformed
       try {
-          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-              textPane.select(0, textPane.getText().length());
-          }
+          selectAllIfNotSelectedYet(textPane);
           textPane.replaceSelection(new String(Base64.decodeBase64(getSelectedText())));
-          textPane.selectAll();
-          textPane.requestFocusInWindow();
-      } catch (Throwable t) {
+          selectAllAndFocus();
+      } catch (Exception t) {
           Runtime.getRuntime().gc();
           t.printStackTrace();
           textPane.setText("Exception! " + t.toString());
@@ -560,13 +564,10 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
   private void base64EncodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base64EncodeButtonActionPerformed
       try {
-          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-              textPane.select(0, textPane.getText().length());
-          }
+          selectAllIfNotSelectedYet(textPane);
           textPane.replaceSelection(Base64.encodeBase64String(getSelectedText().getBytes()));
-          textPane.selectAll();
-          textPane.requestFocusInWindow();
-      } catch (Throwable t) {
+          selectAllAndFocus();
+      } catch (Exception t) {
           Runtime.getRuntime().gc();
           t.printStackTrace();
           textPane.setText("Exception! " + t.toString());
@@ -574,12 +575,10 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
   }//GEN-LAST:event_base64EncodeButtonActionPerformed
 
   private void urlDecodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlDecodeButtonActionPerformed
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, textPane.getText().length());
-      }
-      textPane.replaceSelection(urlDecode(getSelectedText()));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
+      selectAllIfNotSelectedYet(textPane);
+      String text = urlDecode(getSelectedText());
+      textPane.replaceSelection(text);
+      selectAllAndFocus();
   }//GEN-LAST:event_urlDecodeButtonActionPerformed
 
     private String prepareText(String text) {
@@ -587,25 +586,18 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
     }
 
   private void urlEncodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlEncodeButtonActionPerformed
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, textPane.getText().length());
-      }
+      selectAllIfNotSelectedYet(textPane);
       textPane.replaceSelection(urlEncode(getSelectedText()));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
+      selectAllAndFocus();
   }//GEN-LAST:event_urlEncodeButtonActionPerformed
 
 
   private void Adrel32ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Adrel32ButtonActionPerformed
       try {
-          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-              textPane.select(0, textPane.getText().length());
-          }
-          textPane.replaceSelection(prepareText(checksumAdler32Hex(new ByteArrayInputStream(getSelectedText().getBytes("UTF-8")))));
-
-          textPane.selectAll();
-          textPane.requestFocusInWindow();
-      } catch (Throwable t) {
+          selectAllIfNotSelectedYet(textPane);
+          textPane.replaceSelection(prepareText(checksumAdler32Hex(new ByteArrayInputStream(getSelectedText().getBytes(DEFAULT_ENCODING)))));
+          selectAllAndFocus();
+      } catch (Exception t) {
           Runtime.getRuntime().gc();
           t.printStackTrace();
           textPane.setText("Exception! " + t.toString());
@@ -614,13 +606,10 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
   private void sha256ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha256ButtonActionPerformed
       try {
-          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-              textPane.select(0, textPane.getText().length());
-          }
+          selectAllIfNotSelectedYet(textPane);
           textPane.replaceSelection(prepareText(DigestUtils.sha256Hex(getSelectedText().getBytes())));
-          textPane.selectAll();
-          textPane.requestFocusInWindow();
-      } catch (Throwable t) {
+          selectAllAndFocus();
+      } catch (Exception t) {
           Runtime.getRuntime().gc();
           t.printStackTrace();
           textPane.setText("Exception! " + t.toString());
@@ -629,13 +618,10 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
   private void sha384ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha384ButtonActionPerformed
       try {
-          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-              textPane.select(0, textPane.getText().length());
-          }
+          selectAllIfNotSelectedYet(textPane);
           textPane.replaceSelection(prepareText(DigestUtils.sha384Hex(getSelectedText().getBytes())));
-          textPane.selectAll();
-          textPane.requestFocusInWindow();
-      } catch (Throwable t) {
+          selectAllAndFocus();
+      } catch (Exception t) {
           Runtime.getRuntime().gc();
           t.printStackTrace();
           textPane.setText("Exception! " + t.toString());
@@ -644,13 +630,10 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
   private void sha512ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha512ButtonActionPerformed
       try {
-          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-              textPane.select(0, textPane.getText().length());
-          }
+          selectAllIfNotSelectedYet(textPane);
           textPane.replaceSelection(prepareText(DigestUtils.sha512Hex(getSelectedText().getBytes())));
-          textPane.selectAll();
-          textPane.requestFocusInWindow();
-      } catch (Throwable t) {
+          selectAllAndFocus();
+      } catch (Exception t) {
           Runtime.getRuntime().gc();
           t.printStackTrace();
           textPane.setText("Exception! " + t.toString());
@@ -659,13 +642,10 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
   private void cdc32ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cdc32ButtonActionPerformed
       try {
-          if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-              textPane.select(0, textPane.getText().length());
-          }
-          textPane.replaceSelection(prepareText(checksumCRC32Hex(new ByteArrayInputStream(getSelectedText().getBytes("UTF-8")))));
-          textPane.selectAll();
-          textPane.requestFocusInWindow();
-      } catch (Throwable t) {
+          selectAllIfNotSelectedYet(textPane);
+          textPane.replaceSelection(prepareText(checksumCRC32Hex(new ByteArrayInputStream(getSelectedText().getBytes(DEFAULT_ENCODING)))));
+          selectAllAndFocus();
+      } catch (Exception t) {
           Runtime.getRuntime().gc();
           t.printStackTrace();
           textPane.setText("Exception! " + t.toString());
@@ -673,29 +653,23 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
   }//GEN-LAST:event_cdc32ButtonActionPerformed
 
   private void uuidButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuidButtonActionPerformed
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, textPane.getText().length());
-      }
+      selectAllIfNotSelectedYet(textPane);
       textPane.replaceSelection(java.util.UUID.randomUUID().toString());
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
+      selectAllAndFocus();
   }//GEN-LAST:event_uuidButtonActionPerformed
 
   private void encodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encodeTimestampHandler
-      String text = textPane.getText();
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, text.length());
-      }
+      selectAllIfNotSelectedYet(textPane);
+      String text = "";
       try {
-          if (text == null || text.trim().isEmpty()) {
+          if (getSelectedText().trim().isEmpty()) {
               text = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS Z").print(DateTime.now().toDate().getTime());
           }
           textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(text).getTime() + "");
       } catch (ParseException e) {
           e.printStackTrace();
       }
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
+      selectAllAndFocus();
   }//GEN-LAST:event_encodeTimestampHandler
 
   private void decodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodeTimestampHandler
@@ -707,14 +681,11 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
           text = String.valueOf(DateTime.now().toDate().getTime());
       }
       textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").format(Long.valueOf(text)));
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
+      selectAllAndFocus();
   }//GEN-LAST:event_decodeTimestampHandler
 
   private void xmlFormatAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlFormatAction
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, textPane.getText().length());
-      }
+      selectAllIfNotSelectedYet(textPane);
       try {
           Source xmlInput = new StreamSource(new StringReader(textPane.getText()));
           StringWriter stringWriter = new StringWriter();
@@ -726,17 +697,14 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
           transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
           transformer.transform(xmlInput, xmlOutput);
           textPane.replaceSelection(xmlOutput.getWriter().toString());
-          textPane.selectAll();
-          textPane.requestFocusInWindow();
+          selectAllAndFocus();
       } catch (Exception e) {
           throw new IllegalStateException("error reading xml");
       }
   }//GEN-LAST:event_xmlFormatAction
 
   private void jsonFormatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsonFormatActionPerformed
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, textPane.getText().length());
-      }
+      selectAllIfNotSelectedYet(textPane);
       JsonParser parser = new JsonParser();
       Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().enableComplexMapKeySerialization().setExclusionStrategies().create();
 
@@ -744,8 +712,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
       String jsonString = gson.toJson(el); // done
 
       textPane.replaceSelection(jsonString);
-      textPane.selectAll();
-      textPane.requestFocusInWindow();
+      selectAllAndFocus();
   }//GEN-LAST:event_jsonFormatActionPerformed
 
     private void textPaneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textPaneKeyPressed
@@ -759,90 +726,69 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
     }//GEN-LAST:event_textPaneKeyPressed
 
     private void jButtonHmacMd5HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacMd5HexActionPerformed
-        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-            textPane.select(0, textPane.getText().length());
-        }
+        selectAllIfNotSelectedYet(textPane);
         try {
             String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacMd5Hex.getText(), textPane.getSelectedText(), "HmacMD5"));
             textPane.replaceSelection(hmac);
-            textPane.selectAll();
-            textPane.requestFocusInWindow();
+            selectAllAndFocus();
         } catch (Exception e) {
             throw new IllegalStateException("error calculating hmac", e);
         }    }//GEN-LAST:event_jButtonHmacMd5HexActionPerformed
 
     private void jButtonHmacSha512HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha512HexActionPerformed
-        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-            textPane.select(0, textPane.getText().length());
-        }
+        selectAllIfNotSelectedYet(textPane);
         try {
             String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha512Hex.getText(), textPane.getSelectedText(), "HmacSHA512"));
             textPane.replaceSelection(hmac);
-            textPane.selectAll();
-            textPane.requestFocusInWindow();
+            selectAllAndFocus();
         } catch (Exception e) {
             throw new IllegalStateException("error calculating hmac", e);
         }    }//GEN-LAST:event_jButtonHmacSha512HexActionPerformed
 
     private void jTextFieldHmacSha1HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHmacSha1HexActionPerformed
-        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-            textPane.select(0, textPane.getText().length());
-        }
+        selectAllIfNotSelectedYet(textPane);
         try {
             String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha1Hex.getText(), textPane.getSelectedText(), "HmacSHA1"));
             textPane.replaceSelection(hmac);
-            textPane.selectAll();
-            textPane.requestFocusInWindow();
+            selectAllAndFocus();
         } catch (Exception e) {
             throw new IllegalStateException("error calculating hmac", e);
         }    }//GEN-LAST:event_jTextFieldHmacSha1HexActionPerformed
 
     private void jButtonHmacSha256HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha256HexActionPerformed
-        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-            textPane.select(0, textPane.getText().length());
-        }
+        selectAllIfNotSelectedYet(textPane);
         try {
             String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha256Hex.getText(), textPane.getSelectedText(), "HmacSha256"));
             textPane.replaceSelection(hmac);
-            textPane.selectAll();
-            textPane.requestFocusInWindow();
+            selectAllAndFocus();
         } catch (Exception e) {
             throw new IllegalStateException("error calculating hmac", e);
         }    }//GEN-LAST:event_jButtonHmacSha256HexActionPerformed
 
     private void jButtonHmacSha1HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha1HexActionPerformed
-        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-            textPane.select(0, textPane.getText().length());
-        }
+        selectAllIfNotSelectedYet(textPane);
         try {
             String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha1Hex.getText(), textPane.getText(), "HmacSha1"));
             textPane.replaceSelection(hmac);
-            textPane.selectAll();
-            textPane.requestFocusInWindow();
+            selectAllAndFocus();
         } catch (Exception e) {
             throw new IllegalStateException("error calculating hmac", e);
         }    }//GEN-LAST:event_jButtonHmacSha1HexActionPerformed
 
     private void jButtonToUpperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToUpperActionPerformed
-        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-            textPane.select(0, textPane.getText().length());
-        }
+        selectAllIfNotSelectedYet(textPane);
         try {
             textPane.replaceSelection(StringUtils.upperCase(textPane.getSelectedText()));
-            textPane.selectAll();
-            textPane.requestFocusInWindow();
+            selectAllAndFocus();
         } catch (Exception e) {
             throw new IllegalStateException("error upperCase", e);
         }    }//GEN-LAST:event_jButtonToUpperActionPerformed
 
     private void jButtonToLowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToLowerActionPerformed
-        if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-            textPane.select(0, textPane.getText().length());
-        }
+        selectAllIfNotSelectedYet(textPane);
         try {
             textPane.replaceSelection(StringUtils.lowerCase(textPane.getSelectedText()));
-            textPane.selectAll();
-            textPane.requestFocusInWindow();
+            selectAllAndFocus();
         } catch (Exception e) {
             throw new IllegalStateException("error lowerCase", e);
         }    }//GEN-LAST:event_jButtonToLowerActionPerformed
@@ -852,17 +798,21 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         byte[] hmac;
         try {
             final byte[] secretKeyBytes;
-            if (secretKey == null || secretKey.trim().isEmpty()) {
-                secretKeyBytes = new byte[0];
+            if (secretKey == null) {
+                secretKeyBytes = new byte[]{0};
             } else {
-                secretKeyBytes = secretKey.getBytes("UTF-8");
+                secretKeyBytes = secretKey.getBytes(DEFAULT_ENCODING);
+            }
+
+            if (payload == null) {
+                payload = "";
             }
 
             SecretKeySpec keySpec = new SecretKeySpec(secretKeyBytes, hmacType.toString());
             mac = Mac.getInstance(hmacType.toString());
             mac.init(keySpec);
 
-            hmac = mac.doFinal(payload.getBytes("UTF-8"));
+            hmac = mac.doFinal(payload.getBytes(DEFAULT_ENCODING));
 
         } catch (NoSuchAlgorithmException e) {
             String msg = "An error occurred initializing algorithm '" + hmacType + "', e: " + e;
@@ -876,6 +826,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         }
         return hmac;
     }
+    public static final String DEFAULT_ENCODING = "UTF-8";
 
     /**
      * Notifies this object that it is no longer the owner of the contents of
@@ -938,7 +889,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
      */
     public static String urlDecode(String str) {
         try {
-            return (URLDecoder.decode(str, "UTF-8"));
+            return (URLDecoder.decode(str, DEFAULT_ENCODING));
         } catch (Exception e) {
             return ("Decoding error");
         }
@@ -953,7 +904,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
      */
     public static String urlEncode(String str) {
         try {
-            return (URLEncoder.encode(str, "UTF-8"));
+            return (URLEncoder.encode(str, DEFAULT_ENCODING));
         } catch (Exception e) {
             return ("Encoding error");
         }
