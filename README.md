@@ -2,10 +2,12 @@
 
 ## Transcoder project
 
+```bash
 git clone git@github.com:peeeto/transcoder.git
 cd transcoder
 mvn install
 java -jar target/transcoder-1.2-SNAPSHOT.one-jar.jar &
+```
 
 ### Transcoder encoder of text data
 

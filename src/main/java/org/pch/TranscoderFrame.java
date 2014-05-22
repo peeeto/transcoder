@@ -660,7 +660,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
   private void encodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encodeTimestampHandler
       selectAllIfNotSelectedYet(textPane);
-      String text = "";
+      String text = getSelectedText();
       try {
           if (getSelectedText().trim().isEmpty()) {
               text = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS Z").print(DateTime.now().toDate().getTime());
@@ -668,16 +668,15 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
           textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(text).getTime() + "");
       } catch (ParseException e) {
           e.printStackTrace();
+          throw new IllegalStateException("invalid timestamp format", e);
       }
       selectAllAndFocus();
   }//GEN-LAST:event_encodeTimestampHandler
 
   private void decodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodeTimestampHandler
-      String text = textPane.getText();
-      if (textPane.getSelectionEnd() == textPane.getSelectionStart()) {
-          textPane.select(0, text.length());
-      }
-      if (text == null || text.trim().isEmpty()) {
+      selectAllIfNotSelectedYet(textPane);
+      String text = getSelectedText();
+      if (text.trim().isEmpty()) {
           text = String.valueOf(DateTime.now().toDate().getTime());
       }
       textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").format(Long.valueOf(text)));
