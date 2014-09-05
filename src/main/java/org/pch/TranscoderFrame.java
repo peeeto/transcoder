@@ -6,29 +6,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.NullOutputStream;
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.Transferable;
-import java.awt.event.*;
-import java.io.*;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.zip.Adler32;
-import java.util.zip.CRC32;
-import java.util.zip.CheckedInputStream;
-import java.util.zip.Checksum;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.*;
@@ -48,15 +34,25 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.NullOutputStream;
-import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.*;
+import java.io.*;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.zip.Adler32;
+import java.util.zip.CRC32;
+import java.util.zip.CheckedInputStream;
+import java.util.zip.Checksum;
 
 public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwner {
 
@@ -777,12 +773,18 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
       if (getSelectedText().trim().isEmpty()) {
         text = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS Z").print(DateTime.now().toDate().getTime());
       }
-      textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(text).getTime() + "");
+      Date parsedDate = null;
+      try {
+        parsedDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(text);
+      } catch (ParseException pe) {
+        parsedDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(text);
+      }
+      textPane.replaceSelection(parsedDate.getTime() + "");
     } catch (ParseException e) {
       e.printStackTrace();
       throw new IllegalStateException("invalid timestamp format", e);
     }
-    selectAllAndFocus();
+      selectAllAndFocus();
   }//GEN-LAST:event_encodeTimestampHandler
 
   private void decodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodeTimestampHandler
