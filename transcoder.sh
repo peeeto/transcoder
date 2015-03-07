@@ -1,4 +1,5 @@
+#!/bin/bash
 
-#sudo ln -s $(pwd)/transcoder.sh /usr/bin/transcoder
-java -jar /Users/petercho/devel/transcoder/target/transcoder-1.2-SNAPSHOT.one-jar.jar 
+DIR=`dirname $(readlink $0) &> /dev/null` && DIR=`dirname $(readlink $0)` || DIR=.
+java -jar "$DIR"/target/transcoder-*-SNAPSHOT.one-jar.jar 
 
