@@ -54,23 +54,23 @@
                     </execution>
                 </executions>
             </plugin>
-           <!-- <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>osxappbundle-maven-plugin</artifactId>
-                <version>1.0-alpha-1</version>
-                <configuration>
-                    <mainClass>org.pch.Transcoder</mainClass>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>bundle</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
--->
+            <!-- <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>osxappbundle-maven-plugin</artifactId>
+                            <version>1.0-alpha-1</version>
+                            <configuration>
+                                <mainClass>org.pch.Transcoder</mainClass>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>bundle</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+            -->
         </plugins>
     </build>
     <dependencies>
@@ -193,6 +193,16 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>3.2.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
         </dependency>
         <!--<dependency>-->
         <!--<groupId>junit</groupId>-->
