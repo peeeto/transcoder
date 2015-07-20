@@ -24,19 +24,31 @@
 
 <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/pbkdf2.js"></script>
 
+<script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+
 <script>
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+        }
+
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                s4() + '-' + s4() + s4() + s4();
+    }
+
     function encode(element, hashFunc, toStringFunc) {
         var hash = hashFunc(element.val().trim());
         element.val(hash.toString(toStringFunc));
+        $("#test").text(hash.toString());
     }
+
     function getPanel() {
         return $('#panel');
     }
 </script>
 <div id="content">
-    <div id="panels">
-        <textarea id="panel" style="width: 50em; height:10em">text</textarea>
-    </div>
     <div id="buttons">
         <div id="cOne">
             <input id="md5Hex" type="button" value="md5Hex" onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Hex)"/>
@@ -54,6 +66,28 @@
             <input id="sha512Base64" type="button" value="sha512Base64" onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Base64)"/>
             <input id="ripemd160Base64" type="button" value="ripemd160Base64" onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Base64)"/>
         </div>
+        <div id="cTree">
+            <input id="urlEncode" type="button" value="urlEncode" onclick="encode(getPanel(), encodeURIComponent)"/>
+            <input id="urlDecode" type="button" value="urlDecode" onclick="encode(getPanel(), decodeURIComponent)"/>
+            <input id="base64Encode" type="button" value="base64Encode" onclick="encode(getPanel(),btoa )"/>
+            <input id="base64Decode" type="button" value="base64Decode" onclick="encode(getPanel(), atob)"/>
+        </div>
+        <div id="cFour">
+            <input id="UUID" type="button" value="UUID" onclick="encode(getPanel(), guid)"/>
+            <input id="momentToLong" type="button" value="yyyy-MM-dd HH:mm:ss.SSS Z -> 1234L"
+                   onclick="encode(getPanel(), function(date){return moment(date, 'YYYY-MM-DD HH:mm:ss.SSS Z').milliseconds();})"/>
+            <input id="longToMoment" type="button" value="1234L -> yyyy-MM-dd HH:mm:ss.SSS Z"
+                   onclick="encode(getPanel(), function(date){return moment.utc(parseInt(date)).format('YYYY-MM-DD HH:mm:ss.SSS Z');})"/>
+        </div>
+        <div id="cFive">
+            <input id="json" type="button" value="JSON Format"
+                   onclick="encode(getPanel(), function(str){return JSON.stringify(str, null, 4);})"/>
+        </div>
+    </div>
+    <div id=" panels">
+        <textarea id="panel" style="width: 50em; height:10em">text</textarea>
+
+        <div id="test">text</div>
     </div>
 </div>
 
