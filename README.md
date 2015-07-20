@@ -17,7 +17,7 @@ transcoder & # starts application
 
 ## Online beta version
 
->[http://peeeto.github.io/transcoder-jquery/](http://peeeto.github.io/transcoder-jquery/)
+>[http://peeeto.github.io/transcoder](http://peeeto.github.io/transcoder)
 
 
 ### Transcoder encoder of text into various encodings
