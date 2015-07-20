@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>transcoder-jquery</title>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
+
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha512.js"></script>
+
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/ripemd160.js"></script>
+
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-md5.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha1.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha512.js"></script>
+
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/pbkdf2.js"></script>
+
+<script>
+    function encode(element, hashFunc, toStringFunc) {
+        var hash = hashFunc(element.val().trim());
+        element.val(hash.toString(toStringFunc));
+    }
+    function getPanel() {
+        return $('#panel');
+    }
+</script>
+<div id="content">
+    <div id="panels">
+        <textarea id="panel" style="width: 50em; height:10em">text</textarea>
+    </div>
+    <div id="buttons">
+        <div id="cOne">
+            <input id="md5Hex" type="button" value="md5Hex" onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Hex)"/>
+            <input id="sha1Hex" type="button" value="sha1Hex" onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Hex)"/>
+            <input id="sha3Hex" type="button" value="sha3Hex" onclick="encode(getPanel(), CryptoJS.SHA3, CryptoJS.enc.Hex)"/>
+            <input id="sha256Hex" type="button" value="sha256Hex" onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Hex)"/>
+            <input id="sha512Hex" type="button" value="sha512Hex" onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Hex)"/>
+            <input id="ripemd160Hex" type="button" value="ripemd160" onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Hex)"/>
+        </div>
+        <div id="cTwo">
+            <input id="md5Base64" type="button" value="md5Base64" onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Base64)"/>
+            <input id="sha1Base64" type="button" value="sha1Base64" onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Base64)"/>
+            <input id="sha3Base64" type="button" value="sha3Base64" onclick="encode(getPanel(), CryptoJS.SHA3, CryptoJS.enc.Base64)"/>
+            <input id="sha256Base64" type="button" value="sha256Base64" onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Base64)"/>
+            <input id="sha512Base64" type="button" value="sha512Base64" onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Base64)"/>
+            <input id="ripemd160Base64" type="button" value="ripemd160Base64" onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Base64)"/>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
