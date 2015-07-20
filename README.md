@@ -24,3 +24,4 @@ transcoder & # starts application
 
 [![Build Status](https://drone.io/bitbucket.org/peeeto/transcoder/status.png)](https://drone.io/bitbucket.org/peeeto/transcoder/latest)
 
+[![Build Status](https://travis-ci.org/peeeto/transcoder.svg)](https://travis-ci.org/peeeto/transcoder)
