@@ -1,8 +1,8 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>transcoder-jquery</title>
+    <title>transcoder</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
@@ -25,10 +25,14 @@
 
     <script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
 
-    <script type="text/javascript" src="vkbeautify.0.99.00.beta.js"></script>
+    <script src="vkbeautify.0.99.00.beta.js"></script>
+
+    <script src="isaac.js"></script>
+    <script src="bCrypt.js"></script>
 
     <!--<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>-->
     <script>
+        var bcrypt = new bCrypt();
         function xmlFormat(str) {
             try {
                 return vkbeautify.xml(str);
@@ -71,15 +75,33 @@
             return $('#panel');
         }
 
-        function initBCryptFactor(max) {
-            var bcryptFactor = $("#bcryptFactor");
+        function initBCryptRounds(max) {
+            var bcryptRounds = $("#bcryptRounds");
             for (jj = 4; jj < max; jj++) {
-                bcryptFactor.append(new Option(jj, jj));
+                bcryptRounds.append(new Option(jj, jj));
             }
         }
+
+        function bc(password, toHash, rounds) {
+            if (password.length <= 0) {
+                var salt = bcrypt.gensalt(parseInt(rounds));
+                bcrypt.hashpw(toHash, salt, function (hash) {
+                    getPanel().val(hash);
+                });
+            } else {
+                try {
+                    bcrypt.checkpw(password, toHash, function (res) {
+                        alert("Password and Hash are: " + (!!res ? "OK" : "NOT ok"));
+                    });
+                } catch (error) {
+                    alert("Hash does not contain Salt to check");
+                }
+            }
+        }
+
     </script>
 </head>
-<body onload="initBCryptFactor(32)">
+<body onload="initBCryptRounds(32)">
 <div id="content">
     <div id="buttons">
         <div id="cOne">
@@ -118,25 +140,25 @@
             <input id="toLower" type="button" value="To Lower" onclick="encode(getPanel(), function(str){return str.toLowerCase();})"/>
         </div>
         <div id="cSix">
-            TODO
-            <input id="bcrypt" type="button" value="bcrypt" onclick="encode(getPanel())"/>
-            <select id="bcryptFactor">
+            <input id="bcrypt" type="button" value="bcrypt" onclick="bc($('#bcryptPass').val(), getPanel().val(), $('#bcryptRounds').val())"/>
+            <select id="bcryptRounds">
             </select>
-            <input id="bcryptPass" type="text" value="bcryptPass"/>
-
-            <input id="HmacMd5Hex" type="button" value="HmacMd5Hex" onclick="encode(getPanel())"/>
-            <input id="HmacSha1Hex" type="button" value="HmacSha1Hex" onclick="encode(getPanel())"/>
-            <input id="HmacSha256Hex" type="button" value="HmacSha256Hex" onclick="encode(getPanel())"/>
-            <input id="HmacSha512Hex" type="button" value="HmacSha512Hex" onclick="encode(getPanel())"/>
-
+            <input id="bcryptPass" type="text" value=""/>
+        </div>
+        <div id="cSeven">
+            <input id="HmacMd5Hex" type="button" value="HmacMd5Hex"
+                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacMD5(str, $('#HmacSecret').val());})"/>
+            <input id="HmacSha1Hex" type="button" value="HmacSha1Hex"
+                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA1(str, $('#HmacSecret').val());})"/>
+            <input id="HmacSha256Hex" type="button" value="HmacSha256Hex"
+                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA256(str, $('#HmacSecret').val());})"/>
+            <input id="HmacSha512Hex" type="button" value="HmacSha512Hex"
+                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA512(str, $('#HmacSecret').val());})"/>
+            <input id="HmacSecret" type="text" value=""/>
         </div>
     </div>
     <div id=" panels">
-        <textarea id="panel" style="width: 50em; height:10em">
-<xml>asdf
-    <ee>asdf</ee>
-</xml>
-        </textarea>
+        <textarea id="panel" style="width: 50em; height:10em"></textarea>
     </div>
 
 </div>
