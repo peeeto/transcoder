@@ -70,9 +70,16 @@
         function getPanel() {
             return $('#panel');
         }
+
+        function initBCryptFactor(max) {
+            var bcryptFactor = $("#bcryptFactor");
+            for (jj = 4; jj < max; jj++) {
+                bcryptFactor.append(new Option(jj, jj));
+            }
+        }
     </script>
 </head>
-<body>
+<body onload="initBCryptFactor(32)">
 <div id="content">
     <div id="buttons">
         <div id="cOne">
@@ -113,6 +120,10 @@
         <div id="cSix">
             TODO
             <input id="bcrypt" type="button" value="bcrypt" onclick="encode(getPanel())"/>
+            <select id="bcryptFactor">
+            </select>
+            <input id="bcryptPass" type="text" value="bcryptPass"/>
+
             <input id="HmacMd5Hex" type="button" value="HmacMd5Hex" onclick="encode(getPanel())"/>
             <input id="HmacSha1Hex" type="button" value="HmacSha1Hex" onclick="encode(getPanel())"/>
             <input id="HmacSha256Hex" type="button" value="HmacSha256Hex" onclick="encode(getPanel())"/>
@@ -122,9 +133,12 @@
     </div>
     <div id=" panels">
         <textarea id="panel" style="width: 50em; height:10em">
-<xml>asdf<ee>asdf</ee></xml>
+<xml>asdf
+    <ee>asdf</ee>
+</xml>
         </textarea>
     </div>
+
 </div>
 
 </body>
