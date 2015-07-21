@@ -3,51 +3,76 @@
 <head>
     <meta charset="utf-8">
     <title>transcoder-jquery</title>
-</head>
-<body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
 
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha512.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
 
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/ripemd160.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha512.js"></script>
 
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/ripemd160.js"></script>
 
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-md5.js"></script>
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha1.js"></script>
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha512.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
 
-<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/pbkdf2.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-md5.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha1.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha512.js"></script>
 
-<script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/pbkdf2.js"></script>
 
-<script>
-    function guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                    .toString(16)
-                    .substring(1);
+    <script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+
+    <script type="text/javascript" src="vkbeautify.0.99.00.beta.js"></script>
+
+    <!--<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>-->
+    <script>
+        function xmlFormat(str) {
+            try {
+                return vkbeautify.xml(str);
+            } catch (error) {
+                var msg = 'Not XML: ' + error;
+                alert(msg);
+                console.log(msg);
+            }
         }
 
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                s4() + '-' + s4() + s4() + s4();
-    }
+        function jsonFormat(str) {
+            try {
+                str = str.replace(/([a-z][^:]*)(?=\s*:)/g, '"$1"');
+                return JSON.stringify(JSON.parse(str), null, 4);
+            } catch (error) {
+                var msg = 'Not JSON: ' + error;
+                alert(msg);
+                console.log(msg);
+            }
+        }
 
-    function encode(element, hashFunc, toStringFunc) {
-        var hash = hashFunc(element.val().trim());
-        element.val(hash.toString(toStringFunc));
-        $("#test").text(hash.toString());
-    }
+        function guid() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                        .toString(16)
+                        .substring(1);
+            }
 
-    function getPanel() {
-        return $('#panel');
-    }
-</script>
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                    s4() + '-' + s4() + s4() + s4();
+        }
+
+        function encode(element, hashFunc, toStringFunc) {
+            var hash = hashFunc(element.val().trim());
+            var result = hash.toString(toStringFunc);
+            element.val(result);
+        }
+
+        function getPanel() {
+            return $('#panel');
+        }
+    </script>
+</head>
+<body>
 <div id="content">
     <div id="buttons">
         <div id="cOne">
@@ -80,14 +105,25 @@
                    onclick="encode(getPanel(), function(date){return moment.utc(parseInt(date)).format('YYYY-MM-DD HH:mm:ss.SSS Z');})"/>
         </div>
         <div id="cFive">
-            <input id="json" type="button" value="JSON Format"
-                   onclick="encode(getPanel(), function(str){return JSON.stringify(str, null, 4);})"/>
+            <input id="jsonFormat" type="button" value="JSON Format" onclick="encode(getPanel(), jsonFormat)"/>
+            <input id="xmlFormat" type="button" value="XML Format" onclick="encode(getPanel(), xmlFormat)"/>
+            <input id="toUpper" type="button" value="To Upper" onclick="encode(getPanel(), function(str){return str.toUpperCase();})"/>
+            <input id="toLower" type="button" value="To Lower" onclick="encode(getPanel(), function(str){return str.toLowerCase();})"/>
+        </div>
+        <div id="cSix">
+            TODO
+            <input id="bcrypt" type="button" value="bcrypt" onclick="encode(getPanel())"/>
+            <input id="HmacMd5Hex" type="button" value="HmacMd5Hex" onclick="encode(getPanel())"/>
+            <input id="HmacSha1Hex" type="button" value="HmacSha1Hex" onclick="encode(getPanel())"/>
+            <input id="HmacSha256Hex" type="button" value="HmacSha256Hex" onclick="encode(getPanel())"/>
+            <input id="HmacSha512Hex" type="button" value="HmacSha512Hex" onclick="encode(getPanel())"/>
+
         </div>
     </div>
     <div id=" panels">
-        <textarea id="panel" style="width: 50em; height:10em">text</textarea>
-
-        <div id="test">text</div>
+        <textarea id="panel" style="width: 50em; height:10em">
+<xml>asdf<ee>asdf</ee></xml>
+        </textarea>
     </div>
 </div>
 
