@@ -98,7 +98,13 @@
                 }
             }
         }
-
+        $(function () {
+            var selectAll = function () {
+                this.select();
+            };
+            $(document).on('click', 'input[type=text]', selectAll);
+            $(document).on('click', 'textarea', selectAll);
+        });
     </script>
 </head>
 <body onload="initBCryptRounds(32)">
@@ -143,7 +149,7 @@
             <input id="bcrypt" type="button" value="bcrypt" onclick="bc($('#bcryptPass').val(), getPanel().val(), $('#bcryptRounds').val())"/>
             <select id="bcryptRounds">
             </select>
-            <input  id="bcryptPass" type="text" value=""/>
+            <input id="bcryptPass" type="text" value=""/>
         </div>
         <div id="cSeven">
             <input id="HmacMd5Hex" type="button" value="HmacMd5Hex"
@@ -157,7 +163,7 @@
             <input id="HmacSecret" type="text" value=""/>
         </div>
     </div>
-    <div id=" panels">
+    <div id="panels">
         <textarea id="panel" style="width: 50em; height:10em"></textarea>
     </div>
 
