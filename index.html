@@ -204,7 +204,7 @@
                    onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA512(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
         </div>
         <div id="cNine">
-            <input id="HmacSecret" type="text" value=""/>
+            <input id="HmacSecret" type="text" value="" title="hmac secret"/>
         </div>
     </div>
     <div id="panels">
