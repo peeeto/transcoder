@@ -30,6 +30,7 @@
 
     <script src="isaac.js"></script>
     <script src="bCrypt.js"></script>
+    <script src="enc-base32.js"></script>
 
     <!--<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>-->
     <script>
@@ -66,10 +67,31 @@
                     s4() + '-' + s4() + s4() + s4();
         }
 
+        function isInt(value) {
+            return !isNaN(value) && parseInt(Number(value)) == value && !isNaN(parseInt(value, 10));
+        }
+
         function encode(element, hashFunc, toStringFunc) {
             var hash = hashFunc(element.val().trim());
             var result = hash.toString(toStringFunc);
             element.val(result);
+        }
+
+        function stringToMillis(date) {
+            if (date) {
+                var m = moment(date, 'YYYY-MM-DD HH:mm:ss.SSS Z');
+                if (m.isValid()) {
+                    return m.valueOf();
+                }
+                return new Date().getTime();
+            }
+        }
+
+        function millisToString(date) {
+            if (!isInt(date)) {
+                date = new Date().getTime();
+            }
+            return moment.utc(parseInt(date)).format('YYYY-MM-DD HH:mm:ss.SSS Z');
         }
 
         function getPanel() {
@@ -99,6 +121,7 @@
                 }
             }
         }
+
         $(function () {
             var selectAll = function () {
                 this.select();
@@ -132,13 +155,15 @@
             <input id="urlDecode" type="button" value="urlDecode" onclick="encode(getPanel(), decodeURIComponent)"/>
             <input id="base64Encode" type="button" value="base64Encode" onclick="encode(getPanel(), btoa )"/>
             <input id="base64Decode" type="button" value="base64Decode" onclick="encode(getPanel(), atob)"/>
+            <input id="base32Encode" type="button" value="base32Encode" onclick="encode(getPanel(), CryptoJS.enc.Utf8.parse, CryptoJS.enc.Base32)"/>
+            <input id="base32Decode" type="button" value="base32Decode" onclick="encode(getPanel(), CryptoJS.enc.Base32.parse, CryptoJS.enc.Utf8)"/>
         </div>
         <div id="cFour">
             <input id="UUID" type="button" value="UUID" onclick="encode(getPanel(), guid)"/>
             <input id="momentToLong" type="button" value="yyyy-MM-dd HH:mm:ss.SSS Z -> 1234L"
-                   onclick="encode(getPanel(), function(date){return moment(date, 'YYYY-MM-DD HH:mm:ss.SSS Z').milliseconds();})"/>
+                   onclick="encode(getPanel(), stringToMillis)"/>
             <input id="longToMoment" type="button" value="1234L -> yyyy-MM-dd HH:mm:ss.SSS Z"
-                   onclick="encode(getPanel(), function(date){return moment.utc(parseInt(date)).format('YYYY-MM-DD HH:mm:ss.SSS Z');})"/>
+                   onclick="encode(getPanel(), millisToString)"/>
         </div>
         <div id="cTen">
             <input id="hexToBase64" type="button" value="hexToBase64"
