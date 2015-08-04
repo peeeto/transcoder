@@ -78,7 +78,7 @@
         }
 
         function stringToMillis(date) {
-            if (date) {
+            if (!!date) {
                 var m = moment(date, 'YYYY-MM-DD HH:mm:ss.SSS Z');
                 if (m.isValid()) {
                     return m.valueOf();
