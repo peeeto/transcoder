@@ -181,7 +181,7 @@
             <input id="bcrypt" type="button" value="bcrypt" onclick="bc($('#bcryptPass').val(), getPanel().val(), $('#bcryptRounds').val())"/>
             <select id="bcryptRounds">
             </select>
-            <input id="bcryptPass" type="text" value="" title="plaintext password to check"/>
+            <label>plaintext password to check with bcrypt: </label><input id="bcryptPass" type="text" value="" title="plaintext password to check with bcrypt"/>
         </div>
         <div id="cSeven">
             <input id="HmacMd5Hex" type="button" value="HmacMd5Hex"
@@ -204,7 +204,7 @@
                    onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA512(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
         </div>
         <div id="cNine">
-            <input id="HmacSecret" type="text" value="" title="hmac secret"/>
+            <label>hmac secret: </label><input id="HmacSecret" type="text" value="" title="hmac secret"/>
         </div>
     </div>
     <div id="panels">
