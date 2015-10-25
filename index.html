@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
     <title>transcoder</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -32,9 +37,15 @@
     <script src="bCrypt.js"></script>
     <script src="enc-base32.js"></script>
 
+    <script src="scrypt.js"></script>
+
     <!--<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>-->
     <script>
+        var scrypt = scrypt_module_factory();
+        //        alert(scrypt.to_hex(scrypt.random_bytes(16)));
+
         var bcrypt = new bCrypt();
+
         function xmlFormat(str) {
             try {
                 return vkbeautify.xml(str);
@@ -105,17 +116,53 @@
             }
         }
 
-        function bc(password, toHash, rounds) {
-            if (password.length <= 0) {
+        function bc(passwordToCheck, toHash, rounds) {
+            if (passwordToCheck.length <= 0) {
                 var salt = bcrypt.gensalt(parseInt(rounds));
                 bcrypt.hashpw(toHash, salt, function (hash) {
                     getPanel().val(hash);
                 });
             } else {
                 try {
-                    bcrypt.checkpw(password, toHash, function (res) {
+                    bcrypt.checkpw(passwordToCheck, toHash, function (res) {
                         alert("Password and Hash are: " + (!!res ? "OK" : "NOT ok"));
                     });
+                } catch (error) {
+                    alert("Hash does not contain Salt to check");
+                }
+            }
+        }
+
+        function sc(passwordToCheck, toHash, salt, n, r, p) {
+            if (passwordToCheck.length <= 0) {
+                var hash = scrypt.crypto_scrypt(
+                        scrypt.encode_utf8(toHash),
+                        scrypt.encode_utf8(salt),
+                        parseInt(n), parseInt(r), parseInt(p), 32);
+                var params = (((Math.log2(n) << 16) | (r << 8) | p)).toString(16);
+                var slt = btoa(salt);
+                var derived = btoa(String.fromCharCode.apply(null, hash));
+                getPanel().val("$s0$" + params + "$" + slt + "$" + derived);
+            } else {
+                try {
+                    var parts = toHash.split("\$");
+                    if (parts.length != 5 || parts[1] !== 's0') {
+                        alert("Invalid format of validated string")
+                    } else {
+                        params = parseInt(parts[2], 16);
+                        salt = atob(parts[3]);
+                        var passKey = parts[4];
+                        n = Math.pow(2, params >> 16 & 0xffff);
+                        r = params >> 8 & 0xff;
+                        p = params & 0xff;
+                        hash = scrypt.crypto_scrypt(
+                                scrypt.encode_utf8(passwordToCheck),
+                                scrypt.encode_utf8(salt),
+                                n, r, p, 32);
+                        derived = btoa(String.fromCharCode.apply(null, hash));
+                        var res = (passKey === derived);
+                        alert("Password and Hash are: " + (!!res ? "OK" : "NOT ok"));
+                    }
                 } catch (error) {
                     alert("Hash does not contain Salt to check");
                 }
@@ -135,28 +182,43 @@
 <div id="content">
     <div id="buttons">
         <div id="cOne">
-            <input id="md5Hex" type="button" value="md5Hex" onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Hex)"/>
-            <input id="sha1Hex" type="button" value="sha1Hex" onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Hex)"/>
-            <input id="sha3Hex" type="button" value="sha3Hex" onclick="encode(getPanel(), CryptoJS.SHA3, CryptoJS.enc.Hex)"/>
-            <input id="sha256Hex" type="button" value="sha256Hex" onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Hex)"/>
-            <input id="sha512Hex" type="button" value="sha512Hex" onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Hex)"/>
-            <input id="ripemd160Hex" type="button" value="ripemd160" onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Hex)"/>
+            <input id="md5Hex" type="button" value="md5Hex" onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Hex)"
+                   title="echo -n 'text to be encrypted' | openssl md5"/>
+            <input id="sha1Hex" type="button" value="sha1Hex"
+                   onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Hex)"/>
+            <input id="sha3Hex" type="button" value="sha3Hex"
+                   onclick="encode(getPanel(), CryptoJS.SHA3, CryptoJS.enc.Hex)"/>
+            <input id="sha256Hex" type="button" value="sha256Hex"
+                   onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Hex)"/>
+            <input id="sha512Hex" type="button" value="sha512Hex"
+                   onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Hex)"/>
+            <input id="ripemd160Hex" type="button" value="ripemd160"
+                   onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Hex)"/>
         </div>
         <div id="cTwo">
-            <input id="md5Base64" type="button" value="md5Base64" onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Base64)"/>
-            <input id="sha1Base64" type="button" value="sha1Base64" onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Base64)"/>
-            <input id="sha3Base64" type="button" value="sha3Base64" onclick="encode(getPanel(), CryptoJS.SHA3, CryptoJS.enc.Base64)"/>
-            <input id="sha256Base64" type="button" value="sha256Base64" onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Base64)"/>
-            <input id="sha512Base64" type="button" value="sha512Base64" onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Base64)"/>
-            <input id="ripemd160Base64" type="button" value="ripemd160Base64" onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Base64)"/>
+            <input id="md5Base64" type="button" value="md5Base64"
+                   onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Base64)"
+                   title="echo -n 'text to be encrypted' | openssl md5 -binary | openssl base64"/>
+            <input id="sha1Base64" type="button" value="sha1Base64"
+                   onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Base64)"/>
+            <input id="sha3Base64" type="button" value="sha3Base64"
+                   onclick="encode(getPanel(), CryptoJS.SHA3, CryptoJS.enc.Base64)"/>
+            <input id="sha256Base64" type="button" value="sha256Base64"
+                   onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Base64)"/>
+            <input id="sha512Base64" type="button" value="sha512Base64"
+                   onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Base64)"/>
+            <input id="ripemd160Base64" type="button" value="ripemd160Base64"
+                   onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Base64)"/>
         </div>
         <div id="cTree">
             <input id="urlEncode" type="button" value="urlEncode" onclick="encode(getPanel(), encodeURIComponent)"/>
             <input id="urlDecode" type="button" value="urlDecode" onclick="encode(getPanel(), decodeURIComponent)"/>
             <input id="base64Encode" type="button" value="base64Encode" onclick="encode(getPanel(), btoa )"/>
             <input id="base64Decode" type="button" value="base64Decode" onclick="encode(getPanel(), atob)"/>
-            <input id="base32Encode" type="button" value="base32Encode" onclick="encode(getPanel(), CryptoJS.enc.Utf8.parse, CryptoJS.enc.Base32)"/>
-            <input id="base32Decode" type="button" value="base32Decode" onclick="encode(getPanel(), CryptoJS.enc.Base32.parse, CryptoJS.enc.Utf8)"/>
+            <input id="base32Encode" type="button" value="base32Encode"
+                   onclick="encode(getPanel(), CryptoJS.enc.Utf8.parse, CryptoJS.enc.Base32)"/>
+            <input id="base32Decode" type="button" value="base32Decode"
+                   onclick="encode(getPanel(), CryptoJS.enc.Base32.parse, CryptoJS.enc.Utf8)"/>
         </div>
         <div id="cFour">
             <input id="UUID" type="button" value="UUID" onclick="encode(getPanel(), guid)"/>
@@ -174,14 +236,30 @@
         <div id="cFive">
             <input id="jsonFormat" type="button" value="JSON Format" onclick="encode(getPanel(), jsonFormat)"/>
             <input id="xmlFormat" type="button" value="XML Format" onclick="encode(getPanel(), xmlFormat)"/>
-            <input id="toUpper" type="button" value="To Upper" onclick="encode(getPanel(), function(str){return str.toUpperCase();})"/>
-            <input id="toLower" type="button" value="To Lower" onclick="encode(getPanel(), function(str){return str.toLowerCase();})"/>
+            <input id="toUpper" type="button" value="To Upper"
+                   onclick="encode(getPanel(), function(str){return str.toUpperCase();})"/>
+            <input id="toLower" type="button" value="To Lower"
+                   onclick="encode(getPanel(), function(str){return str.toLowerCase();})"/>
         </div>
         <div id="cSix">
-            <input id="bcrypt" type="button" value="bcrypt" onclick="bc($('#bcryptPass').val(), getPanel().val(), $('#bcryptRounds').val())"/>
+            <input id="bcrypt" type="button" value="bcrypt"
+                   onclick="bc($('#bcryptPass').val(), getPanel().val(), $('#bcryptRounds').val())"/>
             <select id="bcryptRounds">
             </select>
-            <label>plaintext password to check with bcrypt: </label><input id="bcryptPass" type="text" value="" title="plaintext password to check with bcrypt"/>
+            <label>plaintext password to check with bcrypt: </label><input id="bcryptPass" type="text" value=""
+                                                                           title="plaintext password to check with bcrypt"/>
+            <br/>
+            <input id="scrypt" type="button" value="scrypt"
+                   onclick="sc($('#scryptPass').val(), getPanel().val(), $('#scryptSalt').val(), $('#scryptN').val(), $('#scryptR').val(), $('#scryptP').val())"/>
+            <label>scrypt salt: <input id="scryptSalt" type="text" value="ramdomSalt"></label>
+            <label>scrypt n,r,p:
+                <input id="scryptN" type="text" value="1024" title="must be a power of two, 2^14=16384, 2^20=1048576">
+                <input id="scryptR" type="text" value="8">
+                <input id="scryptP" type="text" value="1">
+            </label>
+            <label>plaintext password to check with scrypt:<input id="scryptPass" type="text" value=""
+                                                                  title="plaintext password to check with scrypt"/></label>
+
         </div>
         <div id="cSeven">
             <input id="HmacMd5Hex" type="button" value="HmacMd5Hex"
