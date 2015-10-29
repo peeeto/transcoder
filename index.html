@@ -169,12 +169,12 @@
             }
         }
 
-        function utf8_to_b64( str ) {
-            return window.btoa(unescape(encodeURIComponent( str )));
+        function utf8_to_b64(str) {
+            return btoa(unescape(encodeURIComponent(str)));
         }
 
-        function b64_to_utf8( str ) {
-            return decodeURIComponent(escape(window.atob( str )));
+        function b64_to_utf8(str) {
+            return decodeURIComponent(escape(atob(str)));
         }
 
         $(function () {
@@ -278,8 +278,8 @@
                    onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA256(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
             <input id="HmacSha512Hex" type="button" value="HmacSha512Hex"
                    onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA512(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
-        <!--</div>-->
-        <!--<div id="cEight">-->
+            <!--</div>-->
+            <!--<div id="cEight">-->
             <input id="HmacMd5Base64" type="button" value="HmacMd5Base64"
                    onclick="encode(getPanel(), function(str){return CryptoJS.HmacMD5(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
             <input id="HmacSha1Base64" type="button" value="HmacSha1Base64"
