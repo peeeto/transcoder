@@ -6,189 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
 
     <title>transcoder</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
+    <script src="assets/js/main.min.js"></script>
 
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha512.js"></script>
-
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/ripemd160.js"></script>
-
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
-
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-md5.js"></script>
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha1.js"></script>
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha512.js"></script>
-
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/pbkdf2.js"></script>
-
-    <script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
-
-    <script src="vkbeautify.0.99.00.beta.js"></script>
-
-    <script src="isaac.js"></script>
-    <script src="bCrypt.js"></script>
-    <script src="enc-base32.js"></script>
-
-    <script src="scrypt.js"></script>
-
-    <!--<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>-->
-    <script>
-        var scrypt = scrypt_module_factory();
-        //        alert(scrypt.to_hex(scrypt.random_bytes(16)));
-
-        var bcrypt = new bCrypt();
-
-        function xmlFormat(str) {
-            try {
-                return vkbeautify.xml(str);
-            } catch (error) {
-                var msg = 'Not XML: ' + error;
-                alert(msg);
-                console.log(msg);
-            }
-        }
-
-        function jsonFormat(str) {
-            try {
-                str = str.replace(/([a-z][^:]*)(?=\s*:)/g, '"$1"');
-                return JSON.stringify(JSON.parse(str), null, 4);
-            } catch (error) {
-                var msg = 'Not JSON: ' + error;
-                alert(msg);
-                console.log(msg);
-            }
-        }
-
-        function guid() {
-            function s4() {
-                return Math.floor((1 + Math.random()) * 0x10000)
-                        .toString(16)
-                        .substring(1);
-            }
-
-            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                    s4() + '-' + s4() + s4() + s4();
-        }
-
-        function isInt(value) {
-            return !isNaN(value) && parseInt(Number(value)) == value && !isNaN(parseInt(value, 10));
-        }
-
-        function encode(element, hashFunc, toStringFunc) {
-            var hash = hashFunc(element.val().trim());
-            var result = hash.toString(toStringFunc);
-            element.val(result);
-        }
-
-        function stringToMillis(date) {
-            if (!!date) {
-                var m = moment(date, 'YYYY-MM-DD HH:mm:ss.SSS Z');
-                if (m.isValid()) {
-                    return m.valueOf();
-                }
-            }
-            return new Date().getTime();
-        }
-
-        function millisToString(date) {
-            if (!isInt(date)) {
-                date = new Date().getTime();
-            }
-            return moment.utc(parseInt(date)).format('YYYY-MM-DD HH:mm:ss.SSS Z');
-        }
-
-        function getPanel() {
-            return $('#panel');
-        }
-
-        function initBCryptRounds(max) {
-            var bcryptRounds = $("#bcryptRounds");
-            for (jj = 4; jj < max; jj++) {
-                bcryptRounds.append(new Option(jj, jj));
-            }
-        }
-
-        function bc(passwordToCheck, toHash, rounds) {
-            if (passwordToCheck.length <= 0) {
-                var salt = bcrypt.gensalt(parseInt(rounds));
-                bcrypt.hashpw(toHash, salt, function (hash) {
-                    getPanel().val(hash);
-                });
-            } else {
-                try {
-                    bcrypt.checkpw(passwordToCheck, toHash, function (res) {
-                        alert("Password and Hash are: " + (!!res ? "OK" : "NOT ok"));
-                    });
-                } catch (error) {
-                    alert("Hash does not contain Salt to check");
-                }
-            }
-        }
-
-        function sc(passwordToCheck, toHash, salt, n, r, p) {
-            if (passwordToCheck.length <= 0) {
-                var hash = scrypt.crypto_scrypt(
-                        scrypt.encode_utf8(toHash),
-                        scrypt.encode_utf8(salt),
-                        parseInt(n), parseInt(r), parseInt(p), 32);
-                var params = (((Math.log2(n) << 16) | (r << 8) | p)).toString(16);
-                var slt = btoa(salt);
-                var derived = btoa(String.fromCharCode.apply(null, hash));
-                getPanel().val("$s0$" + params + "$" + slt + "$" + derived);
-            } else {
-                try {
-                    var parts = toHash.split("\$");
-                    if (parts.length != 5 || parts[1] !== 's0') {
-                        alert("Invalid format of validated string")
-                    } else {
-                        params = parseInt(parts[2], 16);
-                        salt = atob(parts[3]);
-                        var passKey = parts[4];
-                        n = Math.pow(2, params >> 16 & 0xffff);
-                        r = params >> 8 & 0xff;
-                        p = params & 0xff;
-                        hash = scrypt.crypto_scrypt(
-                                scrypt.encode_utf8(passwordToCheck),
-                                scrypt.encode_utf8(salt),
-                                n, r, p, 32);
-                        derived = btoa(String.fromCharCode.apply(null, hash));
-                        var res = (passKey === derived);
-                        alert("Password and Hash are: " + (!!res ? "OK" : "NOT ok"));
-                    }
-                } catch (error) {
-                    alert("Hash does not contain Salt to check");
-                }
-            }
-        }
-
-        function utf8_to_b64(str) {
-            return btoa(unescape(encodeURIComponent(str)));
-        }
-
-        function b64_to_utf8(str) {
-            return decodeURIComponent(escape(atob(str)));
-        }
-
-        $(function () {
-            var selectAll = function () {
-                this.select();
-            };
-            $(document).on('click', 'input[type=text]', selectAll);
-            $(document).on('click', 'textarea', selectAll);
-        });
-    </script>
 </head>
-<body onload="initBCryptRounds(32)">
+<body onload='initBCryptRounds(32, $("#bcryptRounds"))'>
 <div id="content">
-    <div id="buttons">
+    <div i"buttons">
         <div id="cOne">
             <input id="md5Hex" type="button" value="md5Hex" onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Hex)"
                    title="echo -n 'text to be encrypted' | openssl md5"/>
@@ -258,7 +85,7 @@
                                                                            title="plaintext password to check with bcrypt"/>
             <br/>
             <input id="scrypt" type="button" value="scrypt"
-                   onclick="sc($('#scryptPass').val(), getPanel().val(), $('#scryptSalt').val(), $('#scryptN').val(), $('#scryptR').val(), $('#scryptP').val())"/>
+                   onclick="getPanel().val(sc($('#scryptPass').val(), getPanel().val(), $('#scryptSalt').val(), $('#scryptN').val(), $('#scryptR').val(), $('#scryptP').val()))"/>
             <label>scrypt salt: <input id="scryptSalt" type="text" value="ramdomSalt"></label>
             <label>scrypt n,r,p:
                 <input id="scryptN" type="text" value="1024" title="must be a power of two, 2^14=16384, 2^20=1048576">
@@ -294,10 +121,11 @@
         <!--</div>-->
     </div>
     <div id="panels">
+        <label for="panel">Value:</label>
+        <br/>
         <textarea id="panel" style="width: 70em; height:10em"></textarea>
     </div>
 
 </div>
-
 </body>
 </html>
