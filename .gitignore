@@ -9,4 +9,4 @@ logs/
 *.project
 *.ids
 .settings/
-
+node_modules/
