@@ -15,12 +15,7 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-qunit": ">=0.2.1",
     "grunt-contrib-uglify": "^0.10.0",
-    "grunt-contrib-watch": ">=0.3.1",
-    "grunt-node-qunit": "^2.0.2",
-    "qunit": "latest",
-    "qunit-phantomjs-runner": "latest",
-    "qunitjs": "latest"
+    "grunt-contrib-watch": ">=0.3.1"
   }
 }

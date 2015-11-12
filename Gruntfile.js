@@ -21,19 +21,19 @@ module.exports = function (grunt) {
             },
             options: {}
         },
-        'node-qunit': {
-            deps: './assets/js/main.js',
-            code: './assets/js/main.js',
-            tests: './test/test.js',
-            done: function (err, res) {
-                !err && publishResults("node", res, this.async());
-            }
-        }
+        //'node-qunit': {
+        //    deps: './assets/js/main.js',
+        //    code: './assets/js/main.js',
+        //    tests: './test/test.js',
+        //    done: function (err, res) {
+        //        !err && publishResults("node", res, this.async());
+        //    }
+        //}
     });
 
-    grunt.loadNpmTasks('grunt-node-qunit');
+//    grunt.loadNpmTasks('grunt-node-qunit');
     grunt.loadNpmTasks('grunt-contrib-uglify'); // load the given tasks
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.registerTask('default', ['concat', 'uglify', 'node-qunit']); // Default grunt tasks maps to grunt
+    grunt.registerTask('default', ['concat', 'uglify']); // Default grunt tasks maps to grunt
 };
 

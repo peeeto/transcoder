@@ -22123,8 +22123,6 @@ var scrypt = scrypt_module_factory();
 
 var bcrypt = new bCrypt();
 
-
-
 function xmlFormat(str) {
     try {
         return vkbeautify.xml(str);
