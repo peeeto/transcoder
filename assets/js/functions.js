@@ -1,13 +1,27 @@
-function testing() {
-    return "asdf";
-}
-
-
+// GUI functions
 function initBCryptRounds(max, panel) {
     for (jj = 4; jj < max; jj++) {
         panel.append(new Option(jj, jj));
     }
 }
+
+$(function () {
+    initBCryptRounds(32, $("#bcryptRounds"))
+});
+
+$(function () {
+    var selectAll = function () {
+        this.select();
+    };
+    $(document).one('click', 'input[type=text]', selectAll);
+    $(document).one('click', 'textarea', selectAll);
+});
+
+
+function getPanel() {
+    return $('#panel');
+}
+// computation functions
 
 var scrypt = scrypt_module_factory();
 
@@ -72,10 +86,6 @@ function millisToString(date) {
     return moment.utc(parseInt(date)).format('YYYY-MM-DD HH:mm:ss.SSS Z');
 }
 
-function getPanel() {
-    return $('#panel');
-}
-
 function bc(passwordToCheck, toHash, rounds) {
     if (passwordToCheck.length <= 0) {
         var salt = bcrypt.gensalt(parseInt(rounds));
@@ -136,11 +146,3 @@ function utf8_to_b64(str) {
 function b64_to_utf8(str) {
     return decodeURIComponent(escape(atob(str)));
 }
-
-$(function () {
-    var selectAll = function () {
-        this.select();
-    };
-    $(document).on('click', 'input[type=text]', selectAll);
-    $(document).on('click', 'textarea', selectAll);
-});

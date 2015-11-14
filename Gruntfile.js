@@ -25,7 +25,22 @@ module.exports = function (grunt) {
                 compress: true
             }
         },
-
+        replace: {
+            dist: {
+                options: {
+                    patterns: [
+                        {
+                            match: 'timestamp',
+                            replacement: '<%= new Date().getTime() %>'
+                        }
+                    ]
+                },
+                files: [
+                    {src: ['assets/templates/index.html'], dest: './index.html'},
+                    {src: ['assets/templates/qunit.html'], dest: './qunit.html'}
+                ]
+            }
+        }
         //'node-qunit': {
         //    deps: './assets/js/main.js',
         //    code: './assets/js/main.js',
@@ -39,6 +54,7 @@ module.exports = function (grunt) {
 //    grunt.loadNpmTasks('grunt-node-qunit');
     grunt.loadNpmTasks('grunt-contrib-uglify'); // load the given tasks
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.registerTask('default', ['concat', 'uglify']); // Default grunt tasks maps to grunt
+    grunt.loadNpmTasks('grunt-replace');
+    grunt.registerTask('default', ['concat', 'uglify', 'replace']); // Default grunt tasks maps to grunt
 };
 
