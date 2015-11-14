@@ -9,18 +9,23 @@ module.exports = function (grunt) {
                     stripBanners: true
                 },
                 files: {
-                    './assets/js/main.js': ['./assets/js/libs/*.js']
+                    './assets/js/dist/main.js': ['./assets/js/libs/*.js']
                 }
             }
         },
         uglify: {
             my_target: {
                 files: {
-                    './assets/js/main.min.js': ['./assets/js/main.js']
+                    './assets/js/dist/main.min.js': ['./assets/js/dist/main.js', './assets/js/functions.js']
                 }
             },
-            options: {}
+            options: {
+                preserveComments: false,
+                report: 'gzip',
+                compress: true
+            }
         },
+
         //'node-qunit': {
         //    deps: './assets/js/main.js',
         //    code: './assets/js/main.js',

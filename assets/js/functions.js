@@ -1,6 +1,6 @@
 function testing() {
     return "asdf";
-};
+}
 
 
 function initBCryptRounds(max, panel) {

@@ -9,7 +9,7 @@
   "readme": "README.md",
   "scripts": {
     "start": "node src/index.js",
-    "test": "grunt"
+    "postinstall": "grunt"
   },
   "dependencies": {},
   "devDependencies": {
