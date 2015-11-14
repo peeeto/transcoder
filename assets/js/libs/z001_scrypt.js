@@ -297,7 +297,7 @@ function Fa(a, b) {
 }
 s.Pointer_stringify = Fa;
 var A, G, Ha, Pa, B, Qa, Ia, Ja, Ra = 0, sa = 0, Sa = 0, u = 0, Ta = 0, Ua = 0, z = 0, va = s.TOTAL_MEMORY || 33554432;
-w(!!Int32Array /*&& !!Float64Array*/ && !!(new Int32Array(1)).subarray && !!(new Int32Array(1)).set, "Cannot fallback to non-typed array case: Code is too specialized");
+w(!!Int32Array && !!Float64Array && !!(new Int32Array(1)).subarray && !!(new Int32Array(1)).set, "Cannot fallback to non-typed array case: Code is too specialized");
 var I = new ArrayBuffer(va);
 A = new Int8Array(I);
 Ha = new Int16Array(I);
@@ -9026,7 +9026,7 @@ function da(a, b) {
   dynCall_iii: c4
  };
 // EMSCRIPTEN_END_ASM
-})({Math:Math, Int8Array:Int8Array, Int16Array:Int16Array, Int32Array:Int32Array, Uint8Array:Uint8Array, Uint16Array:Uint16Array, Uint32Array:Uint32Array, Float32Array:Float32Array/*, Float64Array:Float64Array*/}, {abort:wa, assert:w, asmPrintInt:function(a, b) {
+})({Math:Math, Int8Array:Int8Array, Int16Array:Int16Array, Int32Array:Int32Array, Uint8Array:Uint8Array, Uint16Array:Uint16Array, Uint32Array:Uint32Array, Float32Array:Float32Array, Float64Array:Float64Array}, {abort:wa, assert:w, asmPrintInt:function(a, b) {
   s.print("int " + a + "," + b)
 }, asmPrintFloat:function(a, b) {
   s.print("float " + a + "," + b)
