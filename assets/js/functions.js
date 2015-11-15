@@ -64,10 +64,19 @@ function isInt(value) {
 }
 
 function encode(element, hashFunc, toStringFunc) {
-    var hash = hashFunc(element.val().trim());
+    var str = element.val();
+    //var parsed = CryptoJS.enc.Utf8.parse(str);
+    var parsed = str;
+    var hash = hashFunc(parsed);
     var result = hash.toString(toStringFunc);
     element.val(result);
     return result;
+}
+
+function prepareUtf16String(str) {
+    return encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+        return String.fromCharCode('0x' + p1);
+    });
 }
 
 function stringToMillis(date) {
