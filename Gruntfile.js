@@ -32,6 +32,18 @@ module.exports = function (grunt) {
                         {
                             match: 'timestamp',
                             replacement: '<%= new Date().getTime() %>'
+                        },
+                        {
+                            match: /\.\.\/js/g,
+                            replacement: function () {
+                                return 'assets/js';
+                            }
+                        },
+                        {
+                            match: /\.\.\/css/g,
+                            replacement: function () {
+                                return 'assets/css';
+                            }
                         }
                     ]
                 },
@@ -52,9 +64,9 @@ module.exports = function (grunt) {
     });
 
 //    grunt.loadNpmTasks('grunt-node-qunit');
-    grunt.loadNpmTasks('grunt-contrib-uglify'); // load the given tasks
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-replace');
-    grunt.registerTask('default', ['concat', 'uglify', 'replace']); // Default grunt tasks maps to grunt
+    grunt.registerTask('default', ['concat', 'uglify', 'replace']);
 };
 

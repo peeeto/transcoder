@@ -9,9 +9,9 @@
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
 
     <title>Transcoder</title>
-    <script src="assets/js/dist/main.min.js?v=@@timestamp"></script>
-    <!--<script src="assets/js/dist/main.js?v=@@timestamp"></script>-->
-    <!--<script src="assets/js/functions.js?v=@@timestamp"></script>-->
+    <!--<script src="assets/js/dist/main.min.js?v=@@timestamp"></script>-->
+    <script src="../js/dist/main.js?v=@@timestamp"></script>
+    <script src="../js/functions.js?v=@@timestamp"></script>
 
 </head>
 <body>
@@ -29,7 +29,7 @@
                    onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Hex)"/>
             <input id="sha512Hex" type="button" value="sha512Hex"
                    onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Hex)"/>
-            <input id="ripemd160Hex" type="button" value="ripemd160"
+            <input id="ripemd160Hex" type="button" value="ripemd160Hex"
                    onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Hex)"/>
         </div>
         <div id="cTwo">
