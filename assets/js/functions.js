@@ -67,6 +67,7 @@ function encode(element, hashFunc, toStringFunc) {
     var hash = hashFunc(element.val().trim());
     var result = hash.toString(toStringFunc);
     element.val(result);
+    return result;
 }
 
 function stringToMillis(date) {

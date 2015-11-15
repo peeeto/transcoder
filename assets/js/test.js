@@ -1,6 +1,17 @@
+function Mock(str) {
+    var value = str;
+    this.val = function (str) {
+        if (str !== undefined) value = str;
+        return value;
+    }
+}
+
 QUnit.test("md5Hex", function (assert) {
-    assert.equal(1, 2, "");
+    var element = new Mock('');
+    encode(element, CryptoJS.MD5, CryptoJS.enc.Hex);
+    assert.equal(element.val(), "d41d8cd98f00b204e9800998ecf8427e");
 });
+/*
 QUnit.test("sha1Hex", function (assert) {
     assert.equal(1, 2, "");
 });
@@ -124,3 +135,4 @@ QUnit.test("hmacSha256Base64", function (assert) {
 QUnit.test("hmacSha512Base64", function (assert) {
     assert.equal(1, 2, "");
 });
+*/
