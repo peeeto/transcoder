@@ -22,7 +22,7 @@ QUnit.test("md5Hex", function (assert) {
     assertEqualHashes('', "d41d8cd98f00b204e9800998ecf8427e", CryptoJS.MD5, CryptoJS.enc.Hex, assert);
     assertEqualHashes('admin', "21232f297a57a5a743894a0e4a801fc3", CryptoJS.MD5, CryptoJS.enc.Hex, assert);
     assertEqualHashes(' admin ', "94e29491ed800dba5927e35a9272b138", CryptoJS.MD5, CryptoJS.enc.Hex, assert);
-    //assertEqualHashes('✓ à la mode', "ec82bdee4638f2eee7add3fa2dfb96eb", CryptoJS.MD5, CryptoJS.enc.Hex, assert);
+    assertEqualHashes('✓ à la mode', "060ee7b9651684cf44b4d4c67ae96231", CryptoJS.MD5, CryptoJS.enc.Hex, assert);
 });
 
  //QUnit.test("sha1Hex", function (assert) {
@@ -102,7 +102,7 @@ QUnit.test("md5Base64", function (assert) {
     assertEqualHashes('', "1B2M2Y8AsgTpgAmY7PhCfg==", CryptoJS.MD5, CryptoJS.enc.Base64, assert);
     assertEqualHashes('admin', "ISMvKXpXpadDiUoOSoAfww==", CryptoJS.MD5, CryptoJS.enc.Base64, assert);
     assertEqualHashes(' admin ', "lOKUke2ADbpZJ+NaknKxOA==", CryptoJS.MD5, CryptoJS.enc.Base64, assert);
-    //assertEqualHashes('✓ à la mode', "7IK97kY48u7nrdP6LfuW6w==", CryptoJS.MD5, CryptoJS.enc.Base64, assert);
+    assertEqualHashes('✓ à la mode', "Bg7nuWUWhM9EtNTGeuliMQ==", CryptoJS.MD5, CryptoJS.enc.Base64, assert);
 });
  //QUnit.test("base64ToHex", function (assert) {
  //assert.equal(1, 2, "");
