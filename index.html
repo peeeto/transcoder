@@ -9,9 +9,9 @@
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
 
     <title>Transcoder</title>
-    <!--<script src="assets/js/dist/main.min.js?v=1447586377449"></script>-->
-    <script src="assets/js/dist/main.js?v=1447586377449"></script>
-    <script src="assets/js/functions.js?v=1447586377449"></script>
+    <script src="assets/js/dist/main.min.js?v=1447668350977"></script>
+    <!--<script src="assets/js/dist/main.js?v=1447668350977"></script>-->
+    <!--<script src="assets/js/functions.js?v=1447668350977"></script>-->
 
 </head>
 <body>
@@ -23,8 +23,6 @@
                    title="echo -n 'text to be encrypted' | openssl md5"/>
             <input id="sha1Hex" type="button" value="sha1Hex"
                    onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Hex)"/>
-            <input id="sha3Hex" type="button" value="sha3Hex"
-                   onclick="encode(getPanel(), CryptoJS.SHA3, CryptoJS.enc.Hex)"/>
             <input id="sha256Hex" type="button" value="sha256Hex"
                    onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Hex)"/>
             <input id="sha512Hex" type="button" value="sha512Hex"
@@ -38,8 +36,6 @@
                    title="echo -n 'text to be encrypted' | openssl md5 -binary | openssl base64"/>
             <input id="sha1Base64" type="button" value="sha1Base64"
                    onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Base64)"/>
-            <input id="sha3Base64" type="button" value="sha3Base64"
-                   onclick="encode(getPanel(), CryptoJS.SHA3, CryptoJS.enc.Base64)"/>
             <input id="sha256Base64" type="button" value="sha256Base64"
                    onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Base64)"/>
             <input id="sha512Base64" type="button" value="sha512Base64"
