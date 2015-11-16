@@ -50,8 +50,8 @@
         <div id="cTree">
             <input id="urlEncode" type="button" value="urlEncode" onclick="encode(getPanel(), encodeURIComponent)"/>
             <input id="urlDecode" type="button" value="urlDecode" onclick="encode(getPanel(), decodeURIComponent)"/>
-            <input id="base64Encode" type="button" value="base64Encode" onclick="encode(getPanel(), utf8_to_b64 )"/>
-            <input id="base64Decode" type="button" value="base64Decode" onclick="encode(getPanel(), b64_to_utf8)"/>
+            <input id="base64Encode" type="button" value="base64Encode" onclick="encode(getPanel(), base64Encode )"/>
+            <input id="base64Decode" type="button" value="base64Decode" onclick="encode(getPanel(), base64Decode)"/>
             <input id="base32Encode" type="button" value="base32Encode"
                    onclick="encode(getPanel(), CryptoJS.enc.Utf8.parse, CryptoJS.enc.Base32)"/>
             <input id="base32Decode" type="button" value="base32Decode"

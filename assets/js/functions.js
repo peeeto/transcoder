@@ -149,10 +149,10 @@ function sc(passwordToCheck, toHash, salt, n, r, p) {
     }
 }
 
-function utf8_to_b64(str) {
+function base64Encode(str) {
     return btoa(unescape(encodeURIComponent(str)));
 }
 
-function b64_to_utf8(str) {
+function base64Decode(str) {
     return decodeURIComponent(escape(atob(str)));
 }
