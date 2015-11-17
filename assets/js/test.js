@@ -177,12 +177,32 @@ QUnit.test('base64EncodeDecodeWithMiddleSelected', function (assert) {
     encode(element, base64Decode, CryptoJS.enc.Utf8);
     assert.equal(element.val(), 'asd');
 });
-//QUnit.test('base32Encode', function (assert) {
-//assert.equal(1, 2, '');
-//});
-//QUnit.test('base32Decode', function (assert) {
-//assert.equal(1, 2, '');
-//});
+QUnit.test('base64EncodeDecodeWithAllSelected', function (assert) {
+    var element = new Mock('asd', 0, 3);
+    encode(element, base64Encode, CryptoJS.enc.Utf8);
+    assert.equal(element.val(), 'YXNk');
+    assert.equal(element.selectionStart, 0);
+    assert.equal(element.selectionEnd, 4);
+
+    encode(element, base64Decode, CryptoJS.enc.Utf8);
+    assert.equal(element.val(), 'asd');
+});
+QUnit.test('base32Encode', function (assert) {
+    var hashFunc = CryptoJS.enc.Utf8.parse;
+    var toStringFunc = CryptoJS.enc.Base32;
+    assertHashesEqual('', '', hashFunc, toStringFunc, assert);
+    assertHashesEqual('admin', 'MFSG22LO', hashFunc, toStringFunc, assert);
+    assertHashesEqual(' admin ', 'EBQWI3LJNYQA====', hashFunc, toStringFunc, assert);
+    assertHashesEqual('✓ à la mode', '4KOJGIGDUAQGYYJANVXWIZI=', hashFunc, toStringFunc, assert);
+});
+QUnit.test('base32Decode', function (assert) {
+    var hashFunc = CryptoJS.enc.Base32.parse;
+    var toStringFunc = CryptoJS.enc.Utf8;
+    assertHashesEqual('', '', hashFunc, toStringFunc, assert);
+    assertHashesEqual('MFSG22LO', 'admin', hashFunc, toStringFunc, assert);
+    assertHashesEqual('EBQWI3LJNYQA====', ' admin ', hashFunc, toStringFunc, assert);
+    assertHashesEqual('4KOJGIGDUAQGYYJANVXWIZI=', '✓ à la mode', hashFunc, toStringFunc, assert);
+});
 
 QUnit.test('stringToMillis', function (assert) {
     assert.equal(stringToMillis('2015-11-08 21:05:34.670 +00:00'), '1447016734670');
@@ -192,10 +212,17 @@ QUnit.test('millisToString', function (assert) {
     assert.equal(millisToString('1447016734670'), '2015-11-08 21:05:34.670 +00:00');
     assert.equal(millisToString('1447016785711'), '2015-11-08 21:06:25.711 +00:00');
 });
-
-
+///**
+// * echo -n "admin" | openssl md5 -binary|base64 ; ISMvKXpXpadDiUoOSoAfww==
+// */
 //QUnit.test('base64ToHex', function (assert) {
-//assert.equal(1, 2, '');
+//    assert.equal('', '');
+//});
+///**
+// *  echo -n "ISMvKXpXpadDiUoOSoAfww=="|base64 -d|openssl md5 ; d41d8cd98f00b204e9800998ecf8427e
+// */
+//QUnit.test('base64ToHex', function (assert) {
+//    assert.equal('', '');
 //});
 //
 //QUnit.test('jsonFormat', function (assert) {
@@ -204,12 +231,14 @@ QUnit.test('millisToString', function (assert) {
 //QUnit.test('xmlFormat', function (assert) {
 //assert.equal(1, 2, '');
 //});
-//QUnit.test('toUpper', function (assert) {
-//assert.equal(1, 2, '');
-//});
-//QUnit.test('toLower', function (assert) {
-//assert.equal(1, 2, '');
-//});
+QUnit.test('toUpperCase', function (assert) {
+    assert.equal(toUpperCase(''), '');
+    assert.equal(toUpperCase('a'), 'A');
+});
+QUnit.test('toLowerCase', function (assert) {
+    assert.equal(toLowerCase(''), '');
+    assert.equal(toLowerCase('A'), 'a');
+});
 //
 //QUnit.test('bcrypt', function (assert) {
 //assert.equal(1, 2, '');

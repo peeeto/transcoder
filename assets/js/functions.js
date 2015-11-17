@@ -74,8 +74,7 @@ function encode(element, hashFunc, toStringFunc) {
     var wasSelected = !(typeof dom === undefined || typeof dom.selectionStart === undefined || dom.selectionStart == dom.selectionEnd);
     if (wasSelected) {
         before = str.substr(0, dom.selectionStart);
-        var end = dom.selectionEnd == str.length ? dom.selectionEnd : (str.length - 1 - dom.selectionEnd + (dom.selectionStart == 0 ? 0 : 1));
-        selected = str.substr(dom.selectionStart, end);
+        selected = str.substr(dom.selectionStart, dom.selectionEnd - dom.selectionStart);
         after = str.substr(dom.selectionEnd, str.length - dom.selectionEnd);
     }
     var hash = hashFunc(selected);
@@ -87,7 +86,6 @@ function encode(element, hashFunc, toStringFunc) {
         dom.selectionStart = selStart;
         dom.selectionEnd = selStart + res.length;
     }
-
     return result;
 }
 
@@ -173,4 +171,12 @@ function base64Encode(str) {
 
 function base64Decode(str) {
     return decodeURIComponent(escape(atob(str)));
+}
+
+function toUpperCase(str) {
+    return str.toUpperCase();
+}
+
+function toLowerCase(str) {
+    return str.toLowerCase();
 }
