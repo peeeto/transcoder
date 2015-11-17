@@ -65,30 +65,29 @@ function isInt(value) {
 
 function encode(element, hashFunc, toStringFunc) {
     var str = element.val();
-    var dom = element[0];
+    var dom = element.get(0);
 
-    var before;
-    var selected;
-    var after;
+    var before = '';
+    var selected = str;
+    var after = '';
 
-    if (typeof dom == 'undefined' || typeof dom.selectionStart == 'undefined' || dom.selectionStart == dom.selectionEnd) {
-        before = '';
-        selected = str;
-        after = ''
-    } else {
-        before = str.substr(0, dom.selectionStart - 1);
-        selected = str.substr(dom.selectionStart, dom.selectionEnd - 1);
-        after = str.substr(dom.selectionEnd, str.length - 1);
+    var wasSelected = !(typeof dom === undefined || typeof dom.selectionStart === undefined || dom.selectionStart == dom.selectionEnd);
+    if (wasSelected) {
+        before = str.substr(0, dom.selectionStart);
+        var end = dom.selectionEnd == str.length ? dom.selectionEnd : (str.length - 1 - dom.selectionEnd + (dom.selectionStart == 0 ? 0 : 1));
+        selected = str.substr(dom.selectionStart, end);
+        after = str.substr(dom.selectionEnd, str.length - dom.selectionEnd);
     }
-    //var parsed = CryptoJS.enc.Utf8.parse(str);
-    //var parsed = selected;
     var hash = hashFunc(selected);
     var res = hash.toString(toStringFunc);
     var result = before + res + after;
     element.val(result);
-    //element.setSelectionRange(before.length, before.length + res.length);
-    dom.selectionStart = before.length;
-    dom.selectionEnd = before.length + res.length;
+    if (wasSelected) {
+        var selStart = before.length;
+        dom.selectionStart = selStart;
+        dom.selectionEnd = selStart + res.length;
+    }
+
     return result;
 }
 

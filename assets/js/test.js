@@ -1,19 +1,14 @@
-function Mock(str) {
-    var value = str;
-    var selectionStart;
-    var selectionEnd;
+function Mock(str, selectionStart, selectionEnd) {
+    this.value = str;
+    this.selectionStart = selectionStart === undefined ? 0 : selectionStart;
+    this.selectionEnd = selectionEnd === undefined ? 0 : selectionEnd;
 
     this.val = function (str) {
-        if (str !== undefined) value = str;
-        return value;
+        if (str !== undefined) this.value = str;
+        return this.value;
     };
-    this.selectionStart = function (str) {
-        if (str !== undefined) selectionStart = str;
-        return selectionStart;
-    };
-    this.selectionEnd = function (str) {
-        if (str !== undefined) selectionEnd = str;
-        return selectionEnd;
+    this.get = function () {
+        return this;
     };
 }
 
@@ -150,6 +145,37 @@ QUnit.test('base64Decode', function (assert) {
     assertHashesEqual('YWRtaW4=', 'admin', hashFunc, toStringFunc, assert);
     assertHashesEqual('IGFkbWluIA==', ' admin ', hashFunc, toStringFunc, assert);
     assertHashesEqual('4pyTIMOgIGxhIG1vZGU=', '✓ à la mode', hashFunc, toStringFunc, assert);
+});
+
+QUnit.test('base64EncodeDecodeWithStartSelected', function (assert) {
+    var element = new Mock('asd', 0, 1);
+    encode(element, base64Encode, CryptoJS.enc.Utf8);
+    assert.equal(element.val(), 'YQ==' + 'sd');
+    assert.equal(element.selectionStart, 0);
+    assert.equal(element.selectionEnd, 4);
+
+    encode(element, base64Decode, CryptoJS.enc.Utf8);
+    assert.equal(element.val(), 'asd');
+});
+QUnit.test('base64EncodeDecodeWithEndSelected', function (assert) {
+    var element = new Mock('asd', 2, 3);
+    encode(element, base64Encode, CryptoJS.enc.Utf8);
+    assert.equal(element.val(), 'as' + 'ZA==');
+    assert.equal(element.selectionStart, 2);
+    assert.equal(element.selectionEnd, 6);
+
+    encode(element, base64Decode, CryptoJS.enc.Utf8);
+    assert.equal(element.val(), 'asd');
+});
+QUnit.test('base64EncodeDecodeWithMiddleSelected', function (assert) {
+    var element = new Mock('asd', 1, 2);
+    encode(element, base64Encode, CryptoJS.enc.Utf8);
+    assert.equal(element.val(), 'a' + 'cw==' + 'd');
+    assert.equal(element.selectionStart, 1);
+    assert.equal(element.selectionEnd, 5);
+
+    encode(element, base64Decode, CryptoJS.enc.Utf8);
+    assert.equal(element.val(), 'asd');
 });
 //QUnit.test('base32Encode', function (assert) {
 //assert.equal(1, 2, '');
