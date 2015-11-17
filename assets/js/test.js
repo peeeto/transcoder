@@ -213,6 +213,8 @@ QUnit.test('millisToString', function (assert) {
     assert.equal(millisToString('1447016785711'), '2015-11-08 21:06:25.711 +00:00');
 });
 ///**
+// http://emn178.github.io/online-tools/base32_encode.html
+// http://tomeko.net/online_tools/base64.php?lang=en
 // * echo -n "admin" | openssl md5 -binary|base64 ; ISMvKXpXpadDiUoOSoAfww==
 // */
 //QUnit.test('base64ToHex', function (assert) {
@@ -231,10 +233,10 @@ QUnit.test('millisToString', function (assert) {
 //QUnit.test('xmlFormat', function (assert) {
 //assert.equal(1, 2, '');
 //});
-QUnit.test('toUpperCase', function (assert) {
-    assert.equal(toUpperCase(''), '');
-    assert.equal(toUpperCase('a'), 'A');
-});
+    QUnit.test('toUpperCase', function (assert) {
+        assert.equal(toUpperCase(''), '');
+        assert.equal(toUpperCase('a'), 'A');
+    });
 QUnit.test('toLowerCase', function (assert) {
     assert.equal(toLowerCase(''), '');
     assert.equal(toLowerCase('A'), 'a');
