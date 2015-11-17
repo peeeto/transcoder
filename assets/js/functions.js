@@ -9,13 +9,13 @@ $(function () {
     initBCryptRounds(32, $("#bcryptRounds"))
 });
 
-$(function () {
-    var selectAll = function () {
-        this.select();
-    };
-    $(document).one('click', 'input[type=text]', selectAll);
-    $(document).one('click', 'textarea', selectAll);
-});
+//$(function () {
+//    var selectAll = function () {
+//        this.select();
+//    };
+//    $(document).one('click', 'input[type=text]', selectAll);
+//    $(document).one('click', 'textarea', selectAll);
+//});
 
 
 function getPanel() {
@@ -65,11 +65,30 @@ function isInt(value) {
 
 function encode(element, hashFunc, toStringFunc) {
     var str = element.val();
+    var dom = element[0];
+
+    var before;
+    var selected;
+    var after;
+
+    if (typeof dom == 'undefined' || typeof dom.selectionStart == 'undefined' || dom.selectionStart == dom.selectionEnd) {
+        before = '';
+        selected = str;
+        after = ''
+    } else {
+        before = str.substr(0, dom.selectionStart - 1);
+        selected = str.substr(dom.selectionStart, dom.selectionEnd - 1);
+        after = str.substr(dom.selectionEnd, str.length - 1);
+    }
     //var parsed = CryptoJS.enc.Utf8.parse(str);
-    var parsed = str;
-    var hash = hashFunc(parsed);
-    var result = hash.toString(toStringFunc);
+    //var parsed = selected;
+    var hash = hashFunc(selected);
+    var res = hash.toString(toStringFunc);
+    var result = before + res + after;
     element.val(result);
+    //element.setSelectionRange(before.length, before.length + res.length);
+    dom.selectionStart = before.length;
+    dom.selectionEnd = before.length + res.length;
     return result;
 }
 

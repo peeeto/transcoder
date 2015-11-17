@@ -1,9 +1,20 @@
 function Mock(str) {
     var value = str;
+    var selectionStart;
+    var selectionEnd;
+
     this.val = function (str) {
         if (str !== undefined) value = str;
         return value;
-    }
+    };
+    this.selectionStart = function (str) {
+        if (str !== undefined) selectionStart = str;
+        return selectionStart;
+    };
+    this.selectionEnd = function (str) {
+        if (str !== undefined) selectionEnd = str;
+        return selectionEnd;
+    };
 }
 
 function assertHashesEqual(input, expected, hashFunc, toStringFunc, assert) {
