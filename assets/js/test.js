@@ -218,19 +218,48 @@ QUnit.test('millisToString', function (assert) {
  * echo -n "admin" | openssl md5 -binary|base64 ; ISMvKXpXpadDiUoOSoAfww==
  */
 QUnit.test('base64ToHex', function (assert) {
-    assert.equal('', '');
+    var hashFunc = function (str) {
+        return CryptoJS.enc.Base64.parse(str);
+    };
+    var toStringFunc = CryptoJS.enc.Hex;
+    assertHashesEqual('ISMvKXpXpadDiUoOSoAfww==', '21232f297a57a5a743894a0e4a801fc3', hashFunc, toStringFunc, assert);
 });
 /**
  *  echo -n "ISMvKXpXpadDiUoOSoAfww==" | base64 -d | xxd -ps ; 21232f297a57a5a743894a0e4a801fc3
  *  echo -n "admin" | openssl md5 ; 21232f297a57a5a743894a0e4a801fc3
  */
-QUnit.test('base64ToHex', function (assert) {
-    assert.equal('', '');
+QUnit.test('hexToBase64', function (assert) {
+    var hashFunc = CryptoJS.enc.Hex.parse;
+    var toStringFunc = CryptoJS.enc.Base64;
+    assertHashesEqual('21232f297a57a5a743894a0e4a801fc3', 'ISMvKXpXpadDiUoOSoAfww==', hashFunc, toStringFunc, assert);
 });
 
-//QUnit.test('jsonFormat', function (assert) {
-//assert.equal(1, 2, '');
-//});
+QUnit.test('jsonFormat', function (assert) {
+    assert.equal(jsonFormat('{"GlossDef": {"para": "A meta-mar","GlossSeeAlso": ["GML", "XML"]},"GlossSee": true}'),
+        '{\n' +
+        '    "GlossDef": {\n' +
+        '        "para": "A meta-mar",\n' +
+        '        "GlossSeeAlso": [\n' +
+        '            "GML",\n' +
+        '            "XML"\n' +
+        '        ]\n' +
+        '    },\n' +
+        '    "GlossSee": true\n' +
+        '}'
+    );
+    assert.equal(jsonFormat("{'GlossDef': {'para': 'A meta-mar','GlossSeeAlso': ['GML', 'XML']},'GlossSee': true}"),
+        "{\n" +
+        "    'GlossDef': {\n" +
+        "        'para': 'A meta-mar',\n" +
+        "        'GlossSeeAlso': [\n" +
+        "            'GML',\n" +
+        "            'XML'\n" +
+        "        ]\n" +
+        "    },\n" +
+        "    'GlossSee': true\n" +
+        "}"
+    );
+});
 //QUnit.test('xmlFormat', function (assert) {
 //assert.equal(1, 2, '');
 //});
@@ -242,9 +271,9 @@ QUnit.test('toLowerCase', function (assert) {
     assert.equal(toLowerCase(''), '');
     assert.equal(toLowerCase('AŽ'), 'až');
 });
-//
 //QUnit.test('bcrypt', function (assert) {
-//assert.equal(1, 2, '');
+//    var actual = bc('', 'admin', 4);
+    //bc(actual, 'admin', 5, null, );
 //});
 QUnit.test('scrypt', function (assert) {
     assert.equal(sc('', 'password', 'randomSalt', 1024, 8, 1), '$s0$a0801$cmFuZG9tU2FsdA==$4BgX8flnz7UGOZ30L5nB7Y1aMJl2pg8JSpRxMhjwxrs=');

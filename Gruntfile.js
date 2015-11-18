@@ -30,10 +30,6 @@ module.exports = function (grunt) {
                 options: {
                     patterns: [
                         {
-                            match: 'timestamp',
-                            replacement: '<%= new Date().getTime() %>'
-                        },
-                        {
                             match: /\.\.\/js/g,
                             replacement: function () {
                                 return 'assets/js';
@@ -44,6 +40,10 @@ module.exports = function (grunt) {
                             replacement: function () {
                                 return 'assets/css';
                             }
+                        },
+                        {
+                            match: 'timestamp',
+                            replacement: '<%= new Date().getTime() %>'
                         }
                     ]
                 },

@@ -76,7 +76,14 @@
         </div>
         <div id="cSix">
             <input id="bcrypt" type="button" value="bcrypt"
-                   onclick="bc($('#bcryptPass').val(), getPanel().val(), $('#bcryptRounds').val())"/>
+                   onclick="bc(
+                   $('#bcryptPass').val(),
+                    getPanel().val(),
+                   $('#bcryptRounds').val(),
+                   function (res) { getPanel().val(res);},
+                   function (res) { alert('Password and Hash are: ' + (!!res ? 'OK' : 'NOT ok'));},
+                   function (err) { alert('Hash does not contain Salt to check: ' + err)}
+                    )"/>
             <select id="bcryptRounds">
             </select>
             <label>plaintext password to check with bcrypt: </label><input id="bcryptPass" type="text" value=""

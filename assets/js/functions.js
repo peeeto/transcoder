@@ -39,8 +39,17 @@ function xmlFormat(str) {
 
 function jsonFormat(str) {
     try {
-        str = str.replace(/([a-z][^:]*)(?=\s*:)/g, '"$1"');
-        return JSON.stringify(JSON.parse(str), null, 4);
+        var ap = false;
+        if (str.indexOf("'") > 0) {
+            str = str.replace(/'/g, "\"");
+            //str = str.replace(/([a-z][^:]*)(?=\s*:)/g, '"$1"');
+            ap = true
+        }
+        var result = JSON.stringify(JSON.parse(str), null, 4);
+        if (ap === true) {
+            result = result.replace(/"/g, "'");
+        }
+        return result;
     } catch (error) {
         var msg = 'Not JSON: ' + error;
         alert(msg);
@@ -112,19 +121,19 @@ function millisToString(date) {
     return moment.utc(parseInt(date)).format('YYYY-MM-DD HH:mm:ss.SSS Z');
 }
 
-function bc(passwordToCheck, toHash, rounds) {
+function bc(passwordToCheck, toHash, rounds, callbackEncSucc, callbackCheckSucc, callbackErr) {
     if (passwordToCheck.length <= 0) {
         var salt = bcrypt.gensalt(parseInt(rounds));
         bcrypt.hashpw(toHash, salt, function (hash) {
-            getPanel().val(hash);
+            callbackEncSucc(hash);
         });
     } else {
         try {
             bcrypt.checkpw(passwordToCheck, toHash, function (res) {
-                alert("Password and Hash are: " + (!!res ? "OK" : "NOT ok"));
+                callbackCheckSucc(res);
             });
-        } catch (error) {
-            alert("Hash does not contain Salt to check");
+        } catch (err) {
+            callbackErr(err);
         }
     }
 }
