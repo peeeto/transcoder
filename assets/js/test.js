@@ -212,34 +212,35 @@ QUnit.test('millisToString', function (assert) {
     assert.equal(millisToString('1447016734670'), '2015-11-08 21:05:34.670 +00:00');
     assert.equal(millisToString('1447016785711'), '2015-11-08 21:06:25.711 +00:00');
 });
-///**
-// http://emn178.github.io/online-tools/base32_encode.html
-// http://tomeko.net/online_tools/base64.php?lang=en
-// * echo -n "admin" | openssl md5 -binary|base64 ; ISMvKXpXpadDiUoOSoAfww==
-// */
-//QUnit.test('base64ToHex', function (assert) {
-//    assert.equal('', '');
-//});
-///**
-// *  echo -n "ISMvKXpXpadDiUoOSoAfww=="|base64 -d|openssl md5 ; d41d8cd98f00b204e9800998ecf8427e
-// */
-//QUnit.test('base64ToHex', function (assert) {
-//    assert.equal('', '');
-//});
-//
+/**
+ http://emn178.github.io/online-tools/base32_encode.html
+ http://tomeko.net/online_tools/base64.php?lang=en
+ * echo -n "admin" | openssl md5 -binary|base64 ; ISMvKXpXpadDiUoOSoAfww==
+ */
+QUnit.test('base64ToHex', function (assert) {
+    assert.equal('', '');
+});
+/**
+ *  echo -n "ISMvKXpXpadDiUoOSoAfww==" | base64 -d | xxd -ps ; 21232f297a57a5a743894a0e4a801fc3
+ *  echo -n "admin" | openssl md5 ; 21232f297a57a5a743894a0e4a801fc3
+ */
+QUnit.test('base64ToHex', function (assert) {
+    assert.equal('', '');
+});
+
 //QUnit.test('jsonFormat', function (assert) {
 //assert.equal(1, 2, '');
 //});
 //QUnit.test('xmlFormat', function (assert) {
 //assert.equal(1, 2, '');
 //});
-    QUnit.test('toUpperCase', function (assert) {
-        assert.equal(toUpperCase(''), '');
-        assert.equal(toUpperCase('a'), 'A');
-    });
+QUnit.test('toUpperCase', function (assert) {
+    assert.equal(toUpperCase(''), '');
+    assert.equal(toUpperCase('až'), 'AŽ');
+});
 QUnit.test('toLowerCase', function (assert) {
     assert.equal(toLowerCase(''), '');
-    assert.equal(toLowerCase('A'), 'a');
+    assert.equal(toLowerCase('AŽ'), 'až');
 });
 //
 //QUnit.test('bcrypt', function (assert) {
