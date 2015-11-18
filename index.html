@@ -9,9 +9,9 @@
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
 
     <title>Transcoder</title>
-    <script src="assets/js/dist/main.min.js?v=1447793265032"></script>
-    <!--<script src="assets/js/dist/main.js?v=1447793265032"></script>-->
-    <!--<script src="assets/js/functions.js?v=1447793265032"></script>-->
+    <script src="assets/js/dist/main.min.js?v=1447879618086"></script>
+    <!--<script src="assets/js/dist/main.js?v=1447879618086"></script>-->
+    <!--<script src="assets/js/functions.js?v=1447879618086"></script>-->
 
 </head>
 <body>
@@ -76,7 +76,14 @@
         </div>
         <div id="cSix">
             <input id="bcrypt" type="button" value="bcrypt"
-                   onclick="bc($('#bcryptPass').val(), getPanel().val(), $('#bcryptRounds').val())"/>
+                   onclick="bc(
+                   $('#bcryptPass').val(),
+                    getPanel().val(),
+                   $('#bcryptRounds').val(),
+                   function (res) { getPanel().val(res);},
+                   function (res) { alert('Password and Hash are: ' + (!!res ? 'OK' : 'NOT ok'));},
+                   function (err) { alert('Hash does not contain Salt to check: ' + err)}
+                    )"/>
             <select id="bcryptRounds">
             </select>
             <label>plaintext password to check with bcrypt: </label><input id="bcryptPass" type="text" value=""
