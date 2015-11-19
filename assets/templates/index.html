@@ -70,9 +70,9 @@
             <input id="jsonFormat" type="button" value="JSON Format" onclick="encode(getPanel(), jsonFormat)"/>
             <input id="xmlFormat" type="button" value="XML Format" onclick="encode(getPanel(), xmlFormat)"/>
             <input id="toUpper" type="button" value="To Upper"
-                   onclick="encode(getPanel(), function(str){return str.toUpperCase();})"/>
+                   onclick="encode(getPanel(), toUpperCase)"/>
             <input id="toLower" type="button" value="To Lower"
-                   onclick="encode(getPanel(), function(str){return str.toLowerCase();})"/>
+                   onclick="encode(getPanel(), toLowerCase)"/>
         </div>
         <div id="cSix">
             <input id="bcrypt" type="button" value="bcrypt"

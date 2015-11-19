@@ -282,9 +282,11 @@ QUnit.test('scrypt', function (assert) {
     assert.equal(sc('', '64d04051-e48a-00fd-d996-82b9fd5a9ca2', '64d04051', 1024, 8, 1), '$s0$a0801$NjRkMDQwNTE=$OpPyz5onfpBVczPbmHbQvKMtTbiH9+U+CQrHwpIUHWY=');
     assert.equal(sc('', '64d04051-e48a-00fd-d996-82b9fd5a9ca2', '64d04051', 2048, 16, 2), '$s0$b1002$NjRkMDQwNTE=$ckWl5OWrgTlwwR6dhEbs0OZff8FnsUPnS9SL4xCF3Xs=');
 });
-//
+/**
+ * echo -n "payload" | openssl md5 -hmac "secret"
+ */
 //QUnit.test('hmacMd5Hex', function (assert) {
-//assert.equal(1, 2, '');
+//assert.equal(, 2, '');
 //});
 //QUnit.test('hmacSha1Hex', function (assert) {
 //assert.equal(1, 2, '');
