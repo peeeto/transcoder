@@ -1153,6 +1153,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
      *
      * @param str Description of the Parameter
      * @return Description of the Return Value
+     * //TODO curl -G -v -s --data-urlencode query@1.json 'https://www.googleapis.com/freebase/v1/mqlread'
      */
     public static String urlEncode(String str) {
         try {
