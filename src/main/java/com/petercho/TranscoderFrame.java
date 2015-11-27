@@ -1,32 +1,20 @@
 package com.petercho;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.primitives.Longs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.Transferable;
-import java.awt.event.*;
-import java.io.*;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.zip.Adler32;
-import java.util.zip.CRC32;
-import java.util.zip.CheckedInputStream;
-import java.util.zip.Checksum;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -38,22 +26,18 @@ import javax.swing.text.JTextComponent;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.NullOutputStream;
-import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.*;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Hashtable;
 
 public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwner {
 
@@ -61,10 +45,68 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
      *
      */
     private static final long serialVersionUID = 5712516501903313109L;
-    protected UndoManager undo = new UndoManager();
-    protected UndoAction undoAction;
-    protected RedoAction redoAction;
+    private UndoManager undo = new UndoManager();
+    private UndoAction undoAction;
+    private RedoAction redoAction;
     private Hashtable<Object, Action> actions;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Adler32Button;
+    private javax.swing.JButton adler32Base64Button;
+    private javax.swing.JButton base64DecodeButton;
+    private javax.swing.JButton base64EncodeButton;
+    private javax.swing.JButton bcryptButton;
+    private javax.swing.JTextField bcryptTextField;
+    private javax.swing.JLabel countLabel;
+    private javax.swing.JButton crc32Base64Button;
+    private javax.swing.JButton crc32Button;
+    private javax.swing.JMenu editMenu;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonHmacMd5Hex;
+    private javax.swing.JButton jButtonHmacSha1Hex;
+    private javax.swing.JButton jButtonHmacSha256Hex;
+    private javax.swing.JButton jButtonHmacSha512Hex;
+    private javax.swing.JButton jButtonToLower;
+    private javax.swing.JButton jButtonToUpper;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelAdler32;
+    private javax.swing.JPanel jPanelCRC32;
+    private javax.swing.JPanel jPanelHmacMd5Hex;
+    private javax.swing.JPanel jPanelHmacSha1Hex;
+    private javax.swing.JPanel jPanelHmacSha256Hex;
+    private javax.swing.JPanel jPanelHmacSha512Hex;
+    private javax.swing.JPanel jPanelMd5;
+    private javax.swing.JPanel jPanelSha1;
+    private javax.swing.JPanel jPanelSha256;
+    private javax.swing.JPanel jPanelSha384;
+    private javax.swing.JPanel jPanelSha512;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane;
+    private javax.swing.JTextField jTextFieldHmacMd5Hex;
+    private javax.swing.JTextField jTextFieldHmacSha1Hex;
+    private javax.swing.JTextField jTextFieldHmacSha256Hex;
+    private javax.swing.JTextField jTextFieldHmacSha512Hex;
+    private javax.swing.JButton jsonFormat;
+    private javax.swing.JButton md5hashBase64Button;
+    private javax.swing.JButton md5hashButton;
+    private javax.swing.JButton sha1hashBase64Button;
+    private javax.swing.JButton sha1hashButton;
+    private javax.swing.JButton sha256Button;
+    private javax.swing.JButton sha384Base64Button;
+    private javax.swing.JButton sha384Button;
+    private javax.swing.JButton sha512Base64Button;
+    private javax.swing.JButton sha512Button;
+    private javax.swing.JComboBox strengthComboBox;
+    private javax.swing.JTextPane textPane;
+    private javax.swing.JButton timestampDecode;
+    private javax.swing.JButton timestampEncode;
+    private javax.swing.JPanel transcoderPanel;
+    private javax.swing.JButton urlDecodeButton;
+    private javax.swing.JButton urlEncodeButton;
+    private javax.swing.JButton uuidButton;
+    private javax.swing.JButton xmlFormat;
 
     /**
      * Creates new form TranscoderFrame
@@ -115,7 +157,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
     }
 
     //Obtain the images URL
-    protected static Image createImage(String path, String description) {
+    private static Image createImage(String path, String description) {
         URL imageURL = TranscoderFrame.class.getClassLoader().getResource(path);
         return (new ImageIcon(imageURL, description)).getImage();
     }
@@ -258,8 +300,6 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         jPanelAdler32 = new javax.swing.JPanel();
         adler32Base64Button = new javax.swing.JButton();
         Adler32Button = new javax.swing.JButton();
-        groovyPanel = new javax.swing.JPanel();
-        beanshellPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         editMenu = new javax.swing.JMenu();
 
@@ -294,11 +334,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         urlEncodeButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         urlEncodeButton.setText("URL encode");
         urlEncodeButton.setName(""); // NOI18N
-        urlEncodeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                urlEncodeButtonActionPerformed(evt);
-            }
-        });
+        urlEncodeButton.addActionListener(evt -> urlEncodeButtonActionPerformed(evt));
         jPanel1.add(urlEncodeButton);
 
         urlDecodeButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
@@ -350,7 +386,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         strengthComboBox.setEditable(true);
         strengthComboBox.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
-        strengthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        strengthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
         strengthComboBox.setToolTipText("Strength [4..31");
         jPanel3.add(strengthComboBox);
 
@@ -407,7 +443,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelHmacMd5Hex.setLayout(new java.awt.GridLayout(1, 2));
 
-        jButtonHmacMd5Hex.setFont(jButtonHmacMd5Hex.getFont().deriveFont(jButtonHmacMd5Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacMd5Hex.getFont().getSize()-2));
+        jButtonHmacMd5Hex.setFont(jButtonHmacMd5Hex.getFont().deriveFont(jButtonHmacMd5Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacMd5Hex.getFont().getSize() - 2));
         jButtonHmacMd5Hex.setText("HmacMd5Hex");
         jButtonHmacMd5Hex.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -423,7 +459,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelHmacSha1Hex.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonHmacSha1Hex.setFont(jButtonHmacSha1Hex.getFont().deriveFont(jButtonHmacSha1Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha1Hex.getFont().getSize()-2));
+        jButtonHmacSha1Hex.setFont(jButtonHmacSha1Hex.getFont().deriveFont(jButtonHmacSha1Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha1Hex.getFont().getSize() - 2));
         jButtonHmacSha1Hex.setText("HmacSha1Hex");
         jButtonHmacSha1Hex.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -444,7 +480,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelHmacSha256Hex.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonHmacSha256Hex.setFont(jButtonHmacSha256Hex.getFont().deriveFont(jButtonHmacSha256Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha256Hex.getFont().getSize()-2));
+        jButtonHmacSha256Hex.setFont(jButtonHmacSha256Hex.getFont().deriveFont(jButtonHmacSha256Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha256Hex.getFont().getSize() - 2));
         jButtonHmacSha256Hex.setText("HmacSha256Hex");
         jButtonHmacSha256Hex.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -460,7 +496,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelHmacSha512Hex.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonHmacSha512Hex.setFont(jButtonHmacSha512Hex.getFont().deriveFont(jButtonHmacSha512Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha512Hex.getFont().getSize()-2));
+        jButtonHmacSha512Hex.setFont(jButtonHmacSha512Hex.getFont().deriveFont(jButtonHmacSha512Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha512Hex.getFont().getSize() - 2));
         jButtonHmacSha512Hex.setText("HmacSha512Hex");
         jButtonHmacSha512Hex.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -494,7 +530,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelMd5.setLayout(new java.awt.GridLayout(1, 0));
 
-        md5hashBase64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
+        md5hashBase64Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         md5hashBase64Button.setText("MD5 Base64");
         md5hashBase64Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -516,7 +552,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelSha1.setLayout(new java.awt.GridLayout(1, 0));
 
-        sha1hashBase64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
+        sha1hashBase64Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha1hashBase64Button.setText("SHA-1 Base64");
         sha1hashBase64Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -539,7 +575,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelSha256.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton3.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
+        jButton3.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jButton3.setText("SHA-256 Base64");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -561,7 +597,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelSha384.setLayout(new java.awt.GridLayout(1, 0));
 
-        sha384Base64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
+        sha384Base64Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha384Base64Button.setText("SHA-384 Base64");
         sha384Base64Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -583,7 +619,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelSha512.setLayout(new java.awt.GridLayout(1, 0));
 
-        sha512Base64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
+        sha512Base64Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha512Base64Button.setText("SHA-512 Base64");
         sha512Base64Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -605,7 +641,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelCRC32.setLayout(new java.awt.GridLayout(1, 0));
 
-        crc32Base64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
+        crc32Base64Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         crc32Base64Button.setText("CRC32 Base64");
         crc32Base64Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -627,7 +663,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jPanelAdler32.setLayout(new java.awt.GridLayout(1, 0));
 
-        adler32Base64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
+        adler32Base64Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         adler32Base64Button.setText("Adler32 Base64");
         adler32Base64Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -650,8 +686,6 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         transcoderPanel.add(jPanel1, java.awt.BorderLayout.WEST);
 
         jTabbedPane.addTab("transcoder", transcoderPanel);
-        jTabbedPane.addTab("groovy", groovyPanel);
-        jTabbedPane.addTab("beanshell", beanshellPanel);
 
         getContentPane().add(jTabbedPane, java.awt.BorderLayout.CENTER);
 
@@ -664,21 +698,20 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-  private void sha1hashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha1hashButtonActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      textPane.replaceSelection(prepareText(DigestUtils.sha1Hex(getSelectedText())));
-      selectAllAndFocus();
-  }//GEN-LAST:event_sha1hashButtonActionPerformed
+    private void sha1hashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha1hashButtonActionPerformed
+        textPane.replaceSelection(prepareText(DigestUtils.sha1Hex(getSelectedText())));
+        selectAllAndFocus();
+    }//GEN-LAST:event_sha1hashButtonActionPerformed
 
     private String getSelectedText() {
-        return Objects.firstNonNull(textPane.getSelectedText(), "");
+        selectAllIfNotSelectedYet(textPane);
+        return MoreObjects.firstNonNull(textPane.getSelectedText(), "");
     }
 
-  private void md5hashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_md5hashButtonActionPerformed
-      selectAllIfNotSelectedYet(this.textPane);
-      textPane.replaceSelection(prepareText(DigestUtils.md5Hex(getSelectedText())));
-      selectAllAndFocus();
-  }//GEN-LAST:event_md5hashButtonActionPerformed
+    private void md5hashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_md5hashButtonActionPerformed
+        textPane.replaceSelection(prepareText(DigestUtils.md5Hex(getSelectedText())));
+        selectAllAndFocus();
+    }//GEN-LAST:event_md5hashButtonActionPerformed
 
     private void selectAllAndFocus() {
         textPane.selectAll();
@@ -691,320 +724,290 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         }
     }
 
-  private void base64DecodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base64DecodeButtonActionPerformed
-      try {
-          selectAllIfNotSelectedYet(textPane);
-          textPane.replaceSelection(new String(Base64.decodeBase64(getSelectedText())));
-          selectAllAndFocus();
-      } catch (Exception t) {
-          Runtime.getRuntime().gc();
-          t.printStackTrace();
-          textPane.setText("Exception! " + t.toString());
-      }
-  }//GEN-LAST:event_base64DecodeButtonActionPerformed
+    private void base64DecodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base64DecodeButtonActionPerformed
+        try {
+            textPane.replaceSelection(new String(Base64.decodeBase64(getSelectedText())));
+            selectAllAndFocus();
+        } catch (Exception t) {
+            Runtime.getRuntime().gc();
+            t.printStackTrace();
+            textPane.setText("Exception! " + t.toString());
+        }
+    }//GEN-LAST:event_base64DecodeButtonActionPerformed
 
-  private void base64EncodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base64EncodeButtonActionPerformed
-      try {
-          selectAllIfNotSelectedYet(textPane);
-          textPane.replaceSelection(Base64.encodeBase64String(getSelectedText().getBytes()));
-          selectAllAndFocus();
-      } catch (Exception t) {
-          Runtime.getRuntime().gc();
-          t.printStackTrace();
-          textPane.setText("Exception! " + t.toString());
-      }
-  }//GEN-LAST:event_base64EncodeButtonActionPerformed
+    private void base64EncodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_base64EncodeButtonActionPerformed
+        try {
+            textPane.replaceSelection(Base64.encodeBase64String(getSelectedText().getBytes()));
+            selectAllAndFocus();
+        } catch (Exception t) {
+            Runtime.getRuntime().gc();
+            t.printStackTrace();
+            textPane.setText("Exception! " + t.toString());
+        }
+    }//GEN-LAST:event_base64EncodeButtonActionPerformed
 
-  private void urlDecodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlDecodeButtonActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      String text = Encoder.urlDecode(getSelectedText());
-      textPane.replaceSelection(text);
-      selectAllAndFocus();
-  }//GEN-LAST:event_urlDecodeButtonActionPerformed
+    private void urlDecodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlDecodeButtonActionPerformed
+        String text = Encoder.urlDecode(getSelectedText());
+        textPane.replaceSelection(text);
+        selectAllAndFocus();
+    }//GEN-LAST:event_urlDecodeButtonActionPerformed
 
     private String prepareText(String text) {
         return StringUtils.upperCase(text);
     }
 
-  private void urlEncodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlEncodeButtonActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      textPane.replaceSelection(Encoder.urlEncode(getSelectedText()));
-      selectAllAndFocus();
-  }//GEN-LAST:event_urlEncodeButtonActionPerformed
+    private void urlEncodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlEncodeButtonActionPerformed
+        textPane.replaceSelection(Encoder.urlEncode(getSelectedText()));
+        selectAllAndFocus();
+    }//GEN-LAST:event_urlEncodeButtonActionPerformed
 
+    private void Adler32ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Adler32ButtonActionPerformed
+        try {
+            textPane.replaceSelection(prepareText(Long.toHexString(Encoder.checksumAdler32(textPane.getSelectedText()))));
+            selectAllAndFocus();
+        } catch (Exception t) {
+            Runtime.getRuntime().gc();
+            t.printStackTrace();
+            textPane.setText("Exception! " + t.toString());
+        }
+    }//GEN-LAST:event_Adler32ButtonActionPerformed
 
-  private void Adler32ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Adler32ButtonActionPerformed
-      try {
-          selectAllIfNotSelectedYet(textPane);
-          textPane.replaceSelection(prepareText(Long.toHexString(checksumAdler32(textPane.getSelectedText()))));
-          selectAllAndFocus();
-      } catch (Exception t) {
-          Runtime.getRuntime().gc();
-          t.printStackTrace();
-          textPane.setText("Exception! " + t.toString());
-      }
-  }//GEN-LAST:event_Adler32ButtonActionPerformed
+    private void sha256ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha256ButtonActionPerformed
+        try {
+            textPane.replaceSelection(prepareText(DigestUtils.sha256Hex(getSelectedText().getBytes())));
+            selectAllAndFocus();
+        } catch (Exception t) {
+            Runtime.getRuntime().gc();
+            t.printStackTrace();
+            textPane.setText("Exception! " + t.toString());
+        }
+    }//GEN-LAST:event_sha256ButtonActionPerformed
 
-  private void sha256ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha256ButtonActionPerformed
-      try {
-          selectAllIfNotSelectedYet(textPane);
-          textPane.replaceSelection(prepareText(DigestUtils.sha256Hex(getSelectedText().getBytes())));
-          selectAllAndFocus();
-      } catch (Exception t) {
-          Runtime.getRuntime().gc();
-          t.printStackTrace();
-          textPane.setText("Exception! " + t.toString());
-      }
-  }//GEN-LAST:event_sha256ButtonActionPerformed
+    private void sha384ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha384ButtonActionPerformed
+        try {
+            textPane.replaceSelection(prepareText(DigestUtils.sha384Hex(getSelectedText().getBytes())));
+            selectAllAndFocus();
+        } catch (Exception t) {
+            Runtime.getRuntime().gc();
+            t.printStackTrace();
+            textPane.setText("Exception! " + t.toString());
+        }
+    }//GEN-LAST:event_sha384ButtonActionPerformed
 
-  private void sha384ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha384ButtonActionPerformed
-      try {
-          selectAllIfNotSelectedYet(textPane);
-          textPane.replaceSelection(prepareText(DigestUtils.sha384Hex(getSelectedText().getBytes())));
-          selectAllAndFocus();
-      } catch (Exception t) {
-          Runtime.getRuntime().gc();
-          t.printStackTrace();
-          textPane.setText("Exception! " + t.toString());
-      }
-  }//GEN-LAST:event_sha384ButtonActionPerformed
+    private void sha512ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha512ButtonActionPerformed
+        try {
+            textPane.replaceSelection(prepareText(DigestUtils.sha512Hex(getSelectedText().getBytes())));
+            selectAllAndFocus();
+        } catch (Exception t) {
+            Runtime.getRuntime().gc();
+            t.printStackTrace();
+            textPane.setText("Exception! " + t.toString());
+        }
+    }//GEN-LAST:event_sha512ButtonActionPerformed
 
-  private void sha512ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha512ButtonActionPerformed
-      try {
-          selectAllIfNotSelectedYet(textPane);
-          textPane.replaceSelection(prepareText(DigestUtils.sha512Hex(getSelectedText().getBytes())));
-          selectAllAndFocus();
-      } catch (Exception t) {
-          Runtime.getRuntime().gc();
-          t.printStackTrace();
-          textPane.setText("Exception! " + t.toString());
-      }
-  }//GEN-LAST:event_sha512ButtonActionPerformed
+    private void crc32ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crc32ButtonActionPerformed
+        try {
+            textPane.replaceSelection(prepareText(Long.toHexString(Encoder.checksumCRC32(textPane.getSelectedText())).toUpperCase()));
+            selectAllAndFocus();
+        } catch (Exception t) {
+            Runtime.getRuntime().gc();
+            t.printStackTrace();
+            textPane.setText("Exception! " + t.toString());
+        }
+    }//GEN-LAST:event_crc32ButtonActionPerformed
 
-  private void crc32ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crc32ButtonActionPerformed
-      try {
-          selectAllIfNotSelectedYet(textPane);
-          textPane.replaceSelection(prepareText(Long.toHexString(checksumCRC32(textPane.getSelectedText())).toUpperCase()));
-          selectAllAndFocus();
-      } catch (Exception t) {
-          Runtime.getRuntime().gc();
-          t.printStackTrace();
-          textPane.setText("Exception! " + t.toString());
-      }
-  }//GEN-LAST:event_crc32ButtonActionPerformed
+    private void uuidButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuidButtonActionPerformed
+        textPane.replaceSelection(java.util.UUID.randomUUID().toString());
+        selectAllAndFocus();
+    }//GEN-LAST:event_uuidButtonActionPerformed
 
-  private void uuidButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uuidButtonActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      textPane.replaceSelection(java.util.UUID.randomUUID().toString());
-      selectAllAndFocus();
-  }//GEN-LAST:event_uuidButtonActionPerformed
+    private void encodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encodeTimestampHandler
+        String text = getSelectedText();
+        try {
+            if (getSelectedText().trim().isEmpty()) {
+                text = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS Z").print(DateTime.now().toDate().getTime());
+            }
+            Date parsedDate = null;
+            try {
+                parsedDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(text);
+            } catch (ParseException pe) {
+                parsedDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(text);
+            }
+            textPane.replaceSelection(parsedDate.getTime() + "");
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new IllegalStateException("invalid timestamp format", e);
+        }
+        selectAllAndFocus();
+    }//GEN-LAST:event_encodeTimestampHandler
 
-  private void encodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encodeTimestampHandler
-      selectAllIfNotSelectedYet(textPane);
-      String text = getSelectedText();
-      try {
-          if (getSelectedText().trim().isEmpty()) {
-              text = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS Z").print(DateTime.now().toDate().getTime());
-          }
-          Date parsedDate = null;
-          try {
-              parsedDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").parse(text);
-          } catch (ParseException pe) {
-              parsedDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(text);
-          }
-          textPane.replaceSelection(parsedDate.getTime() + "");
-      } catch (ParseException e) {
-          e.printStackTrace();
-          throw new IllegalStateException("invalid timestamp format", e);
-      }
-      selectAllAndFocus();
-  }//GEN-LAST:event_encodeTimestampHandler
+    private void decodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodeTimestampHandler
+        String text = getSelectedText();
+        if (text.trim().isEmpty()) {
+            text = String.valueOf(DateTime.now().toDate().getTime());
+        }
+        textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").format(Long.valueOf(text)));
+        selectAllAndFocus();
+    }//GEN-LAST:event_decodeTimestampHandler
 
-  private void decodeTimestampHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodeTimestampHandler
-      selectAllIfNotSelectedYet(textPane);
-      String text = getSelectedText();
-      if (text.trim().isEmpty()) {
-          text = String.valueOf(DateTime.now().toDate().getTime());
-      }
-      textPane.replaceSelection(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z").format(Long.valueOf(text)));
-      selectAllAndFocus();
-  }//GEN-LAST:event_decodeTimestampHandler
+    private void xmlFormatAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlFormatAction
+        try {
+            String text = textPane.getText();
+            String content = Encoder.formatXml(text);
+            textPane.replaceSelection(content);
+            selectAllAndFocus();
+        } catch (Exception e) {
+            throw new IllegalStateException("error reading xml");
+        }
+    }//GEN-LAST:event_xmlFormatAction
 
-  private void xmlFormatAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlFormatAction
-      selectAllIfNotSelectedYet(textPane);
-      try {
-          Source xmlInput = new StreamSource(new StringReader(textPane.getText()));
-          StringWriter stringWriter = new StringWriter();
-          StreamResult xmlOutput = new StreamResult(stringWriter);
-          TransformerFactory transformerFactory = TransformerFactory.newInstance();
-          transformerFactory.setAttribute("indent-number", 4);
-          Transformer transformer = transformerFactory.newTransformer();
-          transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-          transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-          transformer.transform(xmlInput, xmlOutput);
-          textPane.replaceSelection(xmlOutput.getWriter().toString());
-          selectAllAndFocus();
-      } catch (Exception e) {
-          throw new IllegalStateException("error reading xml");
-      }
-  }//GEN-LAST:event_xmlFormatAction
+    private void jsonFormatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsonFormatActionPerformed
+        final String text = textPane.getText();
+        JsonParser parser = new JsonParser();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().enableComplexMapKeySerialization().setExclusionStrategies().create();
 
-  private void jsonFormatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsonFormatActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      JsonParser parser = new JsonParser();
-      Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().enableComplexMapKeySerialization().setExclusionStrategies().create();
+        JsonElement el = parser.parse(text);
+        String jsonString = gson.toJson(el); // done
 
-      JsonElement el = parser.parse(textPane.getText());
-      String jsonString = gson.toJson(el); // done
+        textPane.replaceSelection(jsonString);
+        selectAllAndFocus();
+    }//GEN-LAST:event_jsonFormatActionPerformed
 
-      textPane.replaceSelection(jsonString);
-      selectAllAndFocus();
-  }//GEN-LAST:event_jsonFormatActionPerformed
+    private void textPaneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textPaneKeyPressed
+        if (evt.isControlDown()) {
+            if (Character.toLowerCase(evt.getKeyChar()) == 'r' || evt.isShiftDown()) {
+                redoAction.actionPerformed(null);
+            } else if ((Character.toLowerCase(evt.getKeyCode()) == 'z' || Character.toLowerCase(evt.getKeyCode()) == 'y')) {
+                undoAction.actionPerformed(null);
+            }
+        }
+    }//GEN-LAST:event_textPaneKeyPressed
 
-  private void textPaneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textPaneKeyPressed
-      if (evt.isControlDown()) {
-          if (Character.toLowerCase(evt.getKeyChar()) == 'r' || evt.isShiftDown()) {
-              redoAction.actionPerformed(null);
-          } else if ((Character.toLowerCase(evt.getKeyCode()) == 'z' || Character.toLowerCase(evt.getKeyCode()) == 'y')) {
-              undoAction.actionPerformed(null);
-          }
-      }
-  }//GEN-LAST:event_textPaneKeyPressed
+    private void jButtonHmacMd5HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacMd5HexActionPerformed
+        try {
+            String hmac = Hex.encodeHexString(Encoder.getHmac(jTextFieldHmacMd5Hex.getText(), textPane.getSelectedText(), "HmacMD5"));
+            textPane.replaceSelection(hmac);
+            selectAllAndFocus();
+        } catch (Exception e) {
+            throw new IllegalStateException("error calculating hmac", e);
+        }
+    }//GEN-LAST:event_jButtonHmacMd5HexActionPerformed
 
-  private void jButtonHmacMd5HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacMd5HexActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      try {
-          String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacMd5Hex.getText(), textPane.getSelectedText(), "HmacMD5"));
-          textPane.replaceSelection(hmac);
-          selectAllAndFocus();
-      } catch (Exception e) {
-          throw new IllegalStateException("error calculating hmac", e);
-      }
-  }//GEN-LAST:event_jButtonHmacMd5HexActionPerformed
+    private void jButtonHmacSha512HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha512HexActionPerformed
+        try {
+            String hmac = Hex.encodeHexString(Encoder.getHmac(jTextFieldHmacSha512Hex.getText(), textPane.getSelectedText(), "HmacSHA512"));
+            textPane.replaceSelection(hmac);
+            selectAllAndFocus();
+        } catch (Exception e) {
+            throw new IllegalStateException("error calculating hmac", e);
+        }
+    }//GEN-LAST:event_jButtonHmacSha512HexActionPerformed
 
-  private void jButtonHmacSha512HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha512HexActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      try {
-          String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha512Hex.getText(), textPane.getSelectedText(), "HmacSHA512"));
-          textPane.replaceSelection(hmac);
-          selectAllAndFocus();
-      } catch (Exception e) {
-          throw new IllegalStateException("error calculating hmac", e);
-      }
-  }//GEN-LAST:event_jButtonHmacSha512HexActionPerformed
+    private void jTextFieldHmacSha1HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHmacSha1HexActionPerformed
+        try {
+            String hmac = Hex.encodeHexString(Encoder.getHmac(jTextFieldHmacSha1Hex.getText(), textPane.getSelectedText(), "HmacSHA1"));
+            textPane.replaceSelection(hmac);
+            selectAllAndFocus();
+        } catch (Exception e) {
+            throw new IllegalStateException("error calculating hmac", e);
+        }
+    }//GEN-LAST:event_jTextFieldHmacSha1HexActionPerformed
 
-  private void jTextFieldHmacSha1HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHmacSha1HexActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      try {
-          String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha1Hex.getText(), textPane.getSelectedText(), "HmacSHA1"));
-          textPane.replaceSelection(hmac);
-          selectAllAndFocus();
-      } catch (Exception e) {
-          throw new IllegalStateException("error calculating hmac", e);
-      }
-  }//GEN-LAST:event_jTextFieldHmacSha1HexActionPerformed
+    private void jButtonHmacSha256HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha256HexActionPerformed
+        try {
+            String hmac = Hex.encodeHexString(Encoder.getHmac(jTextFieldHmacSha256Hex.getText(), textPane.getSelectedText(), "HmacSha256"));
+            textPane.replaceSelection(hmac);
+            selectAllAndFocus();
+        } catch (Exception e) {
+            throw new IllegalStateException("error calculating hmac", e);
+        }
+    }//GEN-LAST:event_jButtonHmacSha256HexActionPerformed
 
-  private void jButtonHmacSha256HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha256HexActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      try {
-          String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha256Hex.getText(), textPane.getSelectedText(), "HmacSha256"));
-          textPane.replaceSelection(hmac);
-          selectAllAndFocus();
-      } catch (Exception e) {
-          throw new IllegalStateException("error calculating hmac", e);
-      }
-  }//GEN-LAST:event_jButtonHmacSha256HexActionPerformed
+    private void jButtonHmacSha1HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha1HexActionPerformed
+        try {
+            String hmac = Hex.encodeHexString(Encoder.getHmac(jTextFieldHmacSha1Hex.getText(), textPane.getText(), "HmacSha1"));
+            textPane.replaceSelection(hmac);
+            selectAllAndFocus();
+        } catch (Exception e) {
+            throw new IllegalStateException("error calculating hmac", e);
+        }
+    }//GEN-LAST:event_jButtonHmacSha1HexActionPerformed
 
-  private void jButtonHmacSha1HexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHmacSha1HexActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      try {
-          String hmac = Hex.encodeHexString(getHmac(jTextFieldHmacSha1Hex.getText(), textPane.getText(), "HmacSha1"));
-          textPane.replaceSelection(hmac);
-          selectAllAndFocus();
-      } catch (Exception e) {
-          throw new IllegalStateException("error calculating hmac", e);
-      }
-  }//GEN-LAST:event_jButtonHmacSha1HexActionPerformed
+    private void jButtonToUpperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToUpperActionPerformed
+        try {
+            textPane.replaceSelection(StringUtils.upperCase(textPane.getSelectedText()));
+            selectAllAndFocus();
+        } catch (Exception e) {
+            throw new IllegalStateException("error upperCase", e);
+        }
+    }//GEN-LAST:event_jButtonToUpperActionPerformed
 
-  private void jButtonToUpperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToUpperActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      try {
-          textPane.replaceSelection(StringUtils.upperCase(textPane.getSelectedText()));
-          selectAllAndFocus();
-      } catch (Exception e) {
-          throw new IllegalStateException("error upperCase", e);
-      }
-  }//GEN-LAST:event_jButtonToUpperActionPerformed
+    private void jButtonToLowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToLowerActionPerformed
+        try {
+            textPane.replaceSelection(StringUtils.lowerCase(textPane.getSelectedText()));
+            selectAllAndFocus();
+        } catch (Exception e) {
+            throw new IllegalStateException("error lowerCase", e);
+        }
+    }//GEN-LAST:event_jButtonToLowerActionPerformed
 
-  private void jButtonToLowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToLowerActionPerformed
-      selectAllIfNotSelectedYet(textPane);
-      try {
-          textPane.replaceSelection(StringUtils.lowerCase(textPane.getSelectedText()));
-          selectAllAndFocus();
-      } catch (Exception e) {
-          throw new IllegalStateException("error lowerCase", e);
-      }
-  }//GEN-LAST:event_jButtonToLowerActionPerformed
+    private void md5hashBase64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_md5hashBase64ButtonActionPerformed
+        selectAllIfNotSelectedYet(this.textPane);
+        textPane.replaceSelection(Base64.encodeBase64String(DigestUtils.md5(getSelectedText())));
+        selectAllAndFocus();
+    }//GEN-LAST:event_md5hashBase64ButtonActionPerformed
 
-  private void md5hashBase64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_md5hashBase64ButtonActionPerformed
-      selectAllIfNotSelectedYet(this.textPane);
-      textPane.replaceSelection(Base64.encodeBase64String(DigestUtils.md5(getSelectedText())));
-      selectAllAndFocus();
-  }//GEN-LAST:event_md5hashBase64ButtonActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        selectAllIfNotSelectedYet(this.textPane);
+        textPane.replaceSelection(Base64.encodeBase64String(DigestUtils.sha256(getSelectedText())));
+        selectAllAndFocus();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-  private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-      selectAllIfNotSelectedYet(this.textPane);
-      textPane.replaceSelection(Base64.encodeBase64String(DigestUtils.sha256(getSelectedText())));
-      selectAllAndFocus();
-  }//GEN-LAST:event_jButton3ActionPerformed
+    private void sha1hashBase64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha1hashBase64ButtonActionPerformed
+        selectAllIfNotSelectedYet(this.textPane);
+        textPane.replaceSelection(Base64.encodeBase64String(DigestUtils.sha1(getSelectedText())));
+        selectAllAndFocus();
+    }//GEN-LAST:event_sha1hashBase64ButtonActionPerformed
 
-  private void sha1hashBase64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha1hashBase64ButtonActionPerformed
-      selectAllIfNotSelectedYet(this.textPane);
-      textPane.replaceSelection(Base64.encodeBase64String(DigestUtils.sha1(getSelectedText())));
-      selectAllAndFocus();
-  }//GEN-LAST:event_sha1hashBase64ButtonActionPerformed
+    private void sha384Base64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha384Base64ButtonActionPerformed
+        selectAllIfNotSelectedYet(this.textPane);
+        textPane.replaceSelection(Base64.encodeBase64String(DigestUtils.sha384(getSelectedText())));
+        selectAllAndFocus();
+    }//GEN-LAST:event_sha384Base64ButtonActionPerformed
 
-  private void sha384Base64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha384Base64ButtonActionPerformed
-      selectAllIfNotSelectedYet(this.textPane);
-      textPane.replaceSelection(Base64.encodeBase64String(DigestUtils.sha384(getSelectedText())));
-      selectAllAndFocus();
-  }//GEN-LAST:event_sha384Base64ButtonActionPerformed
+    private void sha512Base64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha512Base64ButtonActionPerformed
+        selectAllIfNotSelectedYet(this.textPane);
+        textPane.replaceSelection(Base64.encodeBase64String(DigestUtils.sha512(getSelectedText())));
+        selectAllAndFocus();
+    }//GEN-LAST:event_sha512Base64ButtonActionPerformed
 
-  private void sha512Base64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sha512Base64ButtonActionPerformed
-      selectAllIfNotSelectedYet(this.textPane);
-      textPane.replaceSelection(Base64.encodeBase64String(DigestUtils.sha512(getSelectedText())));
-      selectAllAndFocus();
-  }//GEN-LAST:event_sha512Base64ButtonActionPerformed
+    private void crc32Base64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crc32Base64ButtonActionPerformed
+        try {
+            selectAllIfNotSelectedYet(this.textPane);
+            textPane.replaceSelection(new String(
+                    Base64.encodeBase64(Arrays.copyOfRange(Longs.toByteArray(Encoder.checksumCRC32(getSelectedText())), 4, 8)
+                    ), Encoder.DEFAULT_ENCODING));
+            selectAllAndFocus();
+        } catch (UnsupportedEncodingException ex) {
+            throw new IllegalStateException("error crc32 base64", ex);
+        } catch (IOException ex) {
+            throw new IllegalStateException("error crc32 base64", ex);
+        }
+    }//GEN-LAST:event_crc32Base64ButtonActionPerformed
 
-  private void crc32Base64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crc32Base64ButtonActionPerformed
-      try {
-          selectAllIfNotSelectedYet(this.textPane);
-          textPane.replaceSelection(new String(
-                  Base64.encodeBase64(
-                          Arrays.copyOfRange(Longs.toByteArray(checksumCRC32(getSelectedText())), 4, 8)
-                  ), DEFAULT_ENCODING));
-          selectAllAndFocus();
-      } catch (UnsupportedEncodingException ex) {
-          throw new IllegalStateException("error crc32 base64", ex);
-      } catch (IOException ex) {
-          throw new IllegalStateException("error crc32 base64", ex);
-      }
-  }//GEN-LAST:event_crc32Base64ButtonActionPerformed
-
-  private void adler32Base64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adler32Base64ButtonActionPerformed
-      try {
-          selectAllIfNotSelectedYet(this.textPane);
-          textPane.replaceSelection(new String(
-                  Base64.encodeBase64(
-                          Arrays.copyOfRange(Longs.toByteArray(checksumAdler32(getSelectedText())), 4, 8)
-                  ), DEFAULT_ENCODING));
-          selectAllAndFocus();
-      } catch (UnsupportedEncodingException ex) {
-          throw new IllegalStateException("error adler32 base64", ex);
-      } catch (IOException ex) {
-          throw new IllegalStateException("error adler32 base64", ex);
-      }
-  }//GEN-LAST:event_adler32Base64ButtonActionPerformed
+    private void adler32Base64ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adler32Base64ButtonActionPerformed
+        try {
+            selectAllIfNotSelectedYet(this.textPane);
+            textPane.replaceSelection(new String(
+                    Base64.encodeBase64(Arrays.copyOfRange(Longs.toByteArray(Encoder.checksumAdler32(getSelectedText())), 4, 8)
+                    ), Encoder.DEFAULT_ENCODING));
+            selectAllAndFocus();
+        } catch (UnsupportedEncodingException ex) {
+            throw new IllegalStateException("error adler32 base64", ex);
+        } catch (IOException ex) {
+            throw new IllegalStateException("error adler32 base64", ex);
+        }
+    }//GEN-LAST:event_adler32Base64ButtonActionPerformed
 
     private void bcryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcryptButtonActionPerformed
         try {
@@ -1018,16 +1021,16 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
                 if (bcrypt.matches(plainTextPassword, encryptedPassword)) {
                     JOptionPane.showMessageDialog(Transcoder.getInstance(),
                             "Passwords match."
-                            + "\r\nplainTextPassword: " + plainTextPassword
-                            + "\r\nencryptedPassword: " + encryptedPassword,
+                                    + "\r\nplainTextPassword: " + plainTextPassword
+                                    + "\r\nencryptedPassword: " + encryptedPassword,
                             "Passwords Match",
                             JOptionPane.INFORMATION_MESSAGE
                     );
                 } else {
                     JOptionPane.showMessageDialog(Transcoder.getInstance(),
                             "Passwords do not match."
-                            + "\r\nplainTextPassword: " + plainTextPassword
-                            + "\r\nencryptedPassword: " + encryptedPassword,
+                                    + "\r\nplainTextPassword: " + plainTextPassword
+                                    + "\r\nencryptedPassword: " + encryptedPassword,
                             "Passwords Do Not Match",
                             JOptionPane.WARNING_MESSAGE
                     );
@@ -1046,114 +1049,15 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         bcryptTextField.selectAll();
     }//GEN-LAST:event_bcryptTextFieldMouseClicked
 
-    private static byte[] getHmac(String secretKey, String payload, String hmacType) {
-        final Mac mac;
-        byte[] hmac;
-        try {
-            final byte[] secretKeyBytes;
-            if (secretKey == null) {
-                secretKeyBytes = new byte[]{0};
-            } else {
-                secretKeyBytes = secretKey.getBytes(DEFAULT_ENCODING);
-            }
-
-            if (payload == null) {
-                payload = "";
-            }
-
-            SecretKeySpec keySpec = new SecretKeySpec(secretKeyBytes, hmacType.toString());
-            mac = Mac.getInstance(hmacType.toString());
-            mac.init(keySpec);
-
-            hmac = mac.doFinal(payload.getBytes(DEFAULT_ENCODING));
-
-        } catch (NoSuchAlgorithmException e) {
-            String msg = "An error occurred initializing algorithm '" + hmacType + "', e: " + e;
-            throw new IllegalStateException(msg, e);
-        } catch (InvalidKeyException e) {
-            String msg = "An error occurred initializing key, e: " + e;
-            throw new IllegalStateException(msg, e);
-        } catch (UnsupportedEncodingException e) {
-            String msg = "Invalid encoding, e: " + e;
-            throw new IllegalStateException(msg, e);
-        }
-        return hmac;
-    }
-
-    public static final String DEFAULT_ENCODING = "UTF-8";
-
     /**
      * Notifies this object that it is no longer the owner of the contents of
      * the clipboard.
      *
      * @param clipboard the clipboard that is no longer owned
-     * @param contents the contents which this owner had placed on the clipboard
+     * @param contents  the contents which this owner had placed on the clipboard
      */
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
     }
-
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Adler32Button;
-    private javax.swing.JButton adler32Base64Button;
-    private javax.swing.JButton base64DecodeButton;
-    private javax.swing.JButton base64EncodeButton;
-    private javax.swing.JButton bcryptButton;
-    private javax.swing.JTextField bcryptTextField;
-    private javax.swing.JPanel beanshellPanel;
-    private javax.swing.JLabel countLabel;
-    private javax.swing.JButton crc32Base64Button;
-    private javax.swing.JButton crc32Button;
-    private javax.swing.JMenu editMenu;
-    private javax.swing.JPanel groovyPanel;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButtonHmacMd5Hex;
-    private javax.swing.JButton jButtonHmacSha1Hex;
-    private javax.swing.JButton jButtonHmacSha256Hex;
-    private javax.swing.JButton jButtonHmacSha512Hex;
-    private javax.swing.JButton jButtonToLower;
-    private javax.swing.JButton jButtonToUpper;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanelAdler32;
-    private javax.swing.JPanel jPanelCRC32;
-    private javax.swing.JPanel jPanelHmacMd5Hex;
-    private javax.swing.JPanel jPanelHmacSha1Hex;
-    private javax.swing.JPanel jPanelHmacSha256Hex;
-    private javax.swing.JPanel jPanelHmacSha512Hex;
-    private javax.swing.JPanel jPanelMd5;
-    private javax.swing.JPanel jPanelSha1;
-    private javax.swing.JPanel jPanelSha256;
-    private javax.swing.JPanel jPanelSha384;
-    private javax.swing.JPanel jPanelSha512;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane;
-    private javax.swing.JTextField jTextFieldHmacMd5Hex;
-    private javax.swing.JTextField jTextFieldHmacSha1Hex;
-    private javax.swing.JTextField jTextFieldHmacSha256Hex;
-    private javax.swing.JTextField jTextFieldHmacSha512Hex;
-    private javax.swing.JButton jsonFormat;
-    private javax.swing.JButton md5hashBase64Button;
-    private javax.swing.JButton md5hashButton;
-    private javax.swing.JButton sha1hashBase64Button;
-    private javax.swing.JButton sha1hashButton;
-    private javax.swing.JButton sha256Button;
-    private javax.swing.JButton sha384Base64Button;
-    private javax.swing.JButton sha384Button;
-    private javax.swing.JButton sha512Base64Button;
-    private javax.swing.JButton sha512Button;
-    private javax.swing.JComboBox strengthComboBox;
-    private javax.swing.JTextPane textPane;
-    private javax.swing.JButton timestampDecode;
-    private javax.swing.JButton timestampEncode;
-    private javax.swing.JPanel transcoderPanel;
-    private javax.swing.JButton urlDecodeButton;
-    private javax.swing.JButton urlEncodeButton;
-    private javax.swing.JButton uuidButton;
-    private javax.swing.JButton xmlFormat;
     // End of variables declaration//GEN-END:variables
 
     class UndoAction extends AbstractAction {
@@ -1179,7 +1083,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
             redoAction.updateRedoState();
         }
 
-        protected void updateUndoState() {
+        private void updateUndoState() {
             if (undo.canUndo()) {
                 setEnabled(true);
                 putValue(Action.NAME, undo.getUndoPresentationName());
@@ -1213,7 +1117,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
             undoAction.updateUndoState();
         }
 
-        protected void updateRedoState() {
+        private void updateRedoState() {
             if (undo.canRedo()) {
                 setEnabled(true);
                 putValue(Action.NAME, undo.getRedoPresentationName());
@@ -1225,7 +1129,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
     }
 
     //This one listens for edits that can be undone.
-    protected class MyUndoableEditListener
+    private class MyUndoableEditListener
             implements UndoableEditListener {
 
         public void undoableEditHappened(UndoableEditEvent e) {
@@ -1235,33 +1139,4 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
             redoAction.updateRedoState();
         }
     }
-
-    public static long checksumCRC32(String text) throws IOException {
-        CRC32 crc = new CRC32();
-        InputStream is = new ByteArrayInputStream(text.getBytes(DEFAULT_ENCODING));
-        try {
-            checksum(is, crc);
-            return crc.getValue();
-        } finally {
-            is.close();
-        }
-    }
-
-    public static long checksumAdler32(String text) throws IOException {
-        Adler32 crc = new Adler32();
-        InputStream is = new ByteArrayInputStream(text.getBytes(DEFAULT_ENCODING));
-        try {
-            checksum(is, crc);
-            return crc.getValue();
-        } finally {
-            is.close();
-        }
-    }
-
-    private static Checksum checksum(InputStream is, Checksum checksum) throws IOException {
-        InputStream in = new CheckedInputStream(is, checksum);
-        IOUtils.copy(in, new NullOutputStream());
-        return checksum;
-    }
-
 }

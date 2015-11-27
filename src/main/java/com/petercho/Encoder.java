@@ -5,14 +5,30 @@
  */
 package com.petercho;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.NullOutputStream;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.zip.Adler32;
+import java.util.zip.CRC32;
+import java.util.zip.CheckedInputStream;
+import java.util.zip.Checksum;
 
 /**
  *
  * @author turkish
  */
 public class Encoder {
+    public static final String DEFAULT_ENCODING = "UTF-8";
 
     /**
      * Description of the Method
@@ -58,13 +74,14 @@ public class Encoder {
      */
     /**
      * Description of the Method
+     * 
      *
      * @param str Description of the Parameter
      * @return Description of the Return Value
      */
     public static String urlDecode(String str) {
         try {
-            return URLDecoder.decode(str, TranscoderFrame.DEFAULT_ENCODING);
+            return URLDecoder.decode(str, DEFAULT_ENCODING);
         } catch (Exception e) {
             return "Decoding error";
         }
@@ -79,10 +96,80 @@ public class Encoder {
      */
     public static String urlEncode(String str) {
         try {
-            return URLEncoder.encode(str, TranscoderFrame.DEFAULT_ENCODING);
+            return URLEncoder.encode(str, DEFAULT_ENCODING);
         } catch (Exception e) {
             return "Encoding error";
         }
     }
-    
+
+    public static long checksumAdler32(String text) throws IOException {
+        Adler32 crc = new Adler32();
+        InputStream is = new ByteArrayInputStream(text.getBytes(DEFAULT_ENCODING));
+        try {
+            checksum(is, crc);
+            return crc.getValue();
+        } finally {
+            is.close();
+        }
+    }
+
+    public static long checksumCRC32(String text) throws IOException {
+        CRC32 crc = new CRC32();
+        InputStream is = new ByteArrayInputStream(text.getBytes(DEFAULT_ENCODING));
+        try {
+            checksum(is, crc);
+            return crc.getValue();
+        } finally {
+            is.close();
+        }
+    }
+
+    private static Checksum checksum(InputStream is, Checksum checksum) throws IOException {
+        InputStream in = new CheckedInputStream(is, checksum);
+        IOUtils.copy(in, new NullOutputStream());
+        return checksum;
+    }
+
+    static byte[] getHmac(String secretKey, String payload, String hmacType) {
+        final Mac mac;
+        byte[] hmac;
+        try {
+            final byte[] secretKeyBytes;
+            if (secretKey == null) {
+                secretKeyBytes = new byte[]{0};
+            } else {
+                secretKeyBytes = secretKey.getBytes(DEFAULT_ENCODING);
+            }
+            if (payload == null) {
+                payload = "";
+            }
+            SecretKeySpec keySpec = new SecretKeySpec(secretKeyBytes, hmacType.toString());
+            mac = Mac.getInstance(hmacType.toString());
+            mac.init(keySpec);
+            hmac = mac.doFinal(payload.getBytes(DEFAULT_ENCODING));
+        } catch (NoSuchAlgorithmException e) {
+            String msg = "An error occurred initializing algorithm '" + hmacType + "', e: " + e;
+            throw new IllegalStateException(msg, e);
+        } catch (InvalidKeyException e) {
+            String msg = "An error occurred initializing key, e: " + e;
+            throw new IllegalStateException(msg, e);
+        } catch (UnsupportedEncodingException e) {
+            String msg = "Invalid encoding, e: " + e;
+            throw new IllegalStateException(msg, e);
+        }
+        return hmac;
+    }
+
+    public static String formatXml(String xml) throws TransformerException {
+        Source xmlInput = new StreamSource(new StringReader(xml));
+        StringWriter stringWriter = new StringWriter();
+        StreamResult xmlOutput = new StreamResult(stringWriter);
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        transformerFactory.setAttribute("indent-number", 4);
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        transformer.transform(xmlInput, xmlOutput);
+        return xmlOutput.getWriter().toString();
+    }
 }

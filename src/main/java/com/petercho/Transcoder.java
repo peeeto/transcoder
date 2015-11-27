@@ -1,13 +1,12 @@
 package com.petercho;
 
-import java.awt.Component;
-import java.lang.Thread.UncaughtExceptionHandler;
-import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.*;
+import java.awt.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Transcoder {
 
-    private static final AtomicReference<Component> componentRef = new AtomicReference<Component>();
+    private static final AtomicReference<Component> componentRef = new AtomicReference<>();
 
     public static Component getInstance() {
         return componentRef.get();
@@ -22,17 +21,13 @@ public class Transcoder {
                 tf.setVisible(true);
             }
         });
-        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread t, Throwable e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(componentRef.get(),
-                        e + "",
-                        "Unexpected Error",
-                        JOptionPane.ERROR_MESSAGE
-                );
-            }
-        }
-        );
+        Thread.setDefaultUncaughtExceptionHandler((Thread t, Throwable e) -> {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(componentRef.get(),
+                    e + "",
+                    "Unexpected Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        });
     }
 }
