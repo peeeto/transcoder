@@ -213,8 +213,6 @@ QUnit.test('millisToString', function (assert) {
     assert.equal(millisToString('1447016785711'), '2015-11-08 21:06:25.711 +00:00');
 });
 /**
- http://emn178.github.io/online-tools/base32_encode.html
- http://tomeko.net/online_tools/base64.php?lang=en
  * echo -n "admin" | openssl md5 -binary|base64 ; ISMvKXpXpadDiUoOSoAfww==
  */
 QUnit.test('base64ToHex', function (assert) {
@@ -260,9 +258,6 @@ QUnit.test('jsonFormat', function (assert) {
         "}"
     );
 });
-//QUnit.test('xmlFormat', function (assert) {
-//assert.equal(1, 2, '');
-//});
 QUnit.test('toUpperCase', function (assert) {
     assert.equal(toUpperCase(''), '');
     assert.equal(toUpperCase('až'), 'AŽ');
@@ -271,10 +266,6 @@ QUnit.test('toLowerCase', function (assert) {
     assert.equal(toLowerCase(''), '');
     assert.equal(toLowerCase('AŽ'), 'až');
 });
-//QUnit.test('bcrypt', function (assert) {
-//    var actual = bc('', 'admin', 4);
-    //bc(actual, 'admin', 5, null, );
-//});
 QUnit.test('scrypt', function (assert) {
     assert.equal(sc('', 'password', 'randomSalt', 1024, 8, 1), '$s0$a0801$cmFuZG9tU2FsdA==$4BgX8flnz7UGOZ30L5nB7Y1aMJl2pg8JSpRxMhjwxrs=');
     assert.equal(sc('', 'a', 'randomSalt', 1024, 8, 1), '$s0$a0801$cmFuZG9tU2FsdA==$NmXr19xOOkw4RHDXJ1QsiYmwClLpdnCWEeHEVAbT10o=');
@@ -282,31 +273,67 @@ QUnit.test('scrypt', function (assert) {
     assert.equal(sc('', '64d04051-e48a-00fd-d996-82b9fd5a9ca2', '64d04051', 1024, 8, 1), '$s0$a0801$NjRkMDQwNTE=$OpPyz5onfpBVczPbmHbQvKMtTbiH9+U+CQrHwpIUHWY=');
     assert.equal(sc('', '64d04051-e48a-00fd-d996-82b9fd5a9ca2', '64d04051', 2048, 16, 2), '$s0$b1002$NjRkMDQwNTE=$ckWl5OWrgTlwwR6dhEbs0OZff8FnsUPnS9SL4xCF3Xs=');
 });
+function assertHmacEqual(payload, hmacFunction, secret, toStringFunc, assert, expected) {
+    var hmacFunc = function (str) {
+        return hmacFunction(str, secret);
+    };
+    assertHashesEqual(payload, expected, hmacFunc, toStringFunc, assert);
+}
+
 /**
  * echo -n "payload" | openssl md5 -hmac "secret"
  */
-//QUnit.test('hmacMd5Hex', function (assert) {
-//assert.equal(, 2, '');
+QUnit.test('hmacMd5Hex', function (assert) {
+    assertHmacEqual('payload', CryptoJS.HmacMD5, 'secret', CryptoJS.enc.Hex, assert, '4f967408b96fb0e40180074062022698');
+});
+/**
+ * echo -n "payload" | openssl sha1 -hmac "secret"
+ */
+QUnit.test('hmacSha1Hex', function (assert) {
+    assertHmacEqual('payload', CryptoJS.HmacSHA1, 'secret', CryptoJS.enc.Hex, assert, 'f75efc0f29bf50c23f99b30b86f7c78fdaf5f11d');
+});
+/**
+ * echo -n "payload" | openssl sha256 -hmac "secret"
+ */
+QUnit.test('hmacSha256Hex', function (assert) {
+    assertHmacEqual('payload', CryptoJS.HmacSHA256, 'secret', CryptoJS.enc.Hex, assert, 'b82fcb791acec57859b989b430a826488ce2e479fdf92326bd0a2e8375a42ba4');
+});
+/**
+ * echo -n "payload" | openssl sha512 -hmac "secret"
+ */
+QUnit.test('hmacSha512Hex', function (assert) {
+    assertHmacEqual('payload', CryptoJS.HmacSHA512, 'secret', CryptoJS.enc.Hex, assert, '291ddaaa23cafa3aaae1c9755391f4bef35bbdbcb92739a5618a5c896f6520d2b0d28d2d2987dac97479e31214a51d96cfceafa28e46a4f961b63c46352a189e');
+});
+
+/**
+ * echo -n "payload" | openssl md5 -hmac "secret" -binary | openssl base64
+ */
+QUnit.test('hmacMd5Base64', function (assert) {
+    assertHmacEqual('payload', CryptoJS.HmacMD5, 'secret', CryptoJS.enc.Base64, assert, 'T5Z0CLlvsOQBgAdAYgImmA==');
+});
+/**
+ * echo -n "payload" | openssl sha1 -hmac "secret" -binary | openssl base64
+ */
+QUnit.test('hmacSha1Base64', function (assert) {
+    assertHmacEqual('payload', CryptoJS.HmacSHA1, 'secret', CryptoJS.enc.Base64, assert, '9178Dym/UMI/mbMLhvfHj9r18R0=');
+});
+/**
+ * echo -n "payload" | openssl sha256 -hmac "secret" -binary | openssl base64
+ */
+QUnit.test('hmacSha256Base64', function (assert) {
+    assertHmacEqual('payload', CryptoJS.HmacSHA256, 'secret', CryptoJS.enc.Base64, assert, 'uC/LeRrOxXhZuYm0MKgmSIzi5Hn9+SMmvQoug3WkK6Q=');
+});
+/**
+ * echo -n "payload" | openssl sha512 -hmac "secret" -binary | openssl base64
+ */
+QUnit.test('hmacSha512Base64', function (assert) {
+    assertHmacEqual('payload', CryptoJS.HmacSHA512, 'secret', CryptoJS.enc.Base64, assert, 'KR3aqiPK+jqq4cl1U5H0vvNbvby5JzmlYYpciW9lINKw0o0tKYfayXR54xIUpR2Wz86voo5GpPlhtjxGNSoYng==');
+});
+//TODO make testable and test
+//QUnit.test('bcrypt', function (assert) {
+//    var actual = bc('', 'admin', 4);
+//    assert.equal(bc(actual, 'admin', 0), true);
 //});
-//QUnit.test('hmacSha1Hex', function (assert) {
-//assert.equal(1, 2, '');
-//});
-//QUnit.test('hmacSha256Hex', function (assert) {
-//assert.equal(1, 2, '');
-//});
-//QUnit.test('hmacsha512Hex', function (assert) {
-//assert.equal(1, 2, '');
-//});
-//
-//QUnit.test('hmacMd5Base64', function (assert) {
-//assert.equal(1, 2, '');
-//});
-//QUnit.test('hmacSha1Base64', function (assert) {
-//assert.equal(1, 2, '');
-//});
-//QUnit.test('hmacSha256Base64', function (assert) {
-//assert.equal(1, 2, '');
-//});
-//QUnit.test('hmacSha512Base64', function (assert) {
+//QUnit.test('xmlFormat', function (assert) {
 //assert.equal(1, 2, '');
 //});
