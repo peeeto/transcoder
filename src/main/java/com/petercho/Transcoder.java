@@ -1,4 +1,4 @@
-package org.pch;
+package com.petercho;
 
 import java.awt.Component;
 import java.lang.Thread.UncaughtExceptionHandler;

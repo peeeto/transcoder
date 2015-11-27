@@ -1,4 +1,4 @@
-package org.pch;
+package com.petercho;
 
 import com.google.common.base.Objects;
 import com.google.common.primitives.Longs;
@@ -337,7 +337,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         });
         jPanel1.add(uuidButton);
 
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         bcryptButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         bcryptButton.setText("BCrypt");
@@ -660,7 +660,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(836, 543));
+        setSize(new java.awt.Dimension(836, 587));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -717,7 +717,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
   private void urlDecodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlDecodeButtonActionPerformed
       selectAllIfNotSelectedYet(textPane);
-      String text = urlDecode(getSelectedText());
+      String text = Encoder.urlDecode(getSelectedText());
       textPane.replaceSelection(text);
       selectAllAndFocus();
   }//GEN-LAST:event_urlDecodeButtonActionPerformed
@@ -728,7 +728,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
   private void urlEncodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urlEncodeButtonActionPerformed
       selectAllIfNotSelectedYet(textPane);
-      textPane.replaceSelection(urlEncode(getSelectedText()));
+      textPane.replaceSelection(Encoder.urlEncode(getSelectedText()));
       selectAllAndFocus();
   }//GEN-LAST:event_urlEncodeButtonActionPerformed
 
@@ -1092,76 +1092,6 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
     }
 
-    /**
-     * Description of the Method
-     *
-     * @param str Description of the Parameter
-     * @return Description of the Return Value
-     */
-    /* 
-     public static String unicodeDecode( String str ) {
-     // FIXME: TOTALLY EXPERIMENTAL
-     try {
-     ByteBuffer bbuf = ByteBuffer.allocate( str.length() );
-     bbuf.put( str.getBytes() );
-     Charset charset = Charset.forName( "ISO-8859-1" );
-     CharsetDecoder decoder = charset.newDecoder();
-     CharBuffer cbuf = decoder.decode( bbuf );
-     return ( cbuf.toString() );
-     }
-     catch ( Exception e ) {
-     return ( "Encoding problem" );
-     }
-     }
-     */
-    /**
-     * Description of the Method
-     *
-     * @param str Description of the Parameter
-     * @return Description of the Return Value
-     */
-    /*
-     public static String unicodeEncode( String str ) {
-     // FIXME: TOTALLY EXPERIMENTAL
-     try {
-     Charset charset = Charset.forName( "ISO-8859-1" );
-     CharsetEncoder encoder = charset.newEncoder();
-     ByteBuffer bbuf = encoder.encode( CharBuffer.wrap( str ) );
-     return ( new String( bbuf.array() ) );
-     }
-     catch ( Exception e ) {
-     return ( "Encoding problem" );
-     }
-     }
-     */
-    /**
-     * Description of the Method
-     *
-     * @param str Description of the Parameter
-     * @return Description of the Return Value
-     */
-    public static String urlDecode(String str) {
-        try {
-            return (URLDecoder.decode(str, DEFAULT_ENCODING));
-        } catch (Exception e) {
-            return ("Decoding error");
-        }
-    }
-
-    /**
-     * Description of the Method
-     *
-     * @param str Description of the Parameter
-     * @return Description of the Return Value
-     * //TODO curl -G -v -s --data-urlencode query@1.json 'https://www.googleapis.com/freebase/v1/mqlread'
-     */
-    public static String urlEncode(String str) {
-        try {
-            return (URLEncoder.encode(str, DEFAULT_ENCODING));
-        } catch (Exception e) {
-            return ("Encoding error");
-        }
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
