@@ -39,7 +39,8 @@ import java.util.Hashtable;
 public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwner {
 
     private static final long serialVersionUID = 5712516501903313109L;
-    private UndoManager undo = new UndoManager();
+    private final UndoManager undo = new UndoManager();
+    private final Hashtable<Object, Action> actions = new Hashtable<>();
     private UndoAction undoAction;
     private RedoAction redoAction;
     private Hashtable<Object, Action> actions;
@@ -186,7 +187,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         uuidButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         bcryptButton = new javax.swing.JButton();
-        strengthComboBox = new javax.swing.JComboBox();
+        strengthComboBox = new javax.swing.JComboBox<>();
         bcryptTextField = new javax.swing.JTextField();
         timestampEncode = new javax.swing.JButton();
         timestampDecode = new javax.swing.JButton();
@@ -270,49 +271,29 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         urlDecodeButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         urlDecodeButton.setText("URL decode");
-        urlDecodeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                urlDecodeButtonActionPerformed(evt);
-            }
-        });
+        urlDecodeButton.addActionListener(this::urlDecodeButtonActionPerformed);
         jPanel1.add(urlDecodeButton);
 
         base64EncodeButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         base64EncodeButton.setText("Base64 encode");
-        base64EncodeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                base64EncodeButtonActionPerformed(evt);
-            }
-        });
+        base64EncodeButton.addActionListener(this::base64EncodeButtonActionPerformed);
         jPanel1.add(base64EncodeButton);
 
         base64DecodeButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         base64DecodeButton.setText("Base64 decode");
-        base64DecodeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                base64DecodeButtonActionPerformed(evt);
-            }
-        });
+        base64DecodeButton.addActionListener(this::base64DecodeButtonActionPerformed);
         jPanel1.add(base64DecodeButton);
 
         uuidButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         uuidButton.setText("UUID");
-        uuidButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                uuidButtonActionPerformed(evt);
-            }
-        });
+        uuidButton.addActionListener(this::uuidButtonActionPerformed);
         jPanel1.add(uuidButton);
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         bcryptButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         bcryptButton.setText("BCrypt");
-        bcryptButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bcryptButtonActionPerformed(evt);
-            }
-        });
+        bcryptButton.addActionListener(this::bcryptButtonActionPerformed);
         jPanel3.add(bcryptButton);
 
         strengthComboBox.setEditable(true);
@@ -335,52 +316,32 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
         timestampEncode.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         timestampEncode.setText("yyyy-MM-dd HH:mm:ss.SSS Z -> 1234L");
         timestampEncode.setToolTipText("ENCODE yyyy-MM-dd HH:mm:ss.SSS Z");
-        timestampEncode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                encodeTimestampHandler(evt);
-            }
-        });
+        timestampEncode.addActionListener(this::encodeTimestampHandler);
         jPanel1.add(timestampEncode);
 
         timestampDecode.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         timestampDecode.setText("1234L -> yyyy-MM-dd HH:mm:ss.SSS Z");
         timestampDecode.setToolTipText("DECODE yyyy-MM-dd HH:mm:ss.SSS Z");
-        timestampDecode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                decodeTimestampHandler(evt);
-            }
-        });
+        timestampDecode.addActionListener(this::decodeTimestampHandler);
         jPanel1.add(timestampDecode);
 
         jsonFormat.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jsonFormat.setText("JSON Format");
         jsonFormat.setToolTipText("JSON Format");
-        jsonFormat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jsonFormatActionPerformed(evt);
-            }
-        });
+        jsonFormat.addActionListener(TranscoderFrame.this::jsonFormatActionPerformed);
         jPanel1.add(jsonFormat);
 
         xmlFormat.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         xmlFormat.setText("XML Format");
         xmlFormat.setToolTipText("XML Format");
-        xmlFormat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                xmlFormatAction(evt);
-            }
-        });
+        xmlFormat.addActionListener(TranscoderFrame.this::xmlFormatAction);
         jPanel1.add(xmlFormat);
 
         jPanelHmacMd5Hex.setLayout(new java.awt.GridLayout(1, 2));
 
         jButtonHmacMd5Hex.setFont(jButtonHmacMd5Hex.getFont().deriveFont(jButtonHmacMd5Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacMd5Hex.getFont().getSize()-2));
         jButtonHmacMd5Hex.setText("HmacMd5Hex");
-        jButtonHmacMd5Hex.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonHmacMd5HexActionPerformed(evt);
-            }
-        });
+        jButtonHmacMd5Hex.addActionListener(TranscoderFrame.this::jButtonHmacMd5HexActionPerformed);
         jPanelHmacMd5Hex.add(jButtonHmacMd5Hex);
 
         jTextFieldHmacMd5Hex.setFont(new java.awt.Font("Andale Mono", 0, 10)); // NOI18N
@@ -392,19 +353,11 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jButtonHmacSha1Hex.setFont(jButtonHmacSha1Hex.getFont().deriveFont(jButtonHmacSha1Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha1Hex.getFont().getSize()-2));
         jButtonHmacSha1Hex.setText("HmacSha1Hex");
-        jButtonHmacSha1Hex.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonHmacSha1HexActionPerformed(evt);
-            }
-        });
+        jButtonHmacSha1Hex.addActionListener(TranscoderFrame.this::jButtonHmacSha1HexActionPerformed);
         jPanelHmacSha1Hex.add(jButtonHmacSha1Hex);
 
         jTextFieldHmacSha1Hex.setFont(new java.awt.Font("Andale Mono", 0, 10)); // NOI18N
-        jTextFieldHmacSha1Hex.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldHmacSha1HexActionPerformed(evt);
-            }
-        });
+        jTextFieldHmacSha1Hex.addActionListener(TranscoderFrame.this::jTextFieldHmacSha1HexActionPerformed);
         jPanelHmacSha1Hex.add(jTextFieldHmacSha1Hex);
 
         jPanel1.add(jPanelHmacSha1Hex);
@@ -413,11 +366,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jButtonHmacSha256Hex.setFont(jButtonHmacSha256Hex.getFont().deriveFont(jButtonHmacSha256Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha256Hex.getFont().getSize()-2));
         jButtonHmacSha256Hex.setText("HmacSha256Hex");
-        jButtonHmacSha256Hex.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonHmacSha256HexActionPerformed(evt);
-            }
-        });
+        jButtonHmacSha256Hex.addActionListener(TranscoderFrame.this::jButtonHmacSha256HexActionPerformed);
         jPanelHmacSha256Hex.add(jButtonHmacSha256Hex);
 
         jTextFieldHmacSha256Hex.setFont(new java.awt.Font("Andale Mono", 0, 10)); // NOI18N
@@ -429,11 +378,7 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jButtonHmacSha512Hex.setFont(jButtonHmacSha512Hex.getFont().deriveFont(jButtonHmacSha512Hex.getFont().getStyle() & ~java.awt.Font.BOLD, jButtonHmacSha512Hex.getFont().getSize()-2));
         jButtonHmacSha512Hex.setText("HmacSha512Hex");
-        jButtonHmacSha512Hex.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonHmacSha512HexActionPerformed(evt);
-            }
-        });
+        jButtonHmacSha512Hex.addActionListener(TranscoderFrame.this::jButtonHmacSha512HexActionPerformed);
         jPanelHmacSha512Hex.add(jButtonHmacSha512Hex);
 
         jTextFieldHmacSha512Hex.setFont(new java.awt.Font("Andale Mono", 0, 10)); // NOI18N
@@ -443,40 +388,24 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jButtonToUpper.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jButtonToUpper.setText("To Upper");
-        jButtonToUpper.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonToUpperActionPerformed(evt);
-            }
-        });
+        jButtonToUpper.addActionListener(TranscoderFrame.this::jButtonToUpperActionPerformed);
         jPanel1.add(jButtonToUpper);
 
         jButtonToLower.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jButtonToLower.setText("To Lower");
-        jButtonToLower.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonToLowerActionPerformed(evt);
-            }
-        });
+        jButtonToLower.addActionListener(TranscoderFrame.this::jButtonToLowerActionPerformed);
         jPanel1.add(jButtonToLower);
 
         jPanelMd5.setLayout(new java.awt.GridLayout(1, 0));
 
         md5hashBase64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
         md5hashBase64Button.setText("MD5 Base64");
-        md5hashBase64Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                md5hashBase64ButtonActionPerformed(evt);
-            }
-        });
+        md5hashBase64Button.addActionListener(TranscoderFrame.this::md5hashBase64ButtonActionPerformed);
         jPanelMd5.add(md5hashBase64Button);
 
         md5hashButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         md5hashButton.setText("MD5");
-        md5hashButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                md5hashButtonActionPerformed(evt);
-            }
-        });
+        md5hashButton.addActionListener(TranscoderFrame.this::md5hashButtonActionPerformed);
         jPanelMd5.add(md5hashButton);
 
         jPanel1.add(jPanelMd5);
@@ -485,21 +414,13 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         sha1hashBase64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
         sha1hashBase64Button.setText("SHA-1 Base64");
-        sha1hashBase64Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sha1hashBase64ButtonActionPerformed(evt);
-            }
-        });
+        sha1hashBase64Button.addActionListener(TranscoderFrame.this::sha1hashBase64ButtonActionPerformed);
         jPanelSha1.add(sha1hashBase64Button);
 
         sha1hashButton.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha1hashButton.setText("SHA-1");
         sha1hashButton.setName(""); // NOI18N
-        sha1hashButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sha1hashButtonActionPerformed(evt);
-            }
-        });
+        sha1hashButton.addActionListener(TranscoderFrame.this::sha1hashButtonActionPerformed);
         jPanelSha1.add(sha1hashButton);
 
         jPanel1.add(jPanelSha1);
@@ -508,20 +429,12 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         jButton3.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
         jButton3.setText("SHA-256 Base64");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+        jButton3.addActionListener(TranscoderFrame.this::jButton3ActionPerformed);
         jPanelSha256.add(jButton3);
 
         sha256Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha256Button.setText("SHA-256");
-        sha256Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sha256ButtonActionPerformed(evt);
-            }
-        });
+        sha256Button.addActionListener(TranscoderFrame.this::sha256ButtonActionPerformed);
         jPanelSha256.add(sha256Button);
 
         jPanel1.add(jPanelSha256);
@@ -530,20 +443,12 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         sha384Base64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
         sha384Base64Button.setText("SHA-384 Base64");
-        sha384Base64Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sha384Base64ButtonActionPerformed(evt);
-            }
-        });
+        sha384Base64Button.addActionListener(TranscoderFrame.this::sha384Base64ButtonActionPerformed);
         jPanelSha384.add(sha384Base64Button);
 
         sha384Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha384Button.setText("SHA-384");
-        sha384Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sha384ButtonActionPerformed(evt);
-            }
-        });
+        sha384Button.addActionListener(TranscoderFrame.this::sha384ButtonActionPerformed);
         jPanelSha384.add(sha384Button);
 
         jPanel1.add(jPanelSha384);
@@ -552,20 +457,12 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         sha512Base64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
         sha512Base64Button.setText("SHA-512 Base64");
-        sha512Base64Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sha512Base64ButtonActionPerformed(evt);
-            }
-        });
+        sha512Base64Button.addActionListener(TranscoderFrame.this::sha512Base64ButtonActionPerformed);
         jPanelSha512.add(sha512Base64Button);
 
         sha512Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         sha512Button.setText("SHA-512");
-        sha512Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sha512ButtonActionPerformed(evt);
-            }
-        });
+        sha512Button.addActionListener(TranscoderFrame.this::sha512ButtonActionPerformed);
         jPanelSha512.add(sha512Button);
 
         jPanel1.add(jPanelSha512);
@@ -574,20 +471,12 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         crc32Base64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
         crc32Base64Button.setText("CRC32 Base64");
-        crc32Base64Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                crc32Base64ButtonActionPerformed(evt);
-            }
-        });
+        crc32Base64Button.addActionListener(TranscoderFrame.this::crc32Base64ButtonActionPerformed);
         jPanelCRC32.add(crc32Base64Button);
 
         crc32Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         crc32Button.setText("CRC32");
-        crc32Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                crc32ButtonActionPerformed(evt);
-            }
-        });
+        crc32Button.addActionListener(TranscoderFrame.this::crc32ButtonActionPerformed);
         jPanelCRC32.add(crc32Button);
 
         jPanel1.add(jPanelCRC32);
@@ -596,18 +485,16 @@ public class TranscoderFrame extends javax.swing.JDialog implements ClipboardOwn
 
         adler32Base64Button.setFont(new java.awt.Font("DialogInput", 0, 10)); // NOI18N
         adler32Base64Button.setText("Adler32 Base64");
-        adler32Base64Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adler32Base64ButtonActionPerformed(evt);
-            }
-        });
+        adler32Base64Button.addActionListener(TranscoderFrame.this::adler32Base64ButtonActionPerformed);
         jPanelAdler32.add(adler32Base64Button);
 
         Adler32Button.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         Adler32Button.setText("Adler32");
-        Adler32Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Adler32ButtonActionPerformed(evt);
+        Adler32Button.addActionListener(evt -> {
+            try {
+                adler32ButtonActionPerformed(evt);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         jPanelAdler32.add(Adler32Button);
