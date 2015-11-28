@@ -5,6 +5,11 @@
  */
 package com.petercho;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.NullOutputStream;
 
@@ -24,11 +29,13 @@ import java.util.zip.CheckedInputStream;
 import java.util.zip.Checksum;
 
 /**
- *
  * @author turkish
  */
 public class Encoder {
     public static final String DEFAULT_ENCODING = "UTF-8";
+
+    private Encoder() {
+    }
 
     /**
      * Description of the Method
@@ -72,9 +79,9 @@ public class Encoder {
     }
     }
      */
+
     /**
      * Description of the Method
-     * 
      *
      * @param str Description of the Parameter
      * @return Description of the Return Value
@@ -102,26 +109,24 @@ public class Encoder {
         }
     }
 
-    public static long checksumAdler32(String text) throws IOException {
+    public static long checksumAdler32(String text) {
         Adler32 crc = new Adler32();
-        InputStream is = new ByteArrayInputStream(text.getBytes(DEFAULT_ENCODING));
-        try {
+        try (InputStream is = new ByteArrayInputStream(text.getBytes(DEFAULT_ENCODING))) {
             checksum(is, crc);
             return crc.getValue();
-        } finally {
-            is.close();
+        } catch (IOException e) {
+            throw new IllegalStateException("Error getting checksum, e:" + e, e);
         }
     }
 
-    public static long checksumCRC32(String text) throws IOException {
+    public static long checksumCRC32(String text) {
         CRC32 crc = new CRC32();
-        InputStream is = new ByteArrayInputStream(text.getBytes(DEFAULT_ENCODING));
-        try {
+        try (InputStream is = new ByteArrayInputStream(text.getBytes(DEFAULT_ENCODING))) {
             checksum(is, crc);
-            return crc.getValue();
-        } finally {
-            is.close();
+        } catch (IOException e) {
+            throw new IllegalStateException("Error getting checksum, e:" + e, e);
         }
+        return crc.getValue();
     }
 
     private static Checksum checksum(InputStream is, Checksum checksum) throws IOException {
@@ -130,7 +135,7 @@ public class Encoder {
         return checksum;
     }
 
-    static byte[] getHmac(String secretKey, String payload, String hmacType) {
+    public static byte[] getHmac(String secretKey, String payload, String hmacType) {
         final Mac mac;
         byte[] hmac;
         try {
@@ -143,8 +148,8 @@ public class Encoder {
             if (payload == null) {
                 payload = "";
             }
-            SecretKeySpec keySpec = new SecretKeySpec(secretKeyBytes, hmacType.toString());
-            mac = Mac.getInstance(hmacType.toString());
+            SecretKeySpec keySpec = new SecretKeySpec(secretKeyBytes, hmacType);
+            mac = Mac.getInstance(hmacType);
             mac.init(keySpec);
             hmac = mac.doFinal(payload.getBytes(DEFAULT_ENCODING));
         } catch (NoSuchAlgorithmException e) {
@@ -171,5 +176,16 @@ public class Encoder {
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
         transformer.transform(xmlInput, xmlOutput);
         return xmlOutput.getWriter().toString();
+    }
+
+    public static String hmacHex(String pass, String selectedText, String alg) {
+        return Hex.encodeHexString(getHmac(pass, selectedText, alg));
+    }
+
+    public static String formatJson(String text) {
+        JsonParser parser = new JsonParser();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().enableComplexMapKeySerialization().setExclusionStrategies().create();
+        JsonElement el = parser.parse(text);
+        return gson.toJson(el);
     }
 }
