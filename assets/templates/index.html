@@ -9,9 +9,9 @@
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
 
     <title>Transcoder</title>
-    <script src="../js/dist/main.min.js?v=@@timestamp"></script>
-    <!--<script src="../js/dist/main.js?v=@@timestamp"></script>-->
-    <!--<script src="../js/functions.js?v=@@timestamp"></script>-->
+    <!--<script src="../js/dist/main.min.js?v=@@timestamp"></script>-->
+    <script src="../js/dist/main.js?v=@@timestamp"></script>
+    <script src="../js/functions.js?v=@@timestamp"></script>
 
 </head>
 <body>
@@ -122,8 +122,32 @@
                    onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA512(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
             <label>hmac secret: </label><input id="HmacSecret" type="text" value="" title="hmac secret"/>
         </div>
-        <!--<div id="cNine">-->
-        <!--</div>-->
+        <div id="cEight">
+            <label>wowza security token:
+                <br/>
+                <label>wowzaViewerIp: <input id="wowzaViewerIp" type="text" value="127.0.0.1" title="must be valid ip address"/></label>
+                <input id="wowzaContentPath" type="text" value="vod-demo/mp4:sample.mp4">
+                <input id="wowzaContentURL" type="text"
+                       value="http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8">
+                <input id="wowzaSecureToken" type="text" value="65ce098c8c397e54">
+                <input id="wowzaTokenPrefix" type="text" value="wowzatoken">
+                <input id="wowzaCustomParameter" type="text" value="wowzatokenCustomParameter=myParameter">
+                <input id="wowzaSecureTokenStartTimeSeconds" type="text" value="wowzatokenstarttime=1">
+                <input id="wowzaSecureTokenEndTimeSeconds" type="text" value="wowzatokenendtime=1452620138038">
+                <input id="wowzaHashMethod" type="text" value="SHA256" title="SHA256 SHA384 SHA512">
+                <input id="wowzaEncode" type="button" value="wowzaEncode"
+                       onclick="encode(getPanel(), function(str){return wowzaEncode(
+                       $('#wowzaViewerIp').val(),
+                       $('#wowzaContentPath').val(),
+                       $('#wowzaContentURL').val(),
+                       $('#wowzaSecureToken').val(),
+                       $('#wowzaTokenPrefix').val(),
+                       $('#wowzaCustomParameter').val(),
+                       $('#wowzaSecureTokenStartTimeSeconds').val(),
+                       $('#wowzaSecureTokenEndTimeSeconds').val()
+                       );}, CryptoJS.enc.Utf8)"/>
+            </label>
+        </div>
     </div>
     <div id="panels">
         <label for="panel">Value:</label>

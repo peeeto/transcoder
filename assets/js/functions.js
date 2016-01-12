@@ -189,3 +189,23 @@ function toUpperCase(str) {
 function toLowerCase(str) {
     return str.toLowerCase();
 }
+function wowzaEncode(str) {
+    //String hashString = wowzaContentPath + "?" +
+    //    (isBlank(wowzaViewerIp) ? "" : (wowzaViewerIp + "&")) +
+    //    wowzaSecureToken + "&" +
+    //    wowzaCustomParameter + "&" +
+    //    wowzaSecureTokenEndTimeSeconds + "&" +
+    //    wowzaSecureTokenStartTimeSeconds;
+    //log("hashsrt: " + hashString);
+    //
+    //byte[] cryString = MessageDigest.getInstance("SHA-256").digest(hashString.getBytes(StandardCharsets.UTF_8));
+    //
+    //String usableHash = new String(java.util.Base64.getEncoder().encode(cryString), StandardCharsets.UTF_8)
+    //    .replace("+", "-")
+    //    .replace("/", "_");
+    //
+    //String url = wowzaContentURL + "?" + wowzaSecureTokenStartTimeSeconds + "&" + wowzaSecureTokenEndTimeSeconds + "&" + wowzaCustomParameter + "&" + wowzaTokenPrefix + "hash=" + usableHash;
+    //log(url);
+
+    return str.toLowerCase();
+}
