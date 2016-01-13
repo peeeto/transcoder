@@ -189,23 +189,20 @@ function toUpperCase(str) {
 function toLowerCase(str) {
     return str.toLowerCase();
 }
-function wowzaEncode(str) {
-    //String hashString = wowzaContentPath + "?" +
-    //    (isBlank(wowzaViewerIp) ? "" : (wowzaViewerIp + "&")) +
-    //    wowzaSecureToken + "&" +
-    //    wowzaCustomParameter + "&" +
-    //    wowzaSecureTokenEndTimeSeconds + "&" +
-    //    wowzaSecureTokenStartTimeSeconds;
-    //log("hashsrt: " + hashString);
-    //
-    //byte[] cryString = MessageDigest.getInstance("SHA-256").digest(hashString.getBytes(StandardCharsets.UTF_8));
-    //
-    //String usableHash = new String(java.util.Base64.getEncoder().encode(cryString), StandardCharsets.UTF_8)
-    //    .replace("+", "-")
-    //    .replace("/", "_");
-    //
-    //String url = wowzaContentURL + "?" + wowzaSecureTokenStartTimeSeconds + "&" + wowzaSecureTokenEndTimeSeconds + "&" + wowzaCustomParameter + "&" + wowzaTokenPrefix + "hash=" + usableHash;
-    //log(url);
+function wowzaPrepareSecureUrl(wowzaViewerIp, wowzaContentPath, wowzaContentURL, wowzaSecureToken, wowzaTokenPrefix, wowzaCustomParameter, wowzaSecureTokenStartTimeSeconds, wowzaSecureTokenEndTimeSeconds) {
+    var hashFunc = CryptoJS.SHA256;
 
-    return str.toLowerCase();
+    var hashString = wowzaContentPath + "?" +
+        (!wowzaViewerIp || wowzaViewerIp.trim().length == 0 ? "" : (wowzaViewerIp + "&")) +
+        wowzaSecureToken + "&" +
+        wowzaCustomParameter + "&" +
+        wowzaSecureTokenEndTimeSeconds + "&" +
+        wowzaSecureTokenStartTimeSeconds;
+    console.log(hashString);
+    var cryString = hashFunc(hashString);
+    var logged = cryString.toString(CryptoJS.enc.Base64);
+    console.log(logged);
+    var usableHash = logged.replace("/+/g", "-").replace("/\//g", "_");
+
+    return wowzaContentURL + "?" + wowzaSecureTokenStartTimeSeconds + "&" + wowzaSecureTokenEndTimeSeconds + "&" + wowzaCustomParameter + "&" + wowzaTokenPrefix + "hash=" + usableHash;
 }
