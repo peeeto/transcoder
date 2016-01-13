@@ -136,7 +136,7 @@
                 <input id="wowzaSecureTokenEndTimeSeconds" type="text" value="wowzatokenendtime=1452620138038">
                 <input id="wowzaHashMethod" type="text" value="SHA256" title="SHA256 SHA384 SHA512">
                 <input id="wowzaEncode" type="button" value="wowzaEncode"
-                       onclick="encode(getPanel(), function(str){return wowzaEncode(
+                       onclick="encode(getPanel(), function(str){return wowzaPrepareSecureUrl(
                        $('#wowzaViewerIp').val(),
                        $('#wowzaContentPath').val(),
                        $('#wowzaContentURL').val(),
