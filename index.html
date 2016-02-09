@@ -1,23 +1,61 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta lang="en" charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Bootstrap -->
-    <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="assets/css/bootstrap.min.css?v=1455040841641" rel="stylesheet">
 
     <title>Transcoder</title>
-    <script src="assets/js/dist/main.min.js?v=1448640662354"></script>
-    <!--<script src="assets/js/dist/main.js?v=1448640662354"></script>-->
-    <!--<script src="assets/js/functions.js?v=1448640662354"></script>-->
-
+    <!--DIST-START-->
+    <script src="assets/js/dist/main.min.js?v=1455040841641"></script>
+    <!--DIST-END-->
+    <!--DEV-START
+    <script src="assets/js/dist/main.js?v=1455040841641"></script>
+    <script src="assets/js/functions.js?v=1455040841641"></script>
+    DEV-END-->
+    <style>
+    </style>
 </head>
 <body>
-<div id="content">
+<div id="content" class="container-fluid">
+    <!--<table>-->
+    <!--<thead></thead>-->
+    <!--<tr>-->
+    <!--<td><input id="md5Hex" type="button" value="md5Hex"-->
+    <!--onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Hex)"-->
+    <!--title="echo -n 'text to be encrypted' | openssl md5"/>-->
+    <!--<td/>-->
+    <!--<td><input id="sha1Hex" type="button" value="sha1Hex"-->
+    <!--onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Hex)"/>-->
+    <!--<td/>-->
+    <!--<td><input id="sha256Hex" type="button" value="sha256Hex"-->
+    <!--onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Hex)"/>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td><input id="sha384Hex" type="button" value="sha384Hex"-->
+    <!--onclick="encode(getPanel(), CryptoJS.SHA384, CryptoJS.enc.Hex)"/>-->
+    <!--<td/>-->
+    <!--<td><input id="sha512Hex" type="button" value="sha512Hex"-->
+    <!--onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Hex)"/>-->
+    <!--<td/>-->
+    <!--<td><input id="ripemd160Hex" type="button" value="ripemd160Hex"-->
+    <!--onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Hex)"/>-->
+    <!--<td/>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>a</td>-->
+    <!--<td>b</td>-->
+    <!--<td>c</td>-->
+    <!--</tr>-->
+    <!--<tbody></tbody>-->
+    <!--</table>-->
+
+
     <div id="buttons">
-        <div id="cOne">
+        <div id="cOne" class="row">
             <input id="md5Hex" type="button" value="md5Hex"
                    onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Hex)"
                    title="echo -n 'text to be encrypted' | openssl md5"/>
@@ -30,7 +68,7 @@
             <input id="ripemd160Hex" type="button" value="ripemd160Hex"
                    onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Hex)"/>
         </div>
-        <div id="cTwo">
+        <div id="cTwo" class="row">
             <input id="md5Base64" type="button" value="md5Base64"
                    onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Base64)"
                    title="echo -n 'text to be encrypted' | openssl md5 -binary | openssl base64"/>
@@ -43,7 +81,7 @@
             <input id="ripemd160Base64" type="button" value="ripemd160Base64"
                    onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Base64)"/>
         </div>
-        <div id="cTree">
+        <div id="cTree" class="row">
             <input id="urlEncode" type="button" value="urlEncode" onclick="encode(getPanel(), encodeURIComponent)"/>
             <input id="urlDecode" type="button" value="urlDecode" onclick="encode(getPanel(), decodeURIComponent)"/>
             <input id="base64Encode" type="button" value="base64Encode" onclick="encode(getPanel(), base64Encode )"/>
@@ -53,20 +91,20 @@
             <input id="base32Decode" type="button" value="base32Decode"
                    onclick="encode(getPanel(), CryptoJS.enc.Base32.parse, CryptoJS.enc.Utf8)"/>
         </div>
-        <div id="cFour">
+        <div id="cFour" class="row">
             <input id="UUID" type="button" value="UUID" onclick="encode(getPanel(), guid)"/>
             <input id="momentToLong" type="button" value="yyyy-MM-dd HH:mm:ss.SSS Z -> 1234L"
                    onclick="encode(getPanel(), stringToMillis)"/>
             <input id="longToMoment" type="button" value="1234L -> yyyy-MM-dd HH:mm:ss.SSS Z"
                    onclick="encode(getPanel(), millisToString)"/>
         </div>
-        <div id="cTen">
+        <div id="cTen" class="row">
             <input id="hexToBase64" type="button" value="hexToBase64"
                    onclick="encode(getPanel(), CryptoJS.enc.Hex.parse, CryptoJS.enc.Base64)"/>
             <input id="base64ToHex" type="button" value="base64ToHex"
                    onclick="encode(getPanel(), function(str){return CryptoJS.enc.Base64.parse(str);}, CryptoJS.enc.Hex)"/>
         </div>
-        <div id="cFive">
+        <div id="cFive" class="row">
             <input id="jsonFormat" type="button" value="JSON Format" onclick="encode(getPanel(), jsonFormat)"/>
             <input id="xmlFormat" type="button" value="XML Format" onclick="encode(getPanel(), xmlFormat)"/>
             <input id="toUpper" type="button" value="To Upper"
@@ -74,7 +112,7 @@
             <input id="toLower" type="button" value="To Lower"
                    onclick="encode(getPanel(), toLowerCase)"/>
         </div>
-        <div id="cSix">
+        <div id="cSix" class="row">
             <input id="bcrypt" type="button" value="bcrypt"
                    onclick="bc(
                    $('#bcryptPass').val(),
@@ -101,7 +139,7 @@
                                                                   title="plaintext password to check with scrypt"/></label>
 
         </div>
-        <div id="cSeven">
+        <div id="cSeven" class="row">
             <input id="HmacMd5Hex" type="button" value="HmacMd5Hex"
                    onclick="encode(getPanel(), function(str){return CryptoJS.HmacMD5(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
             <input id="HmacSha1Hex" type="button" value="HmacSha1Hex"
@@ -122,10 +160,39 @@
                    onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA512(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
             <label>hmac secret: </label><input id="HmacSecret" type="text" value="" title="hmac secret"/>
         </div>
-        <!--<div id="cNine">-->
-        <!--</div>-->
+
+        <button data-toggle="collapse" data-target="#cEight">Wowza Secure Token</button>
+        <div id="cEight" class="row collapse">
+            <label>wowza security token</label>
+            <label>wowzaViewerIp<input id="wowzaViewerIp" type="text" value="127.0.0.1" title="must be valid ip address"/></label>
+            <label>wowzaContentPath<input id="wowzaContentPath" type="text" value="vod-demo/mp4:sample.mp4"/></label>
+            <label>wowzaContentURL<input id="wowzaContentURL" type="text"
+                          value="http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8"/></label>
+            <label>wowzaSecureToken<input id="wowzaSecureToken" type="text" value="65ce098c8c397e54"/></label>
+            <label>wowzaTokenPrefix<input id="wowzaTokenPrefix" type="text" value="wowzatoken"/></label>
+            <label>wowzaCustomParameter<input id="wowzaCustomParameter" type="text" value="wowzatokenCustomParameter=myParameter"/></label>
+            <label>wowzaSecureTokenStartTimeSeconds<input id="wowzaSecureTokenStartTimeSeconds" type="text" value="wowzatokenstarttime=1"/></label>
+            <label>wowzaSecureTokenEndTimeSeconds<input id="wowzaSecureTokenEndTimeSeconds" type="text" value="wowzatokenendtime=1452620138038"/></label>
+            <select id="wowzaHashFunc">
+                <option value="SHA256">SHA256</option>
+                <option value="SHA384">SHA384</option>
+                <option value="SHA512">SHA512</option>
+            </select>
+            <input id="wowzaEncode" type="button" value="wowzaEncode"
+                   onclick="encode(getPanel(), function(str){return wowzaPrepareSecureUrl(
+                       $('#wowzaViewerIp').val(),
+                       $('#wowzaContentPath').val(),
+                       $('#wowzaContentURL').val(),
+                       $('#wowzaSecureToken').val(),
+                       $('#wowzaTokenPrefix').val(),
+                       $('#wowzaCustomParameter').val(),
+                       $('#wowzaSecureTokenStartTimeSeconds').val(),
+                       $('#wowzaSecureTokenEndTimeSeconds').val(),
+                       $('#wowzaHashFunc').val()
+                       );}, CryptoJS.enc.Utf8)"/>
+        </div>
     </div>
-    <div id="panels">
+    <div id="panels" class="row">
         <label for="panel">Value:</label>
         <br/>
         <textarea id="panel" style="width: 70em; height:10em"></textarea>

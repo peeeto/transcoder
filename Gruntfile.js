@@ -30,6 +30,30 @@ module.exports = function (grunt) {
                 options: {
                     patterns: [
                         {
+                            match: /<!--DEV-START-->/g,
+                            replacement: function () {
+                                return '<!--DEV-START';
+                            }
+                        },
+                        {
+                             match: /<!--DEV-END-->/g,
+                             replacement: function () {
+                                 return 'DEV-END-->';
+                             }
+                        },
+                        {
+                            match: /<!--DIST-START/g,
+                            replacement: function () {
+                                return '<!--DIST-START-->';
+                            }
+                        },
+                        {
+                             match: /DIST-END-->/g,
+                             replacement: function () {
+                                 return '<!--DIST-END-->';
+                             }
+                        },
+                        {
                             match: /\.\.\/js/g,
                             replacement: function () {
                                 return 'assets/js';

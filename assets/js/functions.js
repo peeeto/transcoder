@@ -189,8 +189,17 @@ function toUpperCase(str) {
 function toLowerCase(str) {
     return str.toLowerCase();
 }
-function wowzaPrepareSecureUrl(wowzaViewerIp, wowzaContentPath, wowzaContentURL, wowzaSecureToken, wowzaTokenPrefix, wowzaCustomParameter, wowzaSecureTokenStartTimeSeconds, wowzaSecureTokenEndTimeSeconds) {
+function wowzaPrepareSecureUrl(wowzaViewerIp, wowzaContentPath, wowzaContentURL, wowzaSecureToken, wowzaTokenPrefix, wowzaCustomParameter, wowzaSecureTokenStartTimeSeconds, wowzaSecureTokenEndTimeSeconds, wowzaHashFunc) {
     var hashFunc = CryptoJS.SHA256;
+
+    switch(wowzaHashFunc.toUpperCase()){
+        case 'SHA512':
+            hashFunc = CryptoJS.SHA512;
+        break;
+        case 'SHA384':
+            hashFunc = CryptoJS.SHA384;
+        break;
+    }
 
     var hashString = wowzaContentPath + "?" +
         (!wowzaViewerIp || wowzaViewerIp.trim().length == 0 ? "" : (wowzaViewerIp + "&")) +
