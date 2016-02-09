@@ -10,3 +10,4 @@ logs/
 *.ids
 .settings/
 node_modules/
+*.log
