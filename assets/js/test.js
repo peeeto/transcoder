@@ -48,6 +48,14 @@ QUnit.test('sha256Hex', function (assert) {
     assertHashesEqual(' admin ', 'dd4d593d726dc2ce9becdf82c9d28eda488339e03c9262b4df54eb73590d445f', hashFunc, toStringFunc, assert);
     assertHashesEqual('✓ à la mode', '7df11e628347633af3d92d3f1c704d09998b876421df4772847f5b02081f7cd0', hashFunc, toStringFunc, assert);
 });
+QUnit.test('sha384Hex', function (assert) {
+    var hashFunc = CryptoJS.SHA384;
+    var toStringFunc = CryptoJS.enc.Hex;
+    assertHashesEqual('', '38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b', hashFunc, toStringFunc, assert);
+    assertHashesEqual('admin', '9ca694a90285c034432c9550421b7b9dbd5c0f4b6673f05f6dbce58052ba20e4248041956ee8c9a2ec9f10290cdc0782', hashFunc, toStringFunc, assert);
+    assertHashesEqual(' admin ', '59f7475a062f596ad377bf4cb8a266273ec552bca778791a4209f2ca9c46ce291a2b16d05c11107979ad4d86289602fc', hashFunc, toStringFunc, assert);
+    assertHashesEqual('✓ à la mode', '6f5cc485fffac51d380fe86c149138180b35a5944cddd1a16dbaece8e4bda13e616b1719cffb0b4bd5f6ae2e7844a850', hashFunc, toStringFunc, assert);
+});
 QUnit.test('sha512Hex', function (assert) {
     var hashFunc = CryptoJS.SHA512;
     var toStringFunc = CryptoJS.enc.Hex;
@@ -92,6 +100,14 @@ QUnit.test('sha256Base64', function (assert) {
     assertHashesEqual('admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', hashFunc, toStringFunc, assert);
     assertHashesEqual(' admin ', '3U1ZPXJtws6b7N+CydKO2kiDOeA8kmK031Trc1kNRF8=', hashFunc, toStringFunc, assert);
     assertHashesEqual('✓ à la mode', 'ffEeYoNHYzrz2S0/HHBNCZmLh2Qh30dyhH9bAggffNA=', hashFunc, toStringFunc, assert);
+});
+QUnit.test('sha384Base64', function (assert) {
+    var hashFunc = CryptoJS.SHA384;
+    var toStringFunc = CryptoJS.enc.Base64;
+    assertHashesEqual('', 'OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb', hashFunc, toStringFunc, assert);
+    assertHashesEqual('admin', 'nKaUqQKFwDRDLJVQQht7nb1cD0tmc/BfbbzlgFK6IOQkgEGVbujJouyfECkM3AeC', hashFunc, toStringFunc, assert);
+    assertHashesEqual(' admin ', 'WfdHWgYvWWrTd79MuKJmJz7FUryneHkaQgnyypxGzikaKxbQXBEQeXmtTYYolgL8', hashFunc, toStringFunc, assert);
+    assertHashesEqual('✓ à la mode', 'b1zEhf/6xR04D+hsFJE4GAs1pZRM3dGhbbrs6OS9oT5haxcZz/sLS9X2ri54RKhQ', hashFunc, toStringFunc, assert);
 });
 QUnit.test('sha512Base64', function (assert) {
     var hashFunc = CryptoJS.SHA512;
@@ -299,6 +315,12 @@ QUnit.test('hmacSha256Hex', function (assert) {
     assertHmacEqual('payload', CryptoJS.HmacSHA256, 'secret', CryptoJS.enc.Hex, assert, 'b82fcb791acec57859b989b430a826488ce2e479fdf92326bd0a2e8375a42ba4');
 });
 /**
+ * echo -n "payload" | openssl sha384 -hmac "secret"
+ */
+QUnit.test('hmacSha384Hex', function (assert) {
+    assertHmacEqual('payload', CryptoJS.HmacSHA384, 'secret', CryptoJS.enc.Hex, assert, 'b3ad9a65fe592cc4af8ed050a58e248896d8c52bbcc0b014a29d83f67a1de44aa077e9f2502123fa2683b95b88e20689');
+});
+/**
  * echo -n "payload" | openssl sha512 -hmac "secret"
  */
 QUnit.test('hmacSha512Hex', function (assert) {
@@ -322,6 +344,12 @@ QUnit.test('hmacSha1Base64', function (assert) {
  */
 QUnit.test('hmacSha256Base64', function (assert) {
     assertHmacEqual('payload', CryptoJS.HmacSHA256, 'secret', CryptoJS.enc.Base64, assert, 'uC/LeRrOxXhZuYm0MKgmSIzi5Hn9+SMmvQoug3WkK6Q=');
+});
+/**
+ * echo -n "payload" | openssl sha384 -hmac "secret" -binary | openssl base64
+ */
+QUnit.test('hmacSha384Base64', function (assert) {
+    assertHmacEqual('payload', CryptoJS.HmacSHA384, 'secret', CryptoJS.enc.Base64, assert, 's62aZf5ZLMSvjtBQpY4kiJbYxSu8wLAUop2D9nod5Eqgd+nyUCEj+iaDuVuI4gaJ');
 });
 /**
  * echo -n "payload" | openssl sha512 -hmac "secret" -binary | openssl base64

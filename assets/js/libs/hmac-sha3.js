@@ -1,11 +1,11 @@
 ;(function (root, factory, undef) {
 	if (typeof exports === "object") {
 		// CommonJS
-		module.exports = exports = factory(require("./core"), require("./sha1"), require("./hmac"));
+		module.exports = exports = factory(require("./core"), require("./x64-core"), require("./sha3"), require("./hmac"));
 	}
 	else if (typeof define === "function" && define.amd) {
 		// AMD
-		define(["./core", "./sha1", "./hmac"], factory);
+		define(["./core", "./x64-core", "./sha3", "./hmac"], factory);
 	}
 	else {
 		// Global (browser)
@@ -13,6 +13,6 @@
 	}
 }(this, function (CryptoJS) {
 
-	return CryptoJS.HmacSHA1;
+	return CryptoJS.HmacSHA3;
 
 }));
