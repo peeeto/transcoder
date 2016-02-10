@@ -11,3 +11,4 @@ logs/
 .settings/
 node_modules/
 *.log
+output/
