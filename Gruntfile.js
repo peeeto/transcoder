@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'), // the package file to use
+        pkg: grunt.file.readJSON('package.json'),
         concat: {
             js: {
                 options: {
@@ -84,15 +84,32 @@ module.exports = function (grunt) {
             options: {
                 dest: 'output/testresults'
             }
-        }
+        },
+        jshint: {
+            options: {
+                "curly": true,
+                "eqnull": true,
+                "eqeqeq": true,
+                "undef": true,
+                "globals": {
+                  "jQuery": true,
+                  "CryptoJS": true,
+                  "encode": true,
+                  "QUnit": true
+                },
+                reporter: require('jshint-stylish')
+            },
+            all: ['Gruntfile.js', 'assets/js/*.js']
+          }
     });
 
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-qunit-junit');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-replace');
     grunt.registerTask('default', ['concat', 'uglify', 'replace']);
-    grunt.registerTask('test', ['qunit_junit', 'qunit:src']);
+    grunt.registerTask('test', ['qunit_junit', 'qunit:src', 'jshint']);
 };
 
