@@ -23,6 +23,7 @@ function getPanel() {
 }
 // computation functions
 
+Math.log2 = Math.log2 || function(x){return Math.log(x)*Math.LOG2E;};
 var scrypt = scrypt_module_factory();
 
 var bcrypt = new bCrypt();
@@ -207,10 +208,8 @@ function wowzaPrepareSecureUrl(wowzaViewerIp, wowzaContentPath, wowzaContentURL,
         wowzaCustomParameter + "&" +
         wowzaSecureTokenEndTimeSeconds + "&" +
         wowzaSecureTokenStartTimeSeconds;
-    console.log(hashString);
     var cryString = hashFunc(hashString);
     var logged = cryString.toString(CryptoJS.enc.Base64);
-    console.log(logged);
     var usableHash = logged.replace("/+/g", "-").replace("/\//g", "_");
 
     return wowzaContentURL + "?" + wowzaSecureTokenStartTimeSeconds + "&" + wowzaSecureTokenEndTimeSeconds + "&" + wowzaCustomParameter + "&" + wowzaTokenPrefix + "hash=" + usableHash;

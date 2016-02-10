@@ -76,21 +76,23 @@ module.exports = function (grunt) {
                     {src: ['assets/templates/qunit.html'], dest: './qunit.html'}
                 ]
             }
+        },
+        'qunit': {
+            src: ['./assets/templates/qunit.html']
+        },
+        'qunit_junit': {
+            options: {
+                dest: 'output/testresults'
+            }
         }
-        //'node-qunit': {
-        //    deps: './assets/js/main.js',
-        //    code: './assets/js/main.js',
-        //    tests: './test/test.js',
-        //    done: function (err, res) {
-        //        !err && publishResults("node", res, this.async());
-        //    }
-        //}
     });
 
-//    grunt.loadNpmTasks('grunt-node-qunit');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-qunit-junit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-replace');
     grunt.registerTask('default', ['concat', 'uglify', 'replace']);
+    grunt.registerTask('test', ['qunit_junit', 'qunit:src']);
 };
 

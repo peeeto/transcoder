@@ -8,12 +8,14 @@
   "license": "Apache-2.0",
   "readme": "README.md",
   "scripts": {
-    "start": "node src/index.js",
-    "postinstall": "grunt"
+    "postinstall": "grunt",
+    "test": "grunt test"
   },
   "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.4.1",
+    "grunt": "latest",
+    "grunt-contrib-qunit": "latest",
+    "grunt-qunit-junit": "latest",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-uglify": "^0.10.0",
     "grunt-replace": "latest"
