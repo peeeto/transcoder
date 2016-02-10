@@ -110,6 +110,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-replace');
     grunt.registerTask('default', ['concat', 'uglify', 'replace']);
-    grunt.registerTask('test', ['qunit_junit', 'qunit:src', 'jshint']);
+    grunt.registerTask('test', ['qunit_junit', 'qunit:src']);
 };
 
