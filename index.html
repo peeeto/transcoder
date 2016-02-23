@@ -6,88 +6,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Bootstrap -->
-    <link href="assets/css/bootstrap.min.css?v=1455099176174" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css?v=1456263952419" rel="stylesheet">
 
     <title>Transcoder</title>
     <!--DIST-START-->
-    <script src="assets/js/dist/main.min.js?v=1455099176174"></script>
+    <script src="assets/js/dist/main.min.js?v=1456263952419"></script>
     <!--DIST-END-->
     <!--DEV-START
-    <script src="assets/js/dist/main.js?v=1455099176174"></script>
-    <script src="assets/js/functions.js?v=1455099176174"></script>
+    <script src="assets/js/dist/main.js?v=1456263952419"></script>
+    <script src="assets/js/functions.js?v=1456263952419"></script>
     DEV-END-->
 </head>
 <body>
 <div id="content" class="wrapper">
-    <div id="buttons" class="container-fluid">
+    <div id="buttons" class="container-fluid" style="display:table-cell!important;">
         <div id="hashHex" class="row">
-            <input id="md5Hex" type="button" value="md5Hex"
-                   onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Hex)"
-                   title="echo -n 'text to be encrypted' | openssl md5"/>
-            <input id="sha1Hex" type="button" value="sha1Hex"
-                   onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Hex)"/>
-            <input id="sha256Hex" type="button" value="sha256Hex"
-                   onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Hex)"/>
-            <input id="sha384Hex" type="button" value="sha384Hex"
-                   onclick="encode(getPanel(), CryptoJS.SHA384, CryptoJS.enc.Hex)"/>
-            <input id="sha512Hex" type="button" value="sha512Hex"
-                   onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Hex)"/>
-            <input id="ripemd160Hex" type="button" value="ripemd160Hex"
-                   onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Hex)"/>
+            <div class="btn-group">
+                <input id="md5Hex" type="button" value="md5Hex"
+                       onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Hex)"
+                       title="echo -n 'text to be encrypted' | openssl md5"/>
+                <input id="sha1Hex" type="button" value="sha1Hex"
+                       onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Hex)"/>
+                <input id="sha256Hex" type="button" value="sha256Hex"
+                       onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Hex)"/>
+                <input id="sha384Hex" type="button" value="sha384Hex"
+                       onclick="encode(getPanel(), CryptoJS.SHA384, CryptoJS.enc.Hex)"/>
+                <input id="sha512Hex" type="button" value="sha512Hex"
+                       onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Hex)"/>
+                <input id="ripemd160Hex" type="button" value="ripemd160Hex"
+                       onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Hex)"/>
+            </div>
         </div>
         <div id="hashBase64" class="row">
-            <input id="md5Base64" type="button" value="md5Base64"
-                   onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Base64)"
-                   title="echo -n 'text to be encrypted' | openssl md5 -binary | openssl base64"/>
-            <input id="sha1Base64" type="button" value="sha1Base64"
-                   onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Base64)"/>
-            <input id="sha256Base64" type="button" value="sha256Base64"
-                   onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Base64)"/>
-            <input id="sha384Base64" type="button" value="sha384Base64"
-                   onclick="encode(getPanel(), CryptoJS.SHA384, CryptoJS.enc.Base64)"/>
-            <input id="sha512Base64" type="button" value="sha512Base64"
-                   onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Base64)"/>
-            <input id="ripemd160Base64" type="button" value="ripemd160Base64"
-                   onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Base64)"/>
+            <div class="btn-group">
+                <input id="md5Base64" type="button" value="md5Base64"
+                       onclick="encode(getPanel(), CryptoJS.MD5, CryptoJS.enc.Base64)"
+                       title="echo -n 'text to be encrypted' | openssl md5 -binary | openssl base64"/>
+                <input id="sha1Base64" type="button" value="sha1Base64"
+                       onclick="encode(getPanel(), CryptoJS.SHA1, CryptoJS.enc.Base64)"/>
+                <input id="sha256Base64" type="button" value="sha256Base64"
+                       onclick="encode(getPanel(), CryptoJS.SHA256, CryptoJS.enc.Base64)"/>
+                <input id="sha384Base64" type="button" value="sha384Base64"
+                       onclick="encode(getPanel(), CryptoJS.SHA384, CryptoJS.enc.Base64)"/>
+                <input id="sha512Base64" type="button" value="sha512Base64"
+                       onclick="encode(getPanel(), CryptoJS.SHA512, CryptoJS.enc.Base64)"/>
+                <input id="ripemd160Base64" type="button" value="ripemd160Base64"
+                       onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Base64)"/>
+            </div>
         </div>
         <div id="encodeDecode" class="row">
-            <input id="urlEncode" type="button" value="urlEncode" onclick="encode(getPanel(), encodeURIComponent)"/>
-            <input id="urlDecode" type="button" value="urlDecode" onclick="encode(getPanel(), decodeURIComponent)"/>
-            <input id="base64Encode" type="button" value="base64Encode" onclick="encode(getPanel(), base64Encode )"/>
-            <input id="base64Decode" type="button" value="base64Decode" onclick="encode(getPanel(), base64Decode)"/>
-            <input id="base32Encode" type="button" value="base32Encode"
-                   onclick="encode(getPanel(), CryptoJS.enc.Utf8.parse, CryptoJS.enc.Base32)"/>
-            <input id="base32Decode" type="button" value="base32Decode"
-                   onclick="encode(getPanel(), CryptoJS.enc.Base32.parse, CryptoJS.enc.Utf8)"/>
+            <div class="btn-group">
+                <input id="urlEncode" type="button" value="urlEncode" onclick="encode(getPanel(), encodeURIComponent)"/>
+                <input id="urlDecode" type="button" value="urlDecode" onclick="encode(getPanel(), decodeURIComponent)"/>
+                <input id="base64Encode" type="button" value="base64Encode" onclick="encode(getPanel(), base64Encode )"/>
+                <input id="base64Decode" type="button" value="base64Decode" onclick="encode(getPanel(), base64Decode)"/>
+                <input id="base32Encode" type="button" value="base32Encode"
+                       onclick="encode(getPanel(), CryptoJS.enc.Utf8.parse, CryptoJS.enc.Base32)"/>
+                <input id="base32Decode" type="button" value="base32Decode"
+                       onclick="encode(getPanel(), CryptoJS.enc.Base32.parse, CryptoJS.enc.Utf8)"/>
+            </div>
         </div>
         <div id="ids" class="row">
-            <input id="UUID" type="button" value="UUID" onclick="encode(getPanel(), guid)"/>
-            <input id="momentToLong" type="button" value="yyyy-MM-dd HH:mm:ss.SSS Z -> 1234L"
-                   onclick="encode(getPanel(), stringToMillis)"/>
-            <input id="longToMoment" type="button" value="1234L -> yyyy-MM-dd HH:mm:ss.SSS Z"
-                   onclick="encode(getPanel(), millisToString)"/>
+            <div class="btn-group">
+                <input id="UUID" type="button" value="UUID" onclick="encode(getPanel(), guid)"/>
+                <input id="momentToLong" type="button" value="yyyy-MM-dd HH:mm:ss.SSS Z -> 1234L"
+                       onclick="encode(getPanel(), stringToMillis)"/>
+                <input id="longToMoment" type="button" value="1234L -> yyyy-MM-dd HH:mm:ss.SSS Z"
+                       onclick="encode(getPanel(), millisToString)"/>
+            </div>
         </div>
         <div id="hexBase" class="row">
-            <!--<div class="col-md-8">-->
-            <input id="hexToBase64" type="button" value="hexToBase64"
-                   onclick="encode(getPanel(), CryptoJS.enc.Hex.parse, CryptoJS.enc.Base64)"/>
-            <!--</div>-->
-            <!--<div class="col-md-4">-->
-            <input id="base64ToHex" type="button" value="base64ToHex"
-                   onclick="encode(getPanel(), function(str){return CryptoJS.enc.Base64.parse(str);}, CryptoJS.enc.Hex)"/>
-            <!--</div>-->
+            <div class="btn-group">
+                <!--<div class="col-md-8">-->
+                <input id="hexToBase64" type="button" value="hexToBase64"
+                       onclick="encode(getPanel(), CryptoJS.enc.Hex.parse, CryptoJS.enc.Base64)"/>
+                <!--</div>-->
+                <!--<div class="col-md-4">-->
+                <input id="base64ToHex" type="button" value="base64ToHex"
+                       onclick="encode(getPanel(), function(str){return CryptoJS.enc.Base64.parse(str);}, CryptoJS.enc.Hex)"/>
+                <!--</div>-->
+            </div>
         </div>
         <div id="format" class="row">
-            <input id="jsonFormat" type="button" value="JSON Format" onclick="encode(getPanel(), jsonFormat)"/>
-            <input id="xmlFormat" type="button" value="XML Format" onclick="encode(getPanel(), xmlFormat)"/>
-            <input id="toUpper" type="button" value="To Upper"
-                   onclick="encode(getPanel(), toUpperCase)"/>
-            <input id="toLower" type="button" value="To Lower"
-                   onclick="encode(getPanel(), toLowerCase)"/>
+            <div class="btn-group">
+                <input id="jsonFormat" type="button" value="JSON Format" onclick="encode(getPanel(), jsonFormat)"/>
+                <input id="xmlFormat" type="button" value="XML Format" onclick="encode(getPanel(), xmlFormat)"/>
+                <input id="toUpper" type="button" value="To Upper"
+                       onclick="encode(getPanel(), toUpperCase)"/>
+                <input id="toLower" type="button" value="To Lower"
+                       onclick="encode(getPanel(), toLowerCase)"/>
+            </div>
         </div>
         <div id="bcrypts" class="row">
-            <input id="bcrypt" type="button" value="bcrypt"
-                   onclick="bc(
+            <div class="btn-group">
+                <label>plaintext password to check with bcrypt:
+                    <input id="bcryptPass" type="text" value="" title="plaintext password to check with bcrypt"/>
+                </label>
+                <input id="bcrypt" type="button" value="bcrypt"
+                       onclick="bc(
                    $('#bcryptPass').val(),
                     getPanel().val(),
                    $('#bcryptRounds').val(),
@@ -95,46 +111,54 @@
                    function (res) { alert('Password and Hash are: ' + (!!res ? 'OK' : 'NOT ok'));},
                    function (err) { alert('Hash does not contain Salt to check: ' + err)}
                     )"/>
-            <select id="bcryptRounds"></select>
-            <label>plaintext password to check with bcrypt:</label>
-            <input id="bcryptPass" type="text" value="" title="plaintext password to check with bcrypt"/>
+                <select id="bcryptRounds"></select>
+            </div>
         </div>
         <div id="scrypts" class="row">
-            <span>scrypt salt:</span>
-            <input id="scryptSalt" type="text" value="ramdomSalt">
-            <span>scrypt n,r,p:</span>
-            <input id="scryptN" type="text" value="1024" title="must be a power of two, 2^14=16384, 2^20=1048576">
-            <input id="scryptR" type="text" value="8">
-            <input id="scryptP" type="text" value="1">
-            <input id="scrypt" type="button" value="scrypt"
-                   onclick="getPanel().val(sc($('#scryptPass').val(), getPanel().val(), $('#scryptSalt').val(), $('#scryptN').val(), $('#scryptR').val(), $('#scryptP').val()))"/>
-            <span>plaintext password to check with scrypt:</span><input id="scryptPass" type="text" value=""
-                                                                        title="plaintext password to check with scrypt"/>
+            <div class="form-group-lg">
+                <label>scrypt salt:
+                    <input id="scryptSalt" type="text" value="ramdomSalt">
+                    <span>scrypt n,r,p:</span>
+                    <input id="scryptN" type="text" value="1024" title="must be a power of two, 2^14=16384, 2^20=1048576">
+                    <input id="scryptR" type="text" value="8">
+                    <input id="scryptP" type="text" value="1">
+                </label>
+                <label>plaintext password to check with scrypt:
+                    <input id="scryptPass" type="text" value="" title="plaintext password to check with scrypt"/>
+                </label>
+                <input id="scrypt" type="button" value="scrypt"
+                       onclick="getPanel().val(sc($('#scryptPass').val(), getPanel().val(), $('#scryptSalt').val(), $('#scryptN').val(), $('#scryptR').val(), $('#scryptP').val()))"/>
+            </div>
         </div>
         <div id="hmacs" class="row">
-            <input id="HmacMd5Hex" type="button" value="HmacMd5Hex"
-                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacMD5(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
-            <input id="HmacSha1Hex" type="button" value="HmacSha1Hex"
-                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA1(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
-            <input id="HmacSha256Hex" type="button" value="HmacSha256Hex"
-                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA256(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
-            <input id="HmacSha512Hex" type="button" value="HmacSha512Hex"
-                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA512(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
-            <!--</div>-->
-            <!--<div id="cEight">-->
-            <input id="HmacMd5Base64" type="button" value="HmacMd5Base64"
-                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacMD5(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
-            <input id="HmacSha1Base64" type="button" value="HmacSha1Base64"
-                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA1(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
-            <input id="HmacSha256Base64" type="button" value="HmacSha256Base64"
-                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA256(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
-            <input id="HmacSha512Base64" type="button" value="HmacSha512Base64"
-                   onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA512(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
-            <label>hmac secret: <input id="HmacSecret" type="text" value="" title="hmac secret"/></label>
+            <div class="btn-group">
+                <input id="HmacMd5Hex" type="button" value="HmacMd5Hex"
+                       onclick="encode(getPanel(), function(str){return CryptoJS.HmacMD5(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
+                <input id="HmacSha1Hex" type="button" value="HmacSha1Hex"
+                       onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA1(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
+                <input id="HmacSha256Hex" type="button" value="HmacSha256Hex"
+                       onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA256(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
+                <input id="HmacSha512Hex" type="button" value="HmacSha512Hex"
+                       onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA512(str, $('#HmacSecret').val());}, CryptoJS.enc.Hex)"/>
+                <!--</div>-->
+                <!--<div id="cEight">-->
+                <input id="HmacMd5Base64" type="button" value="HmacMd5Base64"
+                       onclick="encode(getPanel(), function(str){return CryptoJS.HmacMD5(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
+                <input id="HmacSha1Base64" type="button" value="HmacSha1Base64"
+                       onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA1(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
+                <input id="HmacSha256Base64" type="button" value="HmacSha256Base64"
+                       onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA256(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
+                <input id="HmacSha512Base64" type="button" value="HmacSha512Base64"
+                       onclick="encode(getPanel(), function(str){return CryptoJS.HmacSHA512(str, $('#HmacSecret').val());}, CryptoJS.enc.Base64)"/>
+                <label>hmac secret:<input id="HmacSecret" type="text" value="" title="hmac secret"/> </label>
+            </div>
         </div>
-        <button data-toggle="collapse" data-target="#wowza">Wowza Secure Token</button>
-        <div id="wowza" class="row collapse">
-            <label>wowza security token</label>
+        <div id="wowza-button" class="row">
+            <button type="button" data-toggle="collapse" data-target="#wowza">Wowza Secure Token</button>
+        </div>
+        <div id="wowza" class="row; collapse">
+            <a href="https://www.wowza.com/forums/content.php?620-How-to-protect-streaming-using-SecureToken-in-Wowza-Streaming-Engine">Wowza
+                Secure Token</a>
             <label>wowzaViewerIp<input id="wowzaViewerIp" type="text" value="127.0.0.1" title="must be valid ip address"/></label>
             <label>wowzaContentPath<input id="wowzaContentPath" type="text" value="vod-demo/mp4:sample.mp4"/></label>
             <label>wowzaContentURL<input id="wowzaContentURL" type="text"
@@ -171,14 +195,43 @@
             </label>
         </div>
     </div>
-</div>
-<script>
+    <script>
     var btnFn = function() {
-        $(this).addClass("btn").addClass('btn-default');
+        $(this)
+            .addClass("btn")
+            .addClass('btn-default')
+            <!--.addClass('btn-primary');-->
     };
     $("input[type='button']").each(btnFn);
-    $("select").each(btnFn);
+    $("button").each(btnFn)
+    //$("select").each(btnFn);
 
-</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
 </body>
 </html>
