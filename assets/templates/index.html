@@ -36,7 +36,7 @@
                 <input id="ripemd160Hex" type="button" value="ripemd160Hex"
                        onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Hex)"/>
             </div>
-        </div>
+            </div>
         <div id="hashBase64" class="row">
             <div class="btn-group">
                 <input id="md5Base64" type="button" value="md5Base64"
@@ -53,7 +53,7 @@
                 <input id="ripemd160Base64" type="button" value="ripemd160Base64"
                        onclick="encode(getPanel(), CryptoJS.RIPEMD160, CryptoJS.enc.Base64)"/>
             </div>
-        </div>
+            </div>
         <div id="encodeDecode" class="row">
             <div class="btn-group">
                 <input id="urlEncode" type="button" value="urlEncode" onclick="encode(getPanel(), encodeURIComponent)"/>
@@ -65,7 +65,7 @@
                 <input id="base32Decode" type="button" value="base32Decode"
                        onclick="encode(getPanel(), CryptoJS.enc.Base32.parse, CryptoJS.enc.Utf8)"/>
             </div>
-        </div>
+            </div>
         <div id="ids" class="row">
             <div class="btn-group">
                 <input id="UUID" type="button" value="UUID" onclick="encode(getPanel(), guid)"/>
@@ -74,7 +74,7 @@
                 <input id="longToMoment" type="button" value="1234L -> yyyy-MM-dd HH:mm:ss.SSS Z"
                        onclick="encode(getPanel(), millisToString)"/>
             </div>
-        </div>
+            </div>
         <div id="hexBase" class="row">
             <div class="btn-group">
                 <!--<div class="col-md-8">-->
@@ -86,7 +86,7 @@
                        onclick="encode(getPanel(), function(str){return CryptoJS.enc.Base64.parse(str);}, CryptoJS.enc.Hex)"/>
                 <!--</div>-->
             </div>
-        </div>
+            </div>
         <div id="format" class="row">
             <div class="btn-group">
                 <input id="jsonFormat" type="button" value="JSON Format" onclick="encode(getPanel(), jsonFormat)"/>
@@ -96,7 +96,7 @@
                 <input id="toLower" type="button" value="To Lower"
                        onclick="encode(getPanel(), toLowerCase)"/>
             </div>
-        </div>
+            </div>
         <div id="bcrypts" class="row">
             <div class="btn-group">
                 <label>plaintext password to check with bcrypt:
@@ -104,16 +104,16 @@
                 </label>
                 <input id="bcrypt" type="button" value="bcrypt"
                        onclick="bc(
-                   $('#bcryptPass').val(),
-                    getPanel().val(),
-                   $('#bcryptRounds').val(),
-                   function (res) { getPanel().val(res);},
-                   function (res) { alert('Password and Hash are: ' + (!!res ? 'OK' : 'NOT ok'));},
-                   function (err) { alert('Hash does not contain Salt to check: ' + err)}
-                    )"/>
+                       $('#bcryptPass').val(),
+                        getPanel().val(),
+                       $('#bcryptRounds').val(),
+                       function (res) { getPanel().val(res);},
+                       function (res) { alert('Password and Hash are: ' + (!!res ? 'OK' : 'NOT ok'));},
+                       function (err) { alert('Hash does not contain Salt to check: ' + err)}
+                        )"/>
                 <select id="bcryptRounds"></select>
             </div>
-        </div>
+            </div>
         <div id="scrypts" class="row">
             <div class="form-group-lg">
                 <label>scrypt salt:
@@ -177,16 +177,16 @@
             </select>
             <input id="wowzaEncode" type="button" value="wowzaEncode"
                    onclick="encode(getPanel(), function(str){return wowzaPrepareSecureUrl(
-                       $('#wowzaViewerIp').val(),
-                       $('#wowzaContentPath').val(),
-                       $('#wowzaContentURL').val(),
-                       $('#wowzaSecureToken').val(),
-                       $('#wowzaTokenPrefix').val(),
-                       $('#wowzaCustomParameter').val(),
-                       $('#wowzaSecureTokenStartTimeSeconds').val(),
-                       $('#wowzaSecureTokenEndTimeSeconds').val(),
-                       $('#wowzaHashFunc').val()
-                       );}, CryptoJS.enc.Utf8)"/>
+                           $('#wowzaViewerIp').val(),
+                           $('#wowzaContentPath').val(),
+                           $('#wowzaContentURL').val(),
+                           $('#wowzaSecureToken').val(),
+                           $('#wowzaTokenPrefix').val(),
+                           $('#wowzaCustomParameter').val(),
+                           $('#wowzaSecureTokenStartTimeSeconds').val(),
+                           $('#wowzaSecureTokenEndTimeSeconds').val(),
+                           $('#wowzaHashFunc').val()
+                           );}, CryptoJS.enc.Utf8)"/>
         </div>
         <div id="panels" class="row">
             <label for="panel">Value:
@@ -194,9 +194,9 @@
                 <form>
                     <textarea id="panel" name="panel" style="width: 70em; height:10em"></textarea>
                 </form>
-            </label>
+                </label>
+            </div>
         </div>
-    </div>
     <script>
         var editor = CodeMirror.fromTextArea(document.getElementById("panel"), {
             lineNumbers: true,
@@ -214,5 +214,6 @@
         $("button").each(btnFn)
         //$("select").each(btnFn);
     </script>
+    </div>
 </body>
 </html>
