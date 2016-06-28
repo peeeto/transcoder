@@ -191,47 +191,28 @@
         <div id="panels" class="row">
             <label for="panel">Value:
                 <br/>
-                <textarea id="panel" style="width: 70em; height:10em"></textarea>
+                <form>
+                    <textarea id="panel" name="panel" style="width: 70em; height:10em"></textarea>
+                </form>
             </label>
         </div>
     </div>
     <script>
-    var btnFn = function() {
-        $(this)
-            .addClass("btn")
-            .addClass('btn-default')
+        var editor = CodeMirror.fromTextArea(document.getElementById("panel"), {
+            lineNumbers: true,
+            styleActiveLine: true,
+            matchBrackets: true
+        });
+        var btnFn = function () {
+            $(this)
+                    .addClass("btn")
+                    .addClass('btn-default')
+            ;
             <!--.addClass('btn-primary');-->
-    };
-    $("input[type='button']").each(btnFn);
-    $("button").each(btnFn)
-    //$("select").each(btnFn);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        };
+        $("input[type='button']").each(btnFn);
+        $("button").each(btnFn)
+        //$("select").each(btnFn);
     </script>
 </body>
 </html>
