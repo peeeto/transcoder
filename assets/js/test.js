@@ -313,6 +313,7 @@ QUnit.test('hmacSha1Hex', function (assert) {
  */
 QUnit.test('hmacSha256Hex', function (assert) {
     assertHmacEqual('payload', CryptoJS.HmacSHA256, 'secret', CryptoJS.enc.Hex, assert, 'b82fcb791acec57859b989b430a826488ce2e479fdf92326bd0a2e8375a42ba4');
+    assertHmacEqual('✓ à la mode', CryptoJS.HmacSHA256, 'secret', CryptoJS.enc.Hex, assert, 'ec08046ca246bb30cf84c7869545a98a78c3f6032b8b6538d1fd62f2696aa22b');
 });
 /**
  * echo -n "payload" | openssl sha384 -hmac "secret"
@@ -378,10 +379,10 @@ QUnit.test('wowzaPrepareSecureUrl - SHA256', function (assert) {
     var wowzaHashFunc='SHA256';
 
     assert.equal(wowzaPrepareSecureUrl(wowzaViewerIp, wowzaContentPath, wowzaContentURL, wowzaSecureToken, wowzaTokenPrefix, wowzaCustomParameter, wowzaSecureTokenStartTimeSeconds, wowzaSecureTokenEndTimeSeconds, wowzaHashFunc),
-        'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=c119qiGX92fXNsc7VSTJICOVCeaH4rLVCf4777ySSc4=');
+        'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=c119qiGX92fXNsc7VSTJICOVCeaH4rLVCf4777ySSc4');
 
     assert.equal(wowzaPrepareSecureUrl(' ', wowzaContentPath, wowzaContentURL, wowzaSecureToken, wowzaTokenPrefix, wowzaCustomParameter, wowzaSecureTokenStartTimeSeconds, wowzaSecureTokenEndTimeSeconds, wowzaHashFunc),
-        'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=e0NfLr7sgHYDOntx8LiRdXEoXkNjFKGYRDAmSYyH8Fo=');
+        'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=e0NfLr7sgHYDOntx8LiRdXEoXkNjFKGYRDAmSYyH8Fo');
 });
 
 QUnit.test('wowzaPrepareSecureUrl - SHA384', function (assert) {
@@ -399,7 +400,7 @@ QUnit.test('wowzaPrepareSecureUrl - SHA384', function (assert) {
         'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=hY8USwkcJl1fH0xFwg4uNoAVOTfqZsSL9P7DmimKDCW8AS5nPKIDky1cnhKOOrhG');
 
     assert.equal(wowzaPrepareSecureUrl(' ', wowzaContentPath, wowzaContentURL, wowzaSecureToken, wowzaTokenPrefix, wowzaCustomParameter, wowzaSecureTokenStartTimeSeconds, wowzaSecureTokenEndTimeSeconds, wowzaHashFunc),
-        'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=6j3JWsRZRi5Z0ZFr3o5P1vZaOlbhpIgk5WY/35wMRmhDVZB1TW1WxThIMAx0xfv/');
+        'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=6j3JWsRZRi5Z0ZFr3o5P1vZaOlbhpIgk5WY_35wMRmhDVZB1TW1WxThIMAx0xfv_');
 });
 
 QUnit.test('wowzaPrepareSecureUrl - SHA512', function (assert) {
@@ -414,8 +415,15 @@ QUnit.test('wowzaPrepareSecureUrl - SHA512', function (assert) {
     var wowzaHashFunc='SHA512';
 
     assert.equal(wowzaPrepareSecureUrl(wowzaViewerIp, wowzaContentPath, wowzaContentURL, wowzaSecureToken, wowzaTokenPrefix, wowzaCustomParameter, wowzaSecureTokenStartTimeSeconds, wowzaSecureTokenEndTimeSeconds, wowzaHashFunc),
-        'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=g8EHF+wG3JgNEOG/MXGlVxbCX15dzQPmw1KKORvDGis7AZwoiPFSXTtW0Lag2YJM/8K1182J0CzcrRtqsKiyCQ==');
+        'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=g8EHF-wG3JgNEOG_MXGlVxbCX15dzQPmw1KKORvDGis7AZwoiPFSXTtW0Lag2YJM_8K1182J0CzcrRtqsKiyCQ');
 
     assert.equal(wowzaPrepareSecureUrl(' ', wowzaContentPath, wowzaContentURL, wowzaSecureToken, wowzaTokenPrefix, wowzaCustomParameter, wowzaSecureTokenStartTimeSeconds, wowzaSecureTokenEndTimeSeconds, wowzaHashFunc),
-        'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=WQ1AR9IOH4ftol1++ye416vMqXq3r/8rrl+45GL4hNTUbGG3H9DM7GLTniBOEY8Sj7PD8eDDetucBHDXnSZRUw==');
+        'http://192.168.203.62:1935/vod-demo/mp4:sample.mp4/playlist.m3u8?wowzatokenstarttime=1452672928&wowzatokenendtime=14526729287200&wowzatokenCustomParameter=myParameter&wowzatokenhash=WQ1AR9IOH4ftol1--ye416vMqXq3r_8rrl-45GL4hNTUbGG3H9DM7GLTniBOEY8Sj7PD8eDDetucBHDXnSZRUw');
+});
+
+/**
+ * echo -n "payload" | openssl sha512 -hmac "secret" -binary | openssl base64
+ */
+QUnit.test('jwtPrapare', function (assert) {
+    assert.equal(jwtPrapare('{"alg":"HS256"}', '{"admin":"✓ à la mode"}', 'secret'), 'eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6IuKckyDDoCBsYSBtb2RlIn0.i2bi-GmfP056nIdkrp4AzRs3scrjeOwFEwJH_qz2nRI');
 });

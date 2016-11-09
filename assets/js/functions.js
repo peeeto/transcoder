@@ -172,7 +172,19 @@ function sc(passwordToCheck, toHash, salt, n, r, p) {
         } catch (error) {
             alert("Hash does not contain Salt to check");
         }
+        return toHash;
     }
+}
+
+function cleanupBase64(str) {
+    return str.replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+}
+
+function jwtPrapare(header, payload, secret) {
+    var headerEncoded = cleanupBase64(base64Encode(header));
+    var payloadEncoded = cleanupBase64(base64Encode(payload));
+    var signature = CryptoJS.HmacSHA256(headerEncoded + "." + payloadEncoded, secret).toString(CryptoJS.enc.Base64);
+    return cleanupBase64((headerEncoded + "." + payloadEncoded + "." + signature));
 }
 
 function base64Encode(str) {
@@ -210,7 +222,7 @@ function wowzaPrepareSecureUrl(wowzaViewerIp, wowzaContentPath, wowzaContentURL,
         wowzaSecureTokenStartTimeSeconds;
     var cryString = hashFunc(hashString);
     var logged = cryString.toString(CryptoJS.enc.Base64);
-    var usableHash = logged.replace("/+/g", "-").replace("/\//g", "_");
+    var usableHash = cleanupBase64(logged);
 
     return wowzaContentURL + "?" + wowzaSecureTokenStartTimeSeconds + "&" + wowzaSecureTokenEndTimeSeconds + "&" + wowzaCustomParameter + "&" + wowzaTokenPrefix + "hash=" + usableHash;
 }

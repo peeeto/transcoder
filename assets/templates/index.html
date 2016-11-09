@@ -153,6 +153,22 @@
                 <label>hmac secret:<input id="HmacSecret" type="text" value="" title="hmac secret"/> </label>
             </div>
         </div>
+        <div id="jwt-button" class="row">
+            <button type="button" data-toggle="collapse" data-target="#jwt">JWT Secure Token</button>
+        </div>
+        <div id="jwt" class="row; collapse">
+            <a href="https://jwt.io/">JWT.IO</a>
+            <label>jwtHeader<input id="jwtHeader" type="text" value='{"alg":"HS256"}' title="must be valid jwt header"/></label>
+            <label>jwtPayload<textarea id="jwtPayload" name="jwtPayload" style="width: 70em; height:10em">{"sub":"token","iss":"www.upstream.com","tenantID":1,"exp":1478649977,"applicationID":1,"userID":2}</textarea></label>
+            <label>jwtSecret<input id="jwtSecret" type="text" value='secret' title='secret to sign jwt'/></label>
+            <input id="jwtEncode" type="button" value="jwtEncode"
+                   onclick="encode(getPanel(), function(str){return jwtPrapare(
+                           $('#jwtHeader').val(),
+                           $('#jwtPayload').val(),
+                           $('#jwtSecret').val()
+                           );}, CryptoJS.enc.Utf8)"/>
+        </div>
+
         <div id="wowza-button" class="row">
             <button type="button" data-toggle="collapse" data-target="#wowza">Wowza Secure Token</button>
         </div>
